@@ -11,11 +11,18 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+
 
 int	main(int ac, char **av, char **envp)
 {
+	char *cmd;
+
 	while (INFINIT)
 	{
-		;
+		cmd = readline("$$ ");
+		ft_lexer(cmd);
 	}
 }
