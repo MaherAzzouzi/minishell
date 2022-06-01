@@ -60,6 +60,8 @@ void	ft_lexer(char *str)
 			flag = 1;
 			i++;
 		}
+		if (token == APPND || token == DLMI)
+			i++;
 		if (flag == 0)
 			i++;
 	}

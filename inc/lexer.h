@@ -4,6 +4,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft.h"
+
+// Here CMD type stands for STRING in general for example
+// cat flag.txt cat is a command but flag.txt is a string.
+
 typedef enum {
 	SGLQT,
 	DBLQT,

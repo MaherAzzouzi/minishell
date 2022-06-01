@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **envp)
 
 	while (INFINIT)
 	{
-		cmd = readline("$$ ");
+		cmd = readline(GREEN "$PWNAI> " WHITE);
 		ft_lexer(cmd);
 	}
 }
