@@ -12,3 +12,16 @@ What we should implement:
     - $? exit value.
     - CTRL-C CTRL-D CTRL-\ 
     - builtins (echo - cd - pwd - export - unset - env - exit)
+
+
+    task dghda :
+    --->fixing ugly code lexer.c
+    --->debugging files lexer
+    --->
+    --->testing
+
+    ---> parsing
+    ---> algo 
+
+
+
