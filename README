@@ -5,11 +5,10 @@ What we should implement:
     - double quotes "
     - < should redirect input
     - > should redirect output
-    - << delimiter input
+    - << delimiter input (heredoc)
     - >> append to file
     - | pipes
     - $ environment variables
     - $? exit value.
     - CTRL-C CTRL-D CTRL-\ 
     - builtins (echo - cd - pwd - export - unset - env - exit)
-    
