@@ -15,6 +15,8 @@ INC=inc/
 FLAGS=-Wall -Wextra -Werror
 MAIN=main.c
 B_DIR= build
+# If a new directory is created inside src, we should have it in a variable
+# containing all files inside, and add it to CFILES too.
 LEXERC=$(addprefix lexer/, lexing.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
