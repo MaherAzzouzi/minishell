@@ -13,6 +13,7 @@ typedef enum {
 	PIPE,
 	DLR,
 	CMD,
+	EOL,
 } e_token;
 
 typedef	struct s_type
