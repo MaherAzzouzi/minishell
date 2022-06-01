@@ -34,22 +34,36 @@ e_token lexer_get_type(char a, char b)
 		return (DLR);
 	else if (a == '\0')
 		return (EOL);
+	else if (a == ' ')
+		return (SPACE);
 	else
 		return (CMD);
-
 }
 
 void	ft_lexer(char *str)
 {
+	t_lnode	*head;
+	e_token token;
 	size_t i;
+	int flag;
 
 	printf("Lexing %s\n", str);
+	i = 0;
+	head = NULL;
 	while (str[i])
 	{
-		lexer_get_type(str[i], str[i + 1]);
-		i++;
+		flag = 0;
+		token = lexer_get_type(str[i], str[i + 1]);
+		ft_add_back_lex(&head, token, &str[i]);
+		while (lexer_get_type(str[i], str[i + 1]) == CMD)
+		{
+			flag = 1;
+			i++;
+		}
+		if (flag == 0)
+			i++;
 	}
 
 	// This is called when str[i] is NULL.
-	lexer_get_type(str[i], str[i]);
+	ft_add_back_lex(&head, EOL, NULL);
 }

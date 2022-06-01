@@ -17,13 +17,18 @@ t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd)
 	t_lnode	*node;
 	t_lnode	*current;
 
-	node = ft_new_node(token, cmd);
+	node = ft_new_node_lex(token, cmd);
 	current = *head;
+	if (current == NULL)
+	{
+		current = node;
+		return (*head);
+	}
 	while (current->next)
 		current = current->next;
 	current->next = node;
 	node->next = NULL;
-	return(*head);
+	return (*head);
 }
 
 t_lnode	*ft_new_node_lex(e_token token, char *cmd)
@@ -41,12 +46,17 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 		while (lexer_get_type(cmd[size], cmd[size + 1]) == CMD)
 			size++;
 	
-		node->type->cmd = (char *)malloc((size + 1) * sizeof(char));
-		ft_memcpy(node->type->cmd, cmd, size);
+		node->type.cmd = (char *)malloc((size + 1) * sizeof(char));
+		ft_memcpy(node->type.cmd, cmd, size);
+		node->type.cmd[size] = '\0';
+		printf("[%s] added to the linked list!\n", node->type.cmd);
 	}
 	else
-		node->type->cmd = NULL;
-	node->type->token = token;
+	{
+		node->type.cmd = NULL;
+		printf("[%d] added to the linked list!\n", token);
+	}
+	node->type.token = token;
 	node->next = NULL;
 	return (node);
 }

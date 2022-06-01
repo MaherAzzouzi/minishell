@@ -20,19 +20,19 @@ AR=ar rcs
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
 
 bonus: all $(BNS_OBJS)
-	$(AR) $(NAME) $(BNS_OBJS)
+	@$(AR) $(NAME) $(BNS_OBJS)
 
 %.o: %.c libft.h
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
-	rm -f $(BNS_OBJS)
+	@rm -f $(OBJS)
+	@rm -f $(BNS_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
