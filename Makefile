@@ -10,6 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
+#FIXME: We should add checks on the headers too.
 CC=cc
 INC=inc/
 FLAGS=-Wall -Wextra -Werror
@@ -21,12 +22,14 @@ UTILS= $(addprefix utils/, ft_new_node.c)
 LEXERC=$(addprefix lexer/, lexing.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
+LIBFT=libft/libft.a
 PROGRAM= minishell
 
 all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
-	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -lreadline $(OFILES) -I $(INC) -o $(PROGRAM)
+	@cd libft && make
+	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -lreadline $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM)
 	
 $(B_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -34,6 +37,7 @@ $(B_DIR)/%.o: %.c
 
 clean:
 	rm -rf $(B_DIR)
+	@cd libft && make fclean
 
 fclean: clean
 	rm  -f $(PROGRAM)
