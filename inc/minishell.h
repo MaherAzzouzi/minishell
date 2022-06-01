@@ -13,7 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#define INFINIT 666
+# include <stdio.h>
+
+# define INFINIT 666
 
 
 

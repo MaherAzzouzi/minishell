@@ -25,11 +25,11 @@ PROGRAM= minishell
 all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
-	$(CC) $(FLAGS) $(OFILES) -I $(INC) -o $(PROGRAM)
+	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -lreadline $(OFILES) -I $(INC) -o $(PROGRAM)
 	
 $(B_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) -I $(INC) -c $< -o $@
+	$(CC) $(CPPFLAGS) -I $(INC) -c $< -o $@
 
 clean:
 	rm -rf $(B_DIR)
