@@ -1,0 +1,14 @@
+Project minishell by Mriskyin.
+
+What we should implement:
+    - single quote '
+    - double quotes "
+    - < should redirect input
+    - > should redirect output
+    - << delimiter input
+    - >> append to file
+    - | pipes
+    - $ environment variables
+    - $? exit value.
+    - CTRL-C CTRL-D CTRL-\ 
+    - builtins (echo - cd - pwd - export - unset - env - exit)
