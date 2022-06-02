@@ -32,6 +32,10 @@ typedef enum {
 	CMD,
 	EOL,
 	SPACE,
+	RPAR,
+	LPAR,
+	OR,
+	AND,
 } e_token;
 
 typedef	struct s_type

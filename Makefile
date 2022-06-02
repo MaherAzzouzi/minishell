@@ -19,9 +19,10 @@ B_DIR= build
 # If a new directory is created inside src, we should have it in a variable
 # containing all files inside, and add it to CFILES too.
 TMPUTS= $(addprefix tmp_utils/, token_str.c check_lists.c)
-UTILS= $(addprefix utils/, ft_new_node.c)
+UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c)
 LEXERC=$(addprefix lexer/, lexing.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(TMPUTS))
+PARSERC=$(addprefix parser/, pipe.c)
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(TMPUTS) $(PARSERC))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell

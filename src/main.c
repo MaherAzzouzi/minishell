@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "lexer.h"
+#include "parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -19,13 +20,14 @@
 int	main(int ac, char **av, char **envp)
 {
 	char *cmd;
+	t_lnode	*head;
 
 	while (INFINIT)
 	{
 		cmd = readline("$PWNAI> ");
 		add_history(cmd);
-		ft_lexer(cmd);
-
+		head = ft_lexer(cmd);
+		handle_pipe(head);
 		free(cmd);
 	}
 }

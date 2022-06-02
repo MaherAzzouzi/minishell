@@ -24,13 +24,8 @@ What we should implement:
 
 
     task dghda :
-    --->fixing ugly code lexer.c
-    --->debugging files lexer
-    --->
-    --->testing
-    ---> free readline + history
-    ---> algo 
-    ---> parsing
+--> nzido nimplemtiw f pipe
+
 
 
 
