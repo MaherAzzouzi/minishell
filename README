@@ -13,6 +13,15 @@ What we should implement:
     - CTRL-C CTRL-D CTRL-\ 
     - builtins (echo - cd - pwd - export - unset - env - exit)
 
+    for the bonus part:
+    - || OR
+    - && AND
+    - () PARANTHESIS
+
+    Features:
+    - The color will be set depending on the exit value of the last command.
+    (We will start with GREEN and change to RED)
+
 
     task dghda :
     --->fixing ugly code lexer.c
@@ -25,12 +34,3 @@ What we should implement:
 
 
 
-
-    for the bonus part:
-    - || OR
-    - && AND
-    - () PARANTHESIS
-
-    Features:
-    - The color will be set depending on the exit value of the last command.
-    (We will start with GREEN and change to RED)

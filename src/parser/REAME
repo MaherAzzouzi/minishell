@@ -1,0 +1,15 @@
+For the parser we will use the algorithm "Recursive descent parser
+"
+In out AST the priorities are liek this:
+1 - || &&
+2 - |
+3 - < >
+4 - COMMAND
+5 - 
+
+Note: if < and << are used at the same command the priority goes from left to
+right.
+
+
+First task a parser for : cat file | grep "D" && ls
+First task a parser for : (cat file && grep "D") | wc -l
