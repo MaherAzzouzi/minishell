@@ -40,14 +40,14 @@ e_token lexer_get_type(char a, char b)
 		return (CMD);
 }
 
-void	ft_lexer(char *str)
+t_lnode	*	ft_lexer(char *str)
 {
 	t_lnode	*head;
 	e_token token;
 	size_t i;
 	int flag;
 
-	printf("Lexing %s\n", str);
+	printf("Lexing \"%s\"\n", str);
 	i = 0;
 	head = NULL;
 	while (str[i])
@@ -68,4 +68,5 @@ void	ft_lexer(char *str)
 
 	// This is called when str[i] is NULL.
 	ft_add_back_lex(&head, EOL, NULL);
+	return (head);
 }
