@@ -19,9 +19,18 @@ What we should implement:
     --->debugging files lexer
     --->
     --->testing
-
-    ---> parsing
+    ---> free readline + history
     ---> algo 
+    ---> parsing
 
 
 
+
+    for the bonus part:
+    - || OR
+    - && AND
+    - () PARANTHESIS
+
+    Features:
+    - The color will be set depending on the exit value of the last command.
+    (We will start with GREEN and change to RED)

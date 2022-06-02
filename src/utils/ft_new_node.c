@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:43:29 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/01 16:25:49 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/02 11:11:13 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,11 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 	node = malloc(sizeof(t_lnode));
 	if (!node)
 		exit(1);
-	
 	if (token == CMD)
 	{
 		size = 0;
 		while (lexer_get_type(cmd[size], cmd[size + 1]) == CMD)
 			size++;
-	
 		node->type.cmd = (char *)malloc((size + 1) * sizeof(char));
 		ft_memcpy(node->type.cmd, cmd, size);
 		node->type.cmd[size] = '\0';
@@ -54,7 +52,7 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 	else
 	{
 		node->type.cmd = NULL;
-		printf("[%d] added to the linked list!\n", token);
+		printf("[%s] added to the linked list!\n", enum_to_str(token));
 	}
 	node->type.token = token;
 	node->next = NULL;

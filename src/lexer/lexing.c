@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazzouzi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:07:37 by mazzouzi          #+#    #+#             */
-/*   Updated: 2022/06/01 16:07:40 by mazzouzi         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:21:45 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	ft_lexer(char *str)
 			flag = 1;
 			i++;
 		}
+		if (token == APPND || token == DLMI)
+			i++;
 		if (flag == 0)
 			i++;
 	}

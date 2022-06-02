@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_lists.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 12:26:39 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/01 12:48:15 by snagat           ###   ########.fr       */
+/*   Created: 2022/06/02 10:46:14 by snagat            #+#    #+#             */
+/*   Updated: 2022/06/02 11:06:16 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <stdio.h>
 
 
-int	main(int ac, char **av, char **envp)
+void	ft_check_lists(t_lnode  *head)
 {
-	char *cmd;
+	t_lnode		*current;
 
-	while (INFINIT)
+	current = head;
+
+	while (current)
 	{
-		cmd = readline(GREEN "$PWNAI> " WHITE);
-		ft_lexer(cmd);
+		printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
+		current = current->next;
 	}
 }

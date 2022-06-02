@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/06/01 16:26:45 by snagat           ###   ########.fr        #
+#    Updated: 2022/06/02 10:54:37 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,10 @@ MAIN=main.c
 B_DIR= build
 # If a new directory is created inside src, we should have it in a variable
 # containing all files inside, and add it to CFILES too.
+TMPUTS= $(addprefix tmp_utils/, token_str.c check_lists.c)
 UTILS= $(addprefix utils/, ft_new_node.c)
 LEXERC=$(addprefix lexer/, lexing.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS))
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(TMPUTS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell
