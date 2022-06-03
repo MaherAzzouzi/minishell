@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:43:29 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/02 11:11:13 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/03 11:28:30 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 		node->type.cmd = (char *)malloc((size + 1) * sizeof(char));
 		ft_memcpy(node->type.cmd, cmd, size);
 		node->type.cmd[size] = '\0';
-		//printf("[%s] added to the linked list!\n", node->type.cmd);
+		// printf("[%s] added to the linked list!\n", node->type.cmd);
 	}
 	else
 	{
 		node->type.cmd = NULL;
-		//printf("[%s] added to the linked list!\n", enum_to_str(token));
+		// printf("[%s] added to the linked list!\n", enum_to_str(token));
 	}
 	node->type.token = token;
 	node->next = NULL;
