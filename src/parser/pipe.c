@@ -47,7 +47,6 @@ t_parsing_node *pack_in_node(t_lnode* head)
     node->cmd.argv = (char **)malloc(sizeof(char *) * (cmd_count(current) + 1));
     if (node->cmd.argv == NULL)
         exit(-1);
-    node->cmd.argv[0] = NULL;
     i = 0;
     while (current)
     {
@@ -57,6 +56,7 @@ t_parsing_node *pack_in_node(t_lnode* head)
             node->cmd.argv[i++] = ft_strdup(current->type.cmd);
         current = current->next;
     }
+    node->cmd.argv[i] = NULL;
     return (NULL);
 }
 
@@ -76,7 +76,6 @@ void handle_pipe(t_lnode* head)
 
     add_left(node, left);
     add_right(node, right);
-    printf("lchild %s %s\n", node->lchild->cmd.cmd, node->lchild->cmd.argv[0]);
-    printf("rchild %s %s\n", node->rchild->cmd.cmd, node->rchild->cmd.argv[0]);
+    inorder_show(node);
 
 }

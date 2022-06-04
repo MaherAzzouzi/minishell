@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
+#include <stdio.h>
+char	*ft_strjoin(char const *s1, char const *s2, int flag)
 {
 	int		i;
 	int		j;
@@ -38,5 +38,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[j])
 		p[i++] = s2[j++];
 	p[i] = 0;
+	if (flag == 2)
+	{
+		free((void *)s1);
+		free((void *)s2);
+	}
+	else if (flag == 1)
+		free((void *)s2);
+	else if (flag == 0)
+		free((void *)s1);
 	return (p);
 }

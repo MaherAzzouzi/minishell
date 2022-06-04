@@ -28,5 +28,7 @@ void handle_pipe(t_lnode* head);
 t_parsing_node *pack_in_node(t_lnode* head);
 int cmd_count(t_lnode *head);
 t_lnode * find_pipe(t_lnode *head);
+void inorder_show(t_parsing_node *root);
+void show_node(t_parsing_node *node);
 
 # endif

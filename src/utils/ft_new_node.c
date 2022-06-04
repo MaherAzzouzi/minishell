@@ -45,7 +45,7 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 		while (lexer_get_type(cmd[size], cmd[size + 1]) == CMD)
 			size++;
 		node->type.cmd = (char *)malloc((size + 1) * sizeof(char));
-		ft_memcpy(node->type.cmd, cmd, size);
+		ft_memcpy(node->type.cmd, cmd, size * sizeof(char));
 		node->type.cmd[size] = '\0';
 		//printf("[%s] added to the linked list!\n", node->type.cmd);
 	}

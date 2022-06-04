@@ -27,6 +27,10 @@ int	main(int ac, char **av, char **envp)
 		cmd = readline("$PWNAI> ");
 		add_history(cmd);
 		head = ft_lexer(cmd);
+		ft_check_lists(head);
+		handle_quotes(head);
+		printf("--------------------\n");
+		ft_check_lists(head);
 		handle_pipe(head);
 		free(cmd);
 	}
