@@ -57,8 +57,11 @@ t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd);
 e_token	lexer_get_type(char a, char b);
 char    *enum_to_str(e_token   token);
 void    ft_check_lists(t_lnode  *head);
-void    handle_quotes(t_lnode *head);
-char    *convert_token(e_token  token);
+void set_token(t_lnode *node, e_token e);
+void    set_cmd(t_lnode *node, char *cmd);
+char    *get_cmd(t_lnode *node);
+e_token get_token(t_lnode *node);
+
 
 
 

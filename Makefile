@@ -19,9 +19,9 @@ B_DIR= build
 # If a new directory is created inside src, we should have it in a variable
 # containing all files inside, and add it to CFILES too.
 DBGUTILS= $(addprefix dbg_utils/, token_str.c check_lists.c tree_debug.c)
-UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c)
-LEXERC=$(addprefix lexer/, lexing.c handle_quotes.c)
-PARSERC=$(addprefix parser/, pipe.c)
+UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c)
+LEXERC=$(addprefix lexer/, lexing.c)
+PARSERC=$(addprefix parser/, pipe.c handle_quotes.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSERC))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
@@ -35,7 +35,7 @@ $(PROGRAM) : $(OFILES)
 	
 $(B_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CPPFLAGS) -I $(INC) -c $< -o $@
+	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -c $< -o $@
 
 clean:
 	rm -rf $(B_DIR)

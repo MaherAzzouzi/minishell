@@ -22,9 +22,10 @@ What we should implement:
     - The color will be set depending on the exit value of the last command.
     (We will start with GREEN and change to RED)
 
-
-    task dghda :
---> nzido nimplemtiw f pipe
+    task :
+    -->free(head);
+    -->double quotes;
+    --> nzido nimplemtiw f pipe
 
 
 

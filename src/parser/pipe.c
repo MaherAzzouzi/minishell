@@ -66,8 +66,6 @@ void handle_pipe(t_lnode* head)
     t_parsing_node *left;
     t_parsing_node *right;
 
-    t_lnode *current;
-    printf("I'm here\n");
     if (!find_pipe(head))
         return;
     node = alloc_node(PIPE);
