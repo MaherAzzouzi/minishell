@@ -61,7 +61,7 @@ void set_token(t_lnode *node, e_token e);
 void    set_cmd(t_lnode *node, char *cmd);
 char    *get_cmd(t_lnode *node);
 e_token get_token(t_lnode *node);
-
+void free_lexer_node(t_lnode *node);
 
 
 

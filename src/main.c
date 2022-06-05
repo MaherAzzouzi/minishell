@@ -31,12 +31,9 @@ int	main(int ac, char **av, char **envp)
 
 		head = ft_lexer(cmd);
 
-		printf("--------------------\n");
-		ft_check_lists(head);
-		printf("--------------------\n");
-
-		handle_single_quote(head);
-		join_quotes(head);
+		//handle_single_quote(head);
+		handle_double_quote(&head);
+		//handle_single_quote(head);
 
 		printf("--------------------\n");
 		ft_check_lists(head);

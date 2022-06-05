@@ -23,9 +23,8 @@ What we should implement:
     (We will start with GREEN and change to RED)
 
     task :
-    -->free(head);
     -->double quotes;
-    --> nzido nimplemtiw f pipe
+    -->nzido nimplemtiw f pipe
     
 
 

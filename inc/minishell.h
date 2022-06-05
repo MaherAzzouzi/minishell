@@ -15,13 +15,16 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include "lexer.h"
+# include "parser.h"
+# include "utils.h"
+# include "libft.h"
 
 # define INFINIT    666
 # define RED        "\033[0;31m"
 # define GREEN		"\033[0;32m"
 # define WHITE		"\033[0;37m"
 
-# include "lexer.h"
 void    free_list(t_lnode **head);
 
 

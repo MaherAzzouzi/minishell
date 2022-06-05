@@ -1,4 +1,5 @@
 
+#include "parser.h"
 #include "minishell.h"
 #include "lexer.h"
 
@@ -25,7 +26,7 @@ char    *convert_token(e_token  token)
     return(NULL);
 }
 
-void    handle_single_quote(t_lnode *head)
+void    handle_quote(t_lnode *head, e_token dlm)
 {
     t_lnode *current;
     t_lnode *sg;
@@ -35,16 +36,12 @@ void    handle_single_quote(t_lnode *head)
     current = head;
     while(current)
     {
-        if (current->type.token == SGLQT)
+        if (current->type.token == dlm)
         {
-            node = (t_lnode *)malloc(sizeof(t_lnode));
-            if (node == NULL)
-                exit(1);
-            set_cmd(node, ft_strdup(""));
-            set_token(node, CMD);
+            node = ft_new_node_lex(CMD, "");
             sg = current;
             current = current->next;
-            while (get_token(current) != SGLQT && get_token(current) != EOL)
+            while (get_token(current) != dlm && get_token(current) != EOL)
             {
                 if (get_token(current) == CMD)
                     set_cmd(node, ft_strjoin(get_cmd(node), get_cmd(current), 2));
@@ -61,7 +58,7 @@ void    handle_single_quote(t_lnode *head)
     }
 }
 
-void join_quotes(t_lnode *head)
+void join_quotes(t_lnode *head, e_token dlm)
 {
     t_lnode *p;
     t_lnode *current;
@@ -71,17 +68,17 @@ void join_quotes(t_lnode *head)
     current = head;
     while (current)
     {
-        if (get_token(current) == SGLQT && get_token(current->next) == CMD)
+        if (get_token(current) == dlm && get_token(current->next) == CMD)
         {
             node = ft_new_node_lex(CMD, "");
             p = current;
-            while (get_token(current) == SGLQT && get_token(current->next) == CMD)
+            while (get_token(current) == dlm && get_token(current->next) == CMD)
             {
                 set_cmd(node, ft_strjoin(get_cmd(node), get_cmd(current->next), 2));
                 current = current->next->next;
             }
             temp = p->next;
-            while(temp != current)
+            while (temp != current)
             {
                 free(temp);
                 temp = temp->next;
@@ -91,4 +88,10 @@ void join_quotes(t_lnode *head)
         }
         current = current->next;
     }
+}
+
+void handle_single_quote(t_lnode	*head)
+{
+    handle_quote(head, SGLQT);
+	join_quotes(head, SGLQT);
 }

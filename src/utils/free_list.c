@@ -15,6 +15,12 @@
 #include "lexer.h"
 
 
+void free_lexer_node(t_lnode *node)
+{
+    free(node->type.cmd);
+    free(node);
+}
+
 void    free_list(t_lnode **head)
 {
     t_lnode *current;

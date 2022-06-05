@@ -47,7 +47,6 @@ t_lnode	*	ft_lexer(char *str)
 	size_t i;
 	int flag;
 
-	printf("Lexing \"%s\"\n", str);
 	i = 0;
 	head = NULL;
 	while (str[i])
