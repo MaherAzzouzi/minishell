@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/05 13:40:30 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/05 18:48:08 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define RED        "\033[0;31m"
 # define GREEN		"\033[0;32m"
 # define WHITE		"\033[0;37m"
+# define SUCCESS     0
+# define FAIL       -1
 
 void    free_list(t_lnode **head);
 

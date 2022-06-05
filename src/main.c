@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:26:39 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/05 13:40:53 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/05 18:56:04 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
-int	main(int ac, char **av, char **envp)
+int core(int ac, char **av, char **envp)
 {
 	char *cmd;
 	t_lnode	*head;
@@ -32,7 +31,10 @@ int	main(int ac, char **av, char **envp)
 		head = ft_lexer(cmd);
 
 		//handle_single_quote(head);
-		handle_double_quote(&head);
+		if (handle_double_quote(&head) == FAIL)
+		{
+			printf("Parse error!\n");
+		}
 		//handle_single_quote(head);
 
 		printf("--------------------\n");
@@ -43,4 +45,9 @@ int	main(int ac, char **av, char **envp)
 		free_list(&head);
 		free(cmd);
 	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	core(ac, av, envp);
 }

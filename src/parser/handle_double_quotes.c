@@ -40,9 +40,10 @@ void clean_empty_quote(t_lnode **head, e_token t)
 }
 
 // We will get aa string like this ccc$HOME and expand it in the execution
-void handle_double_quote(t_lnode	**head)
+int handle_double_quote(t_lnode	**head)
 {
     handle_quote(*head, DBLQT);
 	join_quotes(*head, DBLQT);
     clean_empty_quote(head, DBLQT);
+    return(ft_check_quotes(*head, DBLQT));
 }
