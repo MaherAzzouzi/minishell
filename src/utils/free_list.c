@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/05 13:40:30 by snagat           ###   ########.fr       */
+/*   Created: 2022/06/05 13:16:36 by snagat            #+#    #+#             */
+/*   Updated: 2022/06/05 13:46:58 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdio.h>
-# include <stdlib.h>
-
-# define INFINIT    666
-# define RED        "\033[0;31m"
-# define GREEN		"\033[0;32m"
-# define WHITE		"\033[0;37m"
-
-# include "lexer.h"
-void    free_list(t_lnode **head);
+#include "minishell.h"
+#include "parser.h"
+#include "lexer.h"
 
 
+void    free_list(t_lnode **head)
+{
+    t_lnode *current;
+    t_lnode *tmp;
 
-#endif
+    current = *head;
+    if (*head == 0 || head == 0)
+        return ;
+    while(current)
+    {
+        tmp = current;
+        free(tmp->type.cmd);
+        current = current->next;
+        free(tmp);
+    }
+    *head = 0;
+}

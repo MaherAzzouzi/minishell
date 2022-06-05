@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:26:39 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/01 12:48:15 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/05 13:40:53 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int ac, char **av, char **envp)
 		printf("--------------------\n");
 
 		//handle_pipe(head);
-		//free(cmd);
+		free_list(&head);
+		free(cmd);
 	}
 }
