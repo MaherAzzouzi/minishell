@@ -3,6 +3,22 @@
 #include "minishell.h"
 #include "lexer.h"
 
+
+int count_token(t_lnode* head, t_lnode *current, e_token t)
+{
+    int     count;
+
+    count = 0;
+    while (head != current)
+    {
+        if (get_token(head) == t)
+            count++;
+        head = head->next;
+    }
+    return (count);
+}
+
+
 char    *convert_token(e_token  token)
 {
         if (token == SGLQT)
@@ -36,7 +52,8 @@ void    handle_quote(t_lnode *head, e_token dlm)
     current = head;
     while(current)
     {
-        if (current->type.token == dlm)
+
+        if (current->type.token == dlm && is_even(count_token(head, current, DBLQT)))
         {
             node = ft_new_node_lex(CMD, "");
             sg = current;

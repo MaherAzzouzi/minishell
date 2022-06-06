@@ -34,3 +34,9 @@ void add_right(t_parsing_node *node, t_parsing_node *rnode)
 {
     node->rchild = rnode;
 }
+
+void ignore_spaces(t_lnode **head)
+{
+    while (get_token(*head) == SPACE)
+        *head = (*head)->next;
+}
