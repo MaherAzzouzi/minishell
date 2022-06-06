@@ -44,7 +44,7 @@ int core(int ac, char **av, char **envp)
 			printf("Parse error!\n");
 		log_(head);
 
-		//handle_pipe(head);
+		handle_pipe(&head);
 		free_list(&head);
 		free(cmd);
 	}

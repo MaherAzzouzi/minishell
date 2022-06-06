@@ -2,6 +2,7 @@
     "files.associations": {
         "*.html": "html",
         "libft.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "iterator": "c"
     }
 }
