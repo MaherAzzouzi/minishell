@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/06/05 18:50:32 by snagat           ###   ########.fr        #
+#    Updated: 2022/06/06 14:33:39 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ PROGRAM= minishell
 all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
-	@cd libft && make
+	cd libft && make
 	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g -lreadline $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM)
 	
 $(B_DIR)/%.o: %.c

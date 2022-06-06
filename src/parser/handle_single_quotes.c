@@ -64,6 +64,7 @@ void join_quotes(t_lnode *head, e_token dlm)
     t_lnode *current;
     t_lnode *temp;
     t_lnode *node;
+    t_lnode *tm;
 
     current = head;
     while (current)
@@ -80,8 +81,9 @@ void join_quotes(t_lnode *head, e_token dlm)
             temp = p->next;
             while (temp != current)
             {
+                tm = temp->next;
                 free(temp);
-                temp = temp->next;
+                temp = tm;
             }
             p->next = node;
             node->next = current;
@@ -90,8 +92,10 @@ void join_quotes(t_lnode *head, e_token dlm)
     }
 }
 
-void handle_single_quote(t_lnode	*head)
+int handle_single_quote(t_lnode	**head)
 {
-    handle_quote(head, SGLQT);
-	join_quotes(head, SGLQT);
+    handle_quote(*head, SGLQT);
+	join_quotes(*head, SGLQT);
+    clean_empty_quote(head, SGLQT);
+    return(ft_check_quotes(*head, SGLQT));
 }

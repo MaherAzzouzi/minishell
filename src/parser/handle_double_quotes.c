@@ -46,4 +46,4 @@ int handle_double_quote(t_lnode	**head)
 	join_quotes(*head, DBLQT);
     clean_empty_quote(head, DBLQT);
     return(ft_check_quotes(*head, DBLQT));
-}
+} 

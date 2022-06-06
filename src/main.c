@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:26:39 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/05 18:56:04 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/06 14:49:17 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ int core(int ac, char **av, char **envp)
 		head = ft_lexer(cmd);
 
 		//handle_single_quote(head);
+		if (handle_single_quote(&head) == FAIL)
+		{
+			printf("Parse error!\n");
+		}
 		if (handle_double_quote(&head) == FAIL)
 		{
 			printf("Parse error!\n");
 		}
-		//handle_single_quote(head);
 
 		printf("--------------------\n");
 		ft_check_lists(head);
 		printf("--------------------\n");
 
-		//handle_pipe(head);
+		// handle_pipe(head);
 		free_list(&head);
 		free(cmd);
 	}

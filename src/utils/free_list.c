@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 13:16:36 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/05 13:46:58 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/06 14:04:17 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 void free_lexer_node(t_lnode *node)
 {
-    free(node->type.cmd);
+    if (get_cmd(node))
+        free(get_cmd(node));
     free(node);
 }
 

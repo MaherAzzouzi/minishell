@@ -33,7 +33,7 @@ void show_node(t_parsing_node *node);
 void    handle_quote(t_lnode *head, e_token t);
 char    *convert_token(e_token  token);
 void join_quotes(t_lnode *head, e_token t);
-void handle_single_quote(t_lnode	*head);
+int handle_single_quote(t_lnode	**head);
 int handle_double_quote(t_lnode	**head);
 void clean_empty_quote(t_lnode **head, e_token t);
 int    ft_check_quotes(t_lnode *head, e_token dlm);
