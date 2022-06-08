@@ -18,7 +18,6 @@ int count_token(t_lnode* head, t_lnode *current, e_token t)
     return (count);
 }
 
-
 char    *convert_token(e_token  token)
 {
         if (token == SGLQT)
@@ -26,9 +25,9 @@ char    *convert_token(e_token  token)
     else if (token == DBLQT)
         return("\"");
     else if (token == REDRI)
-        return("<");
-    else if (token == REDRO)
         return(">");
+    else if (token == REDRO)
+        return("<");
     else if (token == DLMI)
         return ("<<");
     else if (token == APPND)

@@ -11,7 +11,7 @@ t_parsing_node *alloc_node(e_token type)
     p->lchild = NULL;
     p->rchild = NULL;
     p->cmd.argv = NULL;
-    p->cmd.cmd = NULL;
+    p->cmd.cmd = ft_strdup("");
     return (p);
 }
 
@@ -37,6 +37,12 @@ void add_right(t_parsing_node *node, t_parsing_node *rnode)
 
 void ignore_spaces(t_lnode **head)
 {
+    //t_lnode *current;
+
     while (get_token(*head) == SPACE)
+    {
+        //current = *(head);
         *head = (*head)->next;
+        //free(current);
+    }
 }

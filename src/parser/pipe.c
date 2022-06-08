@@ -2,14 +2,31 @@
 
 t_lnode *find_pipe(t_lnode **head)
 {
+   // t_lnode *current;
 
     while (*head)
     {
         if ((*head)->type.token == PIPE)
             return(*head);
+        //current = (*head);
         (*head) = (*head)->next;
+        //free(current);
     }
     return (NULL);
+}
+
+int check_pipe(t_lnode  *head)
+{
+    t_lnode *current;
+
+    current = head;
+    while(current)
+    {
+        if (get_token(current) == PIPE)
+            return(FOUND);
+        current = current->next;
+    }
+    return(NOT_FOUND);
 }
 
 int cmd_count(t_lnode *head)
@@ -38,8 +55,20 @@ t_parsing_node *pack_in_node(t_lnode* head)
     int i;
 
     node = alloc_node(CMD);
-    printf("CMD is %s\n", get_cmd(head));
-    node->cmd.cmd = ft_strdup(get_cmd(head));
+    while (get_token(head) != SPACE && get_token(head) != PIPE && get_token(head) != EOL)
+    {
+        if (get_token(head) != CMD)
+            node->cmd.cmd = ft_strjoin(node->cmd.cmd, convert_token(get_token(head)), 0);
+        else
+        {
+            node->cmd.cmd = ft_strjoin(node->cmd.cmd, get_cmd(head), 0);
+        }
+        head = head->next;
+    }
+    if (get_token(head) == EOL || get_token(head) == PIPE)
+    {
+        return (node);
+    }
     current = (head)->next;
     node->cmd.argv = (char **)malloc(sizeof(char *) * (cmd_count(current) + 1));
     if (node->cmd.argv == NULL)
@@ -104,7 +133,15 @@ t_parsing_node* handle_pipe_next(t_lnode** head, t_parsing_node* left)
 void handle_pipe(t_lnode** head)
 {
     t_parsing_node* node;
-    node = handle_pipe_first(head);
-    node = handle_pipe_next(head, node);
-    inorder_show(node);
+    node = NULL;
+
+    if (check_pipe(*head))
+        node = handle_pipe_first(head);
+    while(check_pipe(*head))
+        node = handle_pipe_next(head, node);    
+
+    if (node)
+        inorder_show(node);
+    
+    free_tree(node);
 }

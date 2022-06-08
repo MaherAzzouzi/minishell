@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/05 18:48:08 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/08 14:33:22 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define WHITE		"\033[0;37m"
 # define SUCCESS     0
 # define FAIL       -1
+# define FOUND      1
+# define NOT_FOUND  0
 
 void    free_list(t_lnode **head);
 

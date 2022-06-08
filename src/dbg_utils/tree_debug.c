@@ -2,19 +2,17 @@
 
 void show_node(t_parsing_node *node)
 {
-	printf("--------------------------\n");
 	if (node->type == CMD)
 	{
 		int i;
 		printf("%s [", node->cmd.cmd);
 		i = 0;
-		while (node->cmd.argv[i])
+		while (node->cmd.argv && node->cmd.argv[i])
 			printf("%s, ", node->cmd.argv[i++]);
 		printf("]\n");	
 	}
 	else
 		printf("%s\n", enum_to_str(node->type));
-	printf("--------------------------\n");
 }
 
 void inorder_show(t_parsing_node *root)
