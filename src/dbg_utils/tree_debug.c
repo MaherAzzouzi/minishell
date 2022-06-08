@@ -7,7 +7,7 @@ void show_node(t_parsing_node *node)
 		int i;
 		printf("%s [", node->cmd.cmd);
 		i = 0;
-		while (node->cmd.argv[i])
+		while (node->cmd.argv && node->cmd.argv[i])
 			printf("%s, ", node->cmd.argv[i++]);
 		printf("]\n");	
 	}

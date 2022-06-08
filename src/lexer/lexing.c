@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:07:37 by mazzouzi          #+#    #+#             */
-/*   Updated: 2022/06/02 11:21:45 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/08 18:43:12 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ e_token lexer_get_type(char a, char b)
 		else
 			return (REDRO);
 	else if (a == '|')
-		return (PIPE);
+		if (b == '|')
+			return (OR);
+		else
+			return (PIPE);
+	else if (a == '&' && b == '&')
+		return (AND);
 	else if (a == '$')
 		return (DLR);
 	else if (a == '\0')
@@ -59,7 +64,7 @@ t_lnode	*	ft_lexer(char *str)
 			flag = 1;
 			i++;
 		}
-		if (token == APPND || token == DLMI)
+		if (token == APPND || token == DLMI || token == OR || token == AND)
 			i++;
 		if (flag == 0)
 			i++;

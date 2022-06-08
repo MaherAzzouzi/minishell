@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:48:09 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/02 10:12:58 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/08 18:44:39 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,9 @@ char    *enum_to_str(e_token   token)
         return("end of line");
     else if (token == SPACE)
         return("space");
+    else if (token == AND)
+        return ("and");
+    else if (token == OR)
+        return ("or");
     return(NULL);
 }
