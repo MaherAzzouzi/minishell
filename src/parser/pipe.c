@@ -12,6 +12,20 @@ t_lnode *find_pipe(t_lnode **head)
     return (NULL);
 }
 
+int check_pipe(t_lnode  *head)
+{
+    t_lnode *current;
+
+    current = head;
+    while(current)
+    {
+        if (get_token(current) == PIPE)
+            return(FOUND);
+        current = current->next;
+    }
+    return(NOT_FOUND);
+}
+
 int cmd_count(t_lnode *head)
 {
     t_lnode *current;
@@ -37,8 +51,10 @@ t_parsing_node *pack_in_node(t_lnode* head)
     t_lnode* current;
     int i;
 
+    while (get_token(head) != CMD)
+        head = head->next;
     node = alloc_node(CMD);
-    printf("CMD is %s\n", get_cmd(head));
+    ///printf("CMD is %s\n", get_cmd(head));
     node->cmd.cmd = ft_strdup(get_cmd(head));
     current = (head)->next;
     node->cmd.argv = (char **)malloc(sizeof(char *) * (cmd_count(current) + 1));
@@ -104,7 +120,13 @@ t_parsing_node* handle_pipe_next(t_lnode** head, t_parsing_node* left)
 void handle_pipe(t_lnode** head)
 {
     t_parsing_node* node;
-    node = handle_pipe_first(head);
-    node = handle_pipe_next(head, node);
-    inorder_show(node);
+    node = NULL;
+
+    if (check_pipe(*head))
+        node = handle_pipe_first(head);
+    while(check_pipe(*head))
+        node = handle_pipe_next(head, node);    
+
+    if (node)
+        inorder_show(node);
 }

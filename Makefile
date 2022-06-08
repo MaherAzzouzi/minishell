@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/06/06 15:22:38 by snagat           ###   ########.fr        #
+#    Updated: 2022/06/08 15:15:01 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get
 		general_utils.c number_utils.c)
 LEXERC=$(addprefix lexer/, lexing.c)
 PARSERC=$(addprefix parser/, pipe.c handle_single_quotes.c handle_double_quotes.c)
-PARSCHECK= $(addprefix parser/checks/, check_quotes.c)
+PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_pipes.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSERC) $(PARSCHECK) )
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
