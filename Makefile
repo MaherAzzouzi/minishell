@@ -32,7 +32,7 @@ PROGRAM= minishell
 all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
-	cd libft && make
+	@cd libft && make
 	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g -lreadline $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM)
 	
 $(B_DIR)/%.o: %.c
