@@ -130,16 +130,17 @@ t_parsing_node* handle_pipe_next(t_lnode** head, t_parsing_node* left)
     return node;
 }
 
-void handle_pipe(t_lnode** head)
+void handle_pipe(t_lnode* head)
 {
+    t_lnode *head_p[1];
     t_parsing_node* node;
     node = NULL;
-
-    if (check_pipe(*head))
-        node = handle_pipe_first(head);
-    while(check_pipe(*head))
-        node = handle_pipe_next(head, node);    
-
+    
+    *head_p = head;
+    if (check_pipe(*head_p))
+        node = handle_pipe_first(head_p);
+    while(check_pipe(*head_p))
+        node = handle_pipe_next(head_p, node);
     if (node)
         inorder_show(node);
     
