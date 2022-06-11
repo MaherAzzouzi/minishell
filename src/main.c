@@ -23,6 +23,32 @@ void log_(t_lnode *head)
 	printf("--------------------\n");
 }
 
+
+int order_quotes(t_lnode *head)
+{
+	t_lnode * current;
+
+	current = head;
+	while (current)
+	{
+		if (get_token(current) == SGLQT)
+		{
+			current = handle_single_quote(current);
+			if (current == (t_lnode *)-1)
+				return FAIL;
+
+		}
+		else if (get_token(current) == DBLQT)
+		{
+			current = handle_double_quote(current);
+			if (current == (t_lnode *)-1)
+				return FAIL;
+		} else
+			current = current->next;
+	}
+	return SUCCESS;
+}
+
 int core(int ac, char **av, char **envp)
 {
 	char *cmd;
@@ -37,12 +63,14 @@ int core(int ac, char **av, char **envp)
 
 		head = ft_lexer(cmd);
 		ignore_spaces(&head);
-
-		if (handle_single_quote(&head) == FAIL)
-			printf("Parse error!\n");
-			
-		if (handle_double_quote(&head) == FAIL)
-			printf("Parse error!\n");
+		if (order_quotes(head) == FAIL)
+		{
+			printf("PARSE ERROR\n");
+			free_list(&head);
+			free(cmd);
+			continue;
+		}
+		join_quotes(head, SGLQT);
 		log_(head);
 
 		if (check_pipe_syntax_errors(head) == FAIL)
@@ -51,11 +79,9 @@ int core(int ac, char **av, char **envp)
 			free(cmd);
 			continue;
 		}
-		handle_pipe(head);
-		//ft_check_lists(head);
-		//ft_check_lists(head2);
-		free_list(&head);
 		
+		handle_pipe(head);
+		free_list(&head);
 		free(cmd);
 	}
 }
