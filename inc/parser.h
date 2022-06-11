@@ -3,6 +3,7 @@
 
 # include "lexer.h"
 
+
 struct s_command
 {
     char **argv;
@@ -30,14 +31,15 @@ int cmd_count(t_lnode *head);
 t_lnode * find_pipe(t_lnode **head);
 void inorder_show(t_parsing_node *root);
 void show_node(t_parsing_node *node);
-void    handle_quote(t_lnode *head, e_token t);
+t_lnode*    handle_quote(t_lnode *head, e_token t);
 char    *convert_token(e_token  token);
 void join_quotes(t_lnode *head, e_token t);
-int handle_single_quote(t_lnode	**head);
-int handle_double_quote(t_lnode	**head);
+t_lnode* handle_single_quote(t_lnode	*head);
+t_lnode* handle_double_quote(t_lnode	*head);
 void clean_empty_quote(t_lnode **head, e_token t);
 int    ft_check_quotes(t_lnode *head, e_token dlm);
 int check_pipe_syntax_errors(t_lnode* head);
+int	ft_check_siblings(t_lnode	*head, e_token dlm);
 
 
 # endif
