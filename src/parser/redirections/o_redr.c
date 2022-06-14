@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 11:49:07 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/13 18:50:33 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/14 13:18:59 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,20 @@ t_parsing_node *parse_redirections(t_lnode *head)
 {
     t_parsing_node  *node;
     t_lnode         *cmd;
+    int             count;
     
     if (find_i_red(head) == NULL && find_o_red(head) == NULL)
         return NULL;
-    printf("Here\n");
     node = alloc_node(CMD);
     cmd = get_command(head);
+    node->cmd.cmd = get_cmd(cmd);
     if (cmd)
     {
         printf("cmd is %s\n", get_cmd(cmd));
-        count_command_with_ore_args(cmd, head);
+        count  = count_command_with_ore_args(cmd, head);
+        node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 1));
+        if (node->cmd.argv == NULL)
+            exit(-1);
     }
     return node;
     /*
