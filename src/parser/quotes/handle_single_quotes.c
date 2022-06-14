@@ -20,7 +20,7 @@ int count_token(t_lnode* head, t_lnode *current, e_token t)
 
 char    *convert_token(e_token  token)
 {
-        if (token == SGLQT)
+    if (token == SGLQT)
         return("'");
     else if (token == DBLQT)
         return("\"");
@@ -38,6 +38,14 @@ char    *convert_token(e_token  token)
         return("$");
     else if (token == SPACE)
         return(" ");
+    else if (token == AND)
+        return ("&&");
+    else if (token == OR)
+        return ("||");
+    else if (token == CMD)
+        return ("CMD");
+    else if (token == EOL)
+        return ("EOL");
     return(NULL);
 }
 

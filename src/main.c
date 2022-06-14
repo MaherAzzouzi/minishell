@@ -56,6 +56,8 @@ int core(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	(void)envp;
+
+	setbuf(stdout, NULL);
 	while (INFINIT)
 	{
 		cmd = readline("$PWNAI> ");
@@ -74,16 +76,16 @@ int core(int ac, char **av, char **envp)
 		//o_red_command(&head);
 		log_(head);
 
-		if (check_pipe_syntax_errors(head) == FAIL)
-		{
-			free_list(&head);
-			free(cmd);
-			continue;
-		}
+		// if (check_pipe_syntax_errors(head) == FAIL)
+		// {
+		// 	free_list(&head);
+		// 	free(cmd);
+		// 	continue;
+		// }
 		
-		handle_pipe(head);
-		parse_redirections(head);
-		
+		// handle_pipe(head);
+		// parse_redirections(head);
+		parse_tree(head);
 		free_list(&head);
 		free(cmd);
 	}

@@ -8,7 +8,7 @@
 
 struct s_redirections
 {
-    char    **o_r_param;
+    char    **o_r_params;
     char    **i_r_params;
 };
 
@@ -53,5 +53,9 @@ int    ft_check_quotes(t_lnode *head, e_token dlm);
 int check_pipe_syntax_errors(t_lnode* head);
 int	ft_check_siblings(t_lnode	*head, e_token dlm);
 t_lnode *ignore_spaces_ret(t_lnode *head);
+
+t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end, t_lnode *highest);
+t_parsing_node * parse_tree(t_lnode *head);
+
 
 # endif

@@ -17,6 +17,7 @@
     "memory": "c",
     "ratio": "c",
     "tuple": "c",
-    "utility": "c"
+    "utility": "c",
+    "__node_handle": "c"
   }
 }

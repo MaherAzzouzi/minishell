@@ -10,7 +10,32 @@ void show_node(t_parsing_node *node)
 		i = 0;
 		while (node->cmd.argv && node->cmd.argv[i])
 			printf("%s, ", node->cmd.argv[i++]);
-		printf("]\n");	
+		printf("]\n");
+		if (node->reds.i_r_params)
+		{	
+			printf("--> '<' <--");
+			i = 0;
+			printf("\n[\n");
+			while (node->reds.i_r_params[i])
+			{
+				printf("---->%s\n", node->reds.i_r_params[i]);
+				i++;
+			}
+			printf("]\n");
+		}
+		i = 0;
+		if (node->reds.o_r_params)
+		{	
+			printf("--> '>' <--");
+			i = 0;
+			printf("\n[\n");
+			while (node->reds.o_r_params[i])
+			{
+				printf("---->%s\n", node->reds.o_r_params[i]);
+				i++;
+			}
+			printf("]\n");
+		}
 	}
 	else
 		printf("%s\n", enum_to_str(node->type));

@@ -23,11 +23,12 @@ UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get
 		general_utils.c number_utils.c free_tree.c)
 LEXERC=$(addprefix lexer/, lexing.c)
 PARSERC=$(addprefix parser/, )
+PARSETREE=$(addprefix parser/main_tree/, main_tree.c)
 PARSEPIPE=$(addprefix parser/pipe/, pipe.c)
 PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c)
 PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_pipes.c)
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED))
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell
