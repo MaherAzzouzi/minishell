@@ -1,0 +1,3 @@
+We have a problem here when it parse error:
+echo "'"'"
+Freeing a bad address.

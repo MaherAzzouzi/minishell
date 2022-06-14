@@ -5,6 +5,7 @@ void show_node(t_parsing_node *node)
 	if (node->type == CMD)
 	{
 		int i;
+		//printf("ok\n");
 		printf("%s [", node->cmd.cmd);
 		i = 0;
 		while (node->cmd.argv && node->cmd.argv[i])

@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/06/08 17:08:34 by snagat           ###   ########.fr        #
+#    Updated: 2022/06/13 12:57:37 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,12 @@ DBGUTILS= $(addprefix dbg_utils/, token_str.c check_lists.c tree_debug.c)
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\
 		general_utils.c number_utils.c free_tree.c)
 LEXERC=$(addprefix lexer/, lexing.c)
-PARSERC=$(addprefix parser/, pipe.c handle_single_quotes.c handle_double_quotes.c)
+PARSERC=$(addprefix parser/, )
+PARSEPIPE=$(addprefix parser/pipe/, pipe.c)
+PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c)
 PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_pipes.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSERC) $(PARSCHECK) )
+PARSRED= $(addprefix parser/redirections/, o_redr.c)
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell

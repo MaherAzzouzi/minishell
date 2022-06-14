@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/08 14:33:22 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/13 15:20:40 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "parser.h"
 # include "utils.h"
 # include "libft.h"
+# include "redirections.h"
 
 # define INFINIT    666
 # define RED        "\033[0;31m"

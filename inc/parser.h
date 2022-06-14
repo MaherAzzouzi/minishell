@@ -4,6 +4,16 @@
 # include "lexer.h"
 
 
+// Struct for both redirections < and >
+
+struct s_redirections
+{
+    char    **o_r_param;
+    char    **i_r_params;
+};
+
+typedef struct s_redirections t_reds;
+
 struct s_command
 {
     char **argv;
@@ -14,6 +24,8 @@ struct s_parsing_node
 {
     e_token type;
     struct s_command cmd;
+    // In case we have redirections < and >.
+    t_reds reds;
     struct s_parsing_node *lchild;
     struct s_parsing_node *rchild;
 };
@@ -40,6 +52,6 @@ void clean_empty_quote(t_lnode **head, e_token t);
 int    ft_check_quotes(t_lnode *head, e_token dlm);
 int check_pipe_syntax_errors(t_lnode* head);
 int	ft_check_siblings(t_lnode	*head, e_token dlm);
-
+t_lnode *ignore_spaces_ret(t_lnode *head);
 
 # endif

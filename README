@@ -24,9 +24,5 @@ What we should implement:
 
     task :
     -->nzido nimplemtiw f pipe
+    ---> " > f1 cat "      " < f2 cat "
     
-
-
-
-
-
