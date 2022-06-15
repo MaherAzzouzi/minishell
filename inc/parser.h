@@ -10,6 +10,8 @@ struct s_redirections
 {
     char    **o_r_params;
     char    **i_r_params;
+    char    **herdoc_array;
+    char    **append_array;
 };
 
 typedef struct s_redirections t_reds;
@@ -23,6 +25,7 @@ struct s_command
 struct s_parsing_node
 {
     e_token type;
+    int parathensesed;
     struct s_command cmd;
     // In case we have redirections < and >.
     t_reds reds;
@@ -38,10 +41,11 @@ t_parsing_node* go_right(t_parsing_node *node);
 void add_left(t_parsing_node *node, t_parsing_node *lnode);
 void add_right(t_parsing_node *node, t_parsing_node *rnode);
 void handle_pipe(t_lnode* head);
-t_parsing_node *pack_in_node(t_lnode* head);
-int cmd_count(t_lnode *head);
+t_parsing_node *pack_in_node(t_lnode* head, t_lnode *end);
+int cmd_count(t_lnode *head, t_lnode *end);
 t_lnode * find_pipe(t_lnode **head);
 void inorder_show(t_parsing_node *root);
+void print2D(t_parsing_node *root);
 void show_node(t_parsing_node *node);
 t_lnode*    handle_quote(t_lnode *head, e_token t);
 char    *convert_token(e_token  token);
@@ -56,6 +60,7 @@ t_lnode *ignore_spaces_ret(t_lnode *head);
 
 t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end, t_lnode *highest);
 t_parsing_node * parse_tree(t_lnode *head);
+t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end);
 
 
 # endif

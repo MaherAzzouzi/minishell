@@ -44,12 +44,11 @@ t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end, t_lnode *p
     // We just have to return node.
     highest = return_highest_priv(start, end);
     if (get_token(highest) != EOL)
-    {
         node = alloc_node(get_token(highest));
-    }
     if (get_token(highest) != PIPE && get_token(highest) != AND && get_token(highest) != OR)
     {
-        node = alloc_node(CMD);
+        //node = alloc_node(CMD);
+        node = analyze_return_node(start, end);
         return node;
     }
     node->lchild = recursive_tree_creation(start, highest, highest);
@@ -61,6 +60,7 @@ t_parsing_node *parse_tree(t_lnode *head)
 {
     t_parsing_node * root = recursive_tree_creation(head, get_end(head), get_end(head));
     printf("--------------------\n");
-    inorder_show(root);
+    // inorder_show(root);
+    print2D(root);
     return NULL;
 }

@@ -6,20 +6,20 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 11:49:07 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/14 13:18:59 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/15 14:20:00 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // <
-t_lnode *find_red(t_lnode *head, e_token redr)
+t_lnode *find_red(t_lnode *head, t_lnode *end, e_token redr)
 {
     t_lnode *current;
 
     current = head;
 
-    while (current)
+    while (current != end)
     {
         if (get_token(current) == redr)
             return (current);
@@ -28,7 +28,7 @@ t_lnode *find_red(t_lnode *head, e_token redr)
     return (NULL);
 }
 
-t_lnode *get_command(t_lnode *head)
+t_lnode *get_command(t_lnode *head, t_lnode *end)
 {
     t_lnode *p;
     e_token last_token;
@@ -42,7 +42,7 @@ t_lnode *get_command(t_lnode *head)
         return head->next;
     else
     {
-        while (get_token(p) != EOL)
+        while (p != end)
         {
             if (get_token(p) == CMD && last_token == CMD)
                 return(p);
@@ -54,10 +54,10 @@ t_lnode *get_command(t_lnode *head)
     return (NULL);
 }
 
-int count_command_with_ore_args(t_lnode *cmd, t_lnode *head)
+int count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end)
 {
     int counter = 0;
-    while (get_token(head) != EOL)
+    while (head != end)
     {
         if (head == cmd)
         {
@@ -84,10 +84,10 @@ int count_command_with_ore_args(t_lnode *cmd, t_lnode *head)
     return (counter);
 }
 
-int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv)
+int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv, t_lnode *end)
 {
     int counter = 0;
-    while (get_token(head) != EOL)
+    while (head != end)
     {
         if (head == cmd)
         {
@@ -113,35 +113,35 @@ int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv)
     return (counter);
 }
 
-int count_redirections(t_lnode *head, e_token redr)
+int count_redirections(t_lnode *head, e_token redr, t_lnode *end)
 {
     t_lnode *current;
     int count;
 
     count = 0;
     current = head;
-    while (get_token(current) != EOL)
+    while (current != end)
     {
         if (get_token(current) == redr)
             count++;
         current = current->next;
     }
-    return count;
+    return (count);
 }
 
 
-char **alloc_redr_array(t_lnode *head, e_token redr)
+char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
 {
     int count;
     int i;
     char **redri_array;
 
-    count = count_redirections(head, redr);
+    count = count_redirections(head, redr, end);
     redri_array = (char **)malloc((count + 1) * sizeof(char *));
     i = 0;
     if (!redri_array)
         exit(0);
-    while (get_token(head) != EOL)
+    while (head != end)
     {
         if (get_token(head) == redr)
         {
@@ -158,27 +158,29 @@ char **alloc_redr_array(t_lnode *head, e_token redr)
     return redri_array;
 }
 
-t_parsing_node *parse_redirections(t_lnode *head)
+t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
 {
     t_parsing_node  *node;
     t_lnode         *cmd;
     int             count;
     
-    if (find_red(head, REDRI) == NULL && find_red(head, REDRO) == NULL)
+    if (find_red(head, end, REDRI) == NULL && find_red(head, end, REDRO) == NULL)
         return NULL;
     node = alloc_node(CMD);
-    cmd = get_command(head);
+    cmd = get_command(head, end);
     if (cmd)
     {
         node->cmd.cmd = get_cmd(cmd);
-        count  = count_command_with_ore_args(cmd, head);
+        count  = count_command_with_ore_args(cmd, head, end);
         node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 1));
         if (node->cmd.argv == NULL)
             exit(-1);
-        fill_command_with_ore_args(cmd, head, node->cmd.argv);
+        fill_command_with_ore_args(cmd, head, node->cmd.argv, end);
     }
-    node->reds.i_r_params = alloc_redr_array(head, REDRI);
-    node->reds.o_r_params = alloc_redr_array(head, REDRO);
+    node->reds.i_r_params = alloc_redr_array(head, REDRI, end);
+    node->reds.o_r_params = alloc_redr_array(head, REDRO, end);
+    node->reds.append_array = alloc_redr_array(head, APPND, end);
+    node->reds.herdoc_array = alloc_redr_array(head, DLMI, end);
     show_node(node);
     return node;
 }
