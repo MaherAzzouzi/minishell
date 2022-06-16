@@ -30,8 +30,6 @@ char    *enum_to_str(e_token   token)
         return ("append");
     else if (token == PIPE)
         return ("PIPE");
-    else if (token == DLR)
-        return("$");
     else if (token == CMD)
         return("cmd");
     else if (token == EOL)
@@ -42,5 +40,7 @@ char    *enum_to_str(e_token   token)
         return ("and");
     else if (token == OR)
         return ("or");
+    else if (token == DLR)
+        return ("dollar");
     return(NULL);
 }

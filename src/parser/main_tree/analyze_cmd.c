@@ -7,7 +7,7 @@ int cmd_count(t_lnode *head, t_lnode *end)
 
     current = head;
     i = 0;
-    while(current != end)
+    while(current != end->next)
     {
         if (current == end)
             return(i);
@@ -26,13 +26,16 @@ t_parsing_node *pack_in_node(t_lnode *head, t_lnode *end)
     int i;
 
     node = alloc_node(CMD);
+    head = ignore_spaces_ret(head);
     while (get_token(head) != SPACE && head != end)
     {
+        printf("%s\n", convert_token(get_token(end)));
         if (get_token(head) == CMD)
+        {
             node->cmd.cmd = ft_strjoin(node->cmd.cmd, get_cmd(head), 0);
+        }
         head = head->next;
     }
-
     if (head == end)
     {
         return (node);
@@ -63,10 +66,11 @@ t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end)
 {
     t_parsing_node *node;
 
+    node = NULL;
     node = parse_redirections(start, end);
     if (node == NULL)
+    {
         node = pack_in_node(start, end);
-    else
-        return(NULL);
+    }
     return(node);
 }

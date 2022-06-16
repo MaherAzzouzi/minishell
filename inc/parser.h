@@ -49,7 +49,8 @@ void print2D(t_parsing_node *root);
 void show_node(t_parsing_node *node);
 t_lnode*    handle_quote(t_lnode *head, e_token t);
 char    *convert_token(e_token  token);
-void join_quotes(t_lnode *head, e_token t);
+void join_quotes(t_lnode *head);
+void join_cmd_with_quotes(t_lnode **head);
 t_lnode* handle_single_quote(t_lnode	*head);
 t_lnode* handle_double_quote(t_lnode	*head);
 void clean_empty_quote(t_lnode **head, e_token t);
@@ -58,7 +59,8 @@ int check_pipe_syntax_errors(t_lnode* head);
 int	ft_check_siblings(t_lnode	*head, e_token dlm);
 t_lnode *ignore_spaces_ret(t_lnode *head);
 
-t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end, t_lnode *highest);
+
+t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end);
 t_parsing_node * parse_tree(t_lnode *head);
 t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end);
 

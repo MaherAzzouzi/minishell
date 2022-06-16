@@ -34,8 +34,6 @@ char    *convert_token(e_token  token)
         return (">>");
     else if (token == PIPE)
         return ("|");
-    else if (token == DLR)
-        return("$");
     else if (token == SPACE)
         return(" ");
     else if (token == AND)
@@ -46,6 +44,8 @@ char    *convert_token(e_token  token)
         return ("CMD");
     else if (token == EOL)
         return ("EOL");
+    else if (token == DLR)
+        return ("$");
     return(NULL);
 }
 
@@ -63,24 +63,32 @@ t_lnode*    handle_quote(t_lnode *head, e_token dlm)
     while (get_token(current) != dlm && get_token(current) != EOL)
     {
         if (get_token(current) == CMD)
+        {
             set_cmd(node, ft_strjoin(get_cmd(node), get_cmd(current), 2));
+            set_cmd(current, NULL);
+        }
         else
             set_cmd(node, ft_strjoin(get_cmd(node), convert_token(get_token(current)), 0));
-        p = current;
         current = current->next;
-        free(p);
     }
     if (get_token(current) == EOL)
     {
         printf("Can not found a %s ender!\n", convert_token(dlm));
+        free_lexer_node(node);
         return (t_lnode *)(-1);
+    }
+    p = sg->next;
+    while (p != current)
+    {
+        free_lexer_node(p);
+        p = p->next;
     }
     sg->next = node;
     node->next = current;
     return current->next;
 }
 
-void join_quotes(t_lnode *head, e_token dlm)
+void join_quotes(t_lnode *head)
 {
     t_lnode *p;
     t_lnode *current;
@@ -88,11 +96,10 @@ void join_quotes(t_lnode *head, e_token dlm)
     t_lnode *node;
     t_lnode *tm;
 
-    (void)dlm;
     current = head;
     while (current)
     {
-        if ((get_token(current) == SGLQT || get_token(current) == DBLQT) && get_token(current->next) == CMD)
+        if (((get_token(current) == SGLQT || get_token(current) == DBLQT) && get_token(current->next) == CMD))
         {
             node = ft_new_node_lex(CMD, "");
             p = current;
@@ -126,13 +133,42 @@ void join_quotes(t_lnode *head, e_token dlm)
 
 t_lnode *handle_single_quote(t_lnode	*head)
 {
-    //int ret;
-
-    //ret = ft_check_siblings(*head, SGLQT);
-    //if (ret == FAIL)
-    //    return ret;
     return handle_quote(head, SGLQT);
-	//join_quotes(*head, SGLQT);
-    //clean_empty_quote(head, SGLQT);
-    //return SUCCESS;
+}
+
+
+void join_cmd_with_quotes(t_lnode **head)
+{
+    t_lnode *current;
+    t_lnode *node;
+    t_lnode *prev;
+    t_lnode *tmp;
+
+    current = *head;
+    while (current)
+    {
+        if (current && current->next && current->next->next
+            && get_token(current) == CMD
+            && (get_token(current->next) == SGLQT || get_token(current->next) == DBLQT)
+            && get_token(current->next->next) == CMD)
+        {
+            node = ft_new_node_lex(CMD, get_cmd(current));
+            set_cmd(node, ft_strjoin(get_cmd(node), get_cmd(current->next->next), 2));
+            tmp = current->next->next;
+            if (current == *head)
+            {
+                *head = current->next;
+                (*head)->next = node;
+            }
+            else
+            {
+                prev->next = current->next;
+                prev->next->next = node;
+            }
+            node->next = tmp->next;
+            free(tmp);
+        }
+        prev = current;
+        current = current->next;
+    }
 }

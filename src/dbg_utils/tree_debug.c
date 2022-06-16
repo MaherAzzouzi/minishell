@@ -1,41 +1,38 @@
 #include "parser.h"
 
+
+void show_reds_node(char *name, char **p, char *cmd_name)
+{
+	int i;
+	
+	if (cmd_name)
+		printf("%s ", cmd_name);
+	if (p)
+	{
+		if (name)
+			printf("%s ", name);
+		i = 0;
+		printf("\t[");
+		while (p[i])
+		{
+			printf("%s ", p[i]);
+			i++;
+		}
+		printf("]\n");
+	}
+}
+
 void show_node(t_parsing_node *node)
 {
+	printf("------------------------------\n");
 	if (node->type == CMD)
 	{
-		int i;
-		//printf("ok\n");
-		printf("%s [", node->cmd.cmd);
-		i = 0;
-		while (node->cmd.argv && node->cmd.argv[i])
-			printf("%s, ", node->cmd.argv[i++]);
-		printf("]\n");
-		if (node->reds.i_r_params)
-		{	
-			printf("--> '<' <--");
-			i = 0;
-			printf("\n[\n");
-			while (node->reds.i_r_params[i])
-			{
-				printf("---->%s\n", node->reds.i_r_params[i]);
-				i++;
-			}
-			printf("]\n");
-		}
-		i = 0;
-		if (node->reds.o_r_params)
-		{	
-			printf("--> '>' <--");
-			i = 0;
-			printf("\n[\n");
-			while (node->reds.o_r_params[i])
-			{
-				printf("---->%s\n", node->reds.o_r_params[i]);
-				i++;
-			}
-			printf("]\n");
-		}
+		show_reds_node(NULL, node->cmd.argv, node->cmd.cmd);
+		show_reds_node("'>' ", node->reds.i_r_params, NULL);
+		show_reds_node("'<' ", node->reds.o_r_params, NULL);
+		show_reds_node("'>>'", node->reds.append_array, NULL);
+		show_reds_node("'<<'", node->reds.herdoc_array, NULL);
+		
 	}
 	else
 		printf("%s\n", enum_to_str(node->type));

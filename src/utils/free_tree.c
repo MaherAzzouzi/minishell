@@ -1,21 +1,33 @@
 #include "minishell.h"
 
-void free_node(t_parsing_node *node)
+void free_array_of_pointers(char **p)
 {
 	int i;
 
-	if (node->cmd.cmd)
-		free(node->cmd.cmd);
-	if (node->cmd.argv)
+	if (p)
 	{
 		i = 0;
-		while (node->cmd.argv[i])
+		while (p[i])
 		{
-			free(node->cmd.argv[i]);
+			free(p[i]);
 			i++;
 		}
-		free(node->cmd.argv);
+		
+		free(p);
 	}
+}
+
+void free_node(t_parsing_node *node)
+{
+	if (node->cmd.cmd)
+		free(node->cmd.cmd);
+
+	free_array_of_pointers(node->cmd.argv);
+	free_array_of_pointers(node->reds.append_array);
+	free_array_of_pointers(node->reds.herdoc_array);
+	free_array_of_pointers(node->reds.i_r_params);
+	free_array_of_pointers(node->reds.o_r_params);
+
 	free(node);
 }
 

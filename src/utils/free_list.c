@@ -28,12 +28,13 @@ void    free_list(t_lnode **head)
     t_lnode *tmp;
 
     current = *head;
-    if (*head == 0 || head == 0)
+    if (head == 0 || *head == 0)
         return ;
     while(current)
     {
         tmp = current;
-        free(tmp->type.cmd);
+        if (tmp->type.cmd)
+            free(tmp->type.cmd);
         current = current->next;
         free(tmp);
     }

@@ -1,1 +1,7 @@
--->function thats check on all checks and return faillure or success
+--> function thats check on all checks and return faillure or success
+
+--> fixing olabrahm problem
+--> 2 successive tokens is error
+--> single token is error 
+--> leaks
+--> PIPE AND OR (checking left and right)

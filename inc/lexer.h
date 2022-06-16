@@ -28,7 +28,6 @@ typedef enum {
 	DLMI,
 	APPND,
 	PIPE,
-	DLR,
 	CMD,
 	EOL,
 	SPACE,
@@ -36,6 +35,7 @@ typedef enum {
 	LPAR,
 	OR,
 	AND,
+	DLR,
 } e_token;
 
 typedef	struct s_type

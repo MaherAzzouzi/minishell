@@ -18,8 +18,7 @@ t_lnode *find_red(t_lnode *head, t_lnode *end, e_token redr)
     t_lnode *current;
 
     current = head;
-
-    while (current != end)
+    while (current != end && current != NULL)
     {
         if (get_token(current) == redr)
             return (current);
@@ -36,6 +35,7 @@ t_lnode *get_command(t_lnode *head, t_lnode *end)
     p = head;
     
     last_token = EOL;
+    head = ignore_spaces_ret(head);
     if (get_token(head) == CMD)
         return head;
     else if (get_token(head) == SGLQT || get_token(head) == DBLQT)
@@ -63,7 +63,9 @@ int count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end)
         {
             ;
         }
-        else if (get_token(head) == REDRI || get_token(head) == REDRO)
+        else if (get_token(head) == REDRI || get_token(head) == REDRO
+                || get_token(head) == DLMI || get_token(head) == APPND
+                )
         {
             // should check for errors here instead
             head = head->next;
@@ -80,7 +82,6 @@ int count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end)
             ++counter;
         head = head->next;
     }
-    printf("Counter of argv is %d\n", counter);
     return (counter);
 }
 
@@ -93,7 +94,8 @@ int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv, t_lnode
         {
             ;
         }
-        else if (get_token(head) == REDRI || get_token(head) == REDRO)
+        else if (get_token(head) == REDRI || get_token(head) == REDRO
+        || get_token(head) == DLMI || get_token(head) == APPND)
         {
             head = head->next;
             head = ignore_spaces_ret(head);
@@ -141,7 +143,7 @@ char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
     i = 0;
     if (!redri_array)
         exit(0);
-    while (head != end)
+    while (head != end && head != NULL)
     {
         if (get_token(head) == redr)
         {
@@ -150,7 +152,8 @@ char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
                 head = head->next;
             if (get_token(head) == SGLQT || get_token(head) == DBLQT)
                 head = head->next;
-            redri_array[i++] = ft_strdup(get_cmd(head));
+            if (get_token(head) != EOL)
+                redri_array[i++] = ft_strdup(get_cmd(head));
         }
         head = head->next;
     }
@@ -164,13 +167,17 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
     t_lnode         *cmd;
     int             count;
     
-    if (find_red(head, end, REDRI) == NULL && find_red(head, end, REDRO) == NULL)
+    if (find_red(head, end, REDRI) == NULL && find_red(head, end, REDRO) == NULL
+    && find_red(head, end, APPND) == NULL && find_red(head, end, DLMI) == NULL)
+    {
         return NULL;
+    }
     node = alloc_node(CMD);
     cmd = get_command(head, end);
     if (cmd)
     {
-        node->cmd.cmd = get_cmd(cmd);
+        free(node->cmd.cmd);
+        node->cmd.cmd = ft_strdup(get_cmd(cmd));
         count  = count_command_with_ore_args(cmd, head, end);
         node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 1));
         if (node->cmd.argv == NULL)
@@ -181,6 +188,5 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
     node->reds.o_r_params = alloc_redr_array(head, REDRO, end);
     node->reds.append_array = alloc_redr_array(head, APPND, end);
     node->reds.herdoc_array = alloc_redr_array(head, DLMI, end);
-    show_node(node);
     return node;
 }

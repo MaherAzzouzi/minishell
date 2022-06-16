@@ -41,13 +41,13 @@ void add_right(t_parsing_node *node, t_parsing_node *rnode)
 
 void ignore_spaces(t_lnode **head)
 {
-    //t_lnode *current;
+    t_lnode *current;
 
     while (get_token(*head) == SPACE)
     {
-        //current = *(head);
+        current = *(head);
         *head = (*head)->next;
-        //free(current);
+        free(current);
     }
 }
 
