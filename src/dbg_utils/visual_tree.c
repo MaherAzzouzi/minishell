@@ -14,12 +14,6 @@
 #define COUNT 10
 #include <minishell.h>
 
-
-
-
-
-
-
 void print2DUtil(t_parsing_node *root, int space)
 {
     // Base case

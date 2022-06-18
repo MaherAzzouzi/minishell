@@ -67,9 +67,9 @@ int core(int ac, char **av, char **envp)
 
 		head = ft_lexer(cmd);
 		ignore_spaces(&head);
-		if (order_quotes(&head) == FAIL)
+		if (order_quotes(&head) == FAIL || check_all(head) == FAIL)
 		{
-			printf("PARSE ERROR\n");
+			printf("Syntax Error!\n");
 			free_list(&head);
 			free(cmd);
 			continue;

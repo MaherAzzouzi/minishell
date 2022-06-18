@@ -36,6 +36,8 @@ typedef enum {
 	OR,
 	AND,
 	DLR,
+	LEFT_PAR,
+	RIGHT_PAR,
 } e_token;
 
 typedef	struct s_type

@@ -28,6 +28,9 @@ void free_node(t_parsing_node *node)
 	free_array_of_pointers(node->reds.i_r_params);
 	free_array_of_pointers(node->reds.o_r_params);
 
+	if (node->p.cmd)
+		free(node->p.cmd);
+
 	free(node);
 }
 

@@ -41,6 +41,10 @@ e_token lexer_get_type(char a, char b)
 		return (EOL);
 	else if (a == ' ')
 		return (SPACE);
+	else if (a == '(')
+		return (LEFT_PAR);
+	else if (a == ')')
+		return (RIGHT_PAR);
 	else
 		return (CMD);
 }

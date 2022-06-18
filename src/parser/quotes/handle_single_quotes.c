@@ -46,6 +46,10 @@ char    *convert_token(e_token  token)
         return ("EOL");
     else if (token == DLR)
         return ("$");
+    else if (token == LEFT_PAR)
+        return ("(");
+    else if (token == RIGHT_PAR)
+        return (")");
     return(NULL);
 }
 
@@ -73,7 +77,7 @@ t_lnode*    handle_quote(t_lnode *head, e_token dlm)
     }
     if (get_token(current) == EOL)
     {
-        printf("Can not found a %s ender!\n", convert_token(dlm));
+        printf("Can not find a %s ender!\n", convert_token(dlm));
         free_lexer_node(node);
         return (t_lnode *)(-1);
     }

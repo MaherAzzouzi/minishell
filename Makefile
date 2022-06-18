@@ -26,9 +26,10 @@ PARSERC=$(addprefix parser/, )
 PARSETREE=$(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
 PARSEPIPE=$(addprefix parser/pipe/, pipe.c)
 PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c)
-PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_pipes.c)
+PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_pipes.c check_all.c two_nearby_tokens.c)
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE))
+PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell

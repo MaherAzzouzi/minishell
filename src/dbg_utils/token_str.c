@@ -42,5 +42,9 @@ char    *enum_to_str(e_token   token)
         return ("or");
     else if (token == DLR)
         return ("dollar");
+    else if (token == LEFT_PAR)
+        return ("left paranthesis");
+    else if (token == RIGHT_PAR)
+        return ("right paranthesis");
     return(NULL);
 }

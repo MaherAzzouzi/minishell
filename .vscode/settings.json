@@ -18,6 +18,7 @@
     "ratio": "c",
     "tuple": "c",
     "utility": "c",
-    "__node_handle": "c"
+    "__node_handle": "c",
+    "minishell.h": "c"
   }
 }

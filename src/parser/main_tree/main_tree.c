@@ -25,27 +25,31 @@ t_lnode *return_highest_priv(t_lnode *start, t_lnode *end)
     t_lnode *current;
     t_lnode *p;
     int flag;
-
+    int count;
     
     p = get_end(start);
     flag = 0;
     current = start;
+    count = 0;
     while (current != end && get_token(current) != EOL)
     {
-        if (get_token(current) == PIPE && flag == 0)
+        if (get_token(current) == LEFT_PAR)
+            count++;
+        if (get_token(current) == PIPE && flag == 0 && count == 0)
         {
             p = current;
             flag = 1;
         }
-        else if (get_token(current) == AND || get_token(current) == OR)
+        else if ((get_token(current) == AND || get_token(current) == OR)
+                && count == 0)
         {
             p = current;
-            printf("%s returned!\n", convert_token(get_token(current)));
             return p;
         }
+        if (get_token(current) == RIGHT_PAR)
+            count--;
         current = current->next;
     }
-    printf("%s returned!\n", convert_token(get_token(current)));
     return (p);
 }
 
@@ -97,7 +101,6 @@ t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end)
 t_parsing_node *parse_tree(t_lnode *head)
 {
     t_parsing_node * root = recursive_tree_creation(head, get_end(head));
-    //printf("--------------------\n");
     inorder_show(root);
     print2D(root);
     free_tree(root);

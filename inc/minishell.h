@@ -20,6 +20,7 @@
 # include "utils.h"
 # include "libft.h"
 # include "redirections.h"
+# include "checks.h"
 
 # define INFINIT    666
 # define RED        "\033[0;31m"

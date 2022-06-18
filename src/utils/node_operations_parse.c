@@ -16,6 +16,9 @@ t_parsing_node *alloc_node(e_token type)
     p->reds.o_r_params = NULL;
     p->reds.append_array = NULL;
     p->reds.herdoc_array = NULL;
+
+    p->p.cmd = NULL;
+    p->p.parenthesised = 0;
     return (p);
 }
 

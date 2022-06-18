@@ -33,6 +33,10 @@ void show_node(t_parsing_node *node)
 		show_reds_node("'>>'", node->reds.append_array, NULL);
 		show_reds_node("'<<'", node->reds.herdoc_array, NULL);
 		
+		if (node->p.parenthesised)
+		{
+			printf("() -> %s\n", node->p.cmd);
+		}
 	}
 	else
 		printf("%s\n", enum_to_str(node->type));

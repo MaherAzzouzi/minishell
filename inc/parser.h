@@ -22,10 +22,16 @@ struct s_command
     char *cmd;
 };
 
+typedef struct s_parat
+{
+    int parenthesised;
+    char *cmd;
+}t_parat;
+
 struct s_parsing_node
 {
     e_token type;
-    int parathensesed;
+    t_parat p;
     struct s_command cmd;
     // In case we have redirections < and >.
     t_reds reds;
@@ -63,6 +69,9 @@ t_lnode *ignore_spaces_ret(t_lnode *head);
 t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end);
 t_parsing_node * parse_tree(t_lnode *head);
 t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end);
+
+// Parenthesis.
+t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end);
 
 
 # endif

@@ -1,7 +1,6 @@
 --> function thats check on all checks and return faillure or success
 
---> fixing olabrahm problem
---> 2 successive tokens is error
---> single token is error 
---> leaks
---> PIPE AND OR (checking left and right)
+--> 2 successive tokens is error : Done!
+--> single token is error : Done!
+--> tokens checking left and right 
+--> check parenthesis parse error
