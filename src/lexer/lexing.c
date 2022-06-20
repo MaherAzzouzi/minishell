@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
 e_token lexer_get_type(char a, char b)
 {
@@ -76,5 +76,14 @@ t_lnode	*	ft_lexer(char *str)
 
 	// This is called when str[i] is NULL.
 	ft_add_back_lex(&head, EOL, NULL);
+	return (head);
+}
+
+t_lnode *lex(char *cmd)
+{
+	t_lnode *head;
+
+	head = ft_lexer(cmd);
+	ignore_spaces(&head);
 	return (head);
 }

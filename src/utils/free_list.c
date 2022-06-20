@@ -40,3 +40,10 @@ void    free_list(t_lnode **head)
     }
     *head = 0;
 }
+
+void free_all(char *cmd, t_lnode *head, t_parsing_node *root)
+{
+    free_list(&head);
+	free_tree(root);
+	free(cmd);
+}

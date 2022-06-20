@@ -16,73 +16,25 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void log_(t_lnode *head)
-{
-	printf("--------------------\n");
-	ft_check_lists(head);
-	printf("--------------------\n");
-}
-
-
-int order_quotes(t_lnode **head)
-{
-	t_lnode * current;
-
-	current = *head;
-	while (current)
-	{
-		if (get_token(current) == SGLQT)
-		{
-			current = handle_single_quote(current);
-			if (current == (t_lnode *)-1)
-				return FAIL;
-
-		}
-		else if (get_token(current) == DBLQT)
-		{
-			current = handle_double_quote(current);
-			if (current == (t_lnode *)-1)
-				return FAIL;
-		} else
-			current = current->next;
-	}
-	// join_quotes(*head);
-	// join_cmd_with_quotes(head);
-	return SUCCESS;
-}
-
-int core(int ac, char **av, char **envp)
+int core()
 {
 	char *cmd;
 	t_lnode	*head;
-	(void)ac;
-	(void)av;
-	(void)envp;
+	t_parsing_node *root;
 
 	setbuf(stdout, NULL);
+
 	while (INFINIT)
 	{
 		cmd = readline("$PWNAI> ");
 		add_history(cmd);
-
-		head = ft_lexer(cmd);
-		ignore_spaces(&head);
-		if (order_quotes(&head) == FAIL || check_all(head) == FAIL)
-		{
-			printf("Syntax Error!\n");
-			free_list(&head);
-			free(cmd);
-			continue;
-		}
-		log_(head);
-		parse_tree(head);
-		// log_(head);
-		free_list(&head);
-		free(cmd);
+		head = lex(cmd);
+		root = parse(head);
+		free_all(cmd, head, root);
 	}
 }
 
-int	main(int ac, char **av, char **envp)
+int	main(void)
 {
-	core(ac, av, envp);
+	core();
 }

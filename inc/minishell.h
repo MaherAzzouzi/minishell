@@ -32,6 +32,7 @@
 # define NOT_FOUND  0
 
 void    free_list(t_lnode **head);
+int order_quotes(t_lnode **head);
 
 
 

@@ -22,14 +22,14 @@ DBGUTILS= $(addprefix dbg_utils/, token_str.c check_lists.c tree_debug.c visual_
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\
 		general_utils.c number_utils.c free_tree.c)
 LEXERC=$(addprefix lexer/, lexing.c)
-PARSERC=$(addprefix parser/, )
+PARSERC=$(addprefix parser/, parser.c)
 PARSETREE=$(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
 PARSEPIPE=$(addprefix parser/pipe/, pipe.c)
-PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c)
+PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c handle_quotes.c)
 PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c check_paranthesis.c) 
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP))
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP) $(PARSERC))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell
