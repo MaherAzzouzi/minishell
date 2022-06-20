@@ -61,7 +61,6 @@ t_lnode* handle_single_quote(t_lnode	*head);
 t_lnode* handle_double_quote(t_lnode	*head);
 void clean_empty_quote(t_lnode **head, e_token t);
 int    ft_check_quotes(t_lnode *head, e_token dlm);
-int check_pipe_syntax_errors(t_lnode* head);
 int	ft_check_siblings(t_lnode	*head, e_token dlm);
 t_lnode *ignore_spaces_ret(t_lnode *head);
 

@@ -16,5 +16,4 @@ First task a parser for : (cat file && grep "D") | wc -l
 
 
 Tomorrow:
-    -ls -la | grep b || >>f>F>f this is not handled now
-    echo "test"" is not handled
+    We need to fix this one `Hi f gfg  r && ffff >fffffrrrrrrrrrrrr`

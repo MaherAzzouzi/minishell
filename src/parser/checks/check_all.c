@@ -12,6 +12,12 @@ int check_all(t_lnode *head)
 {
     int ret;
 
+
     ret = two_successive_pars(head);
+    if (ret == FAIL)
+        return(FAIL);
+    ret = check_condt_syntax_errors(head);
+    if (ret == FAIL)
+        return(FAIL); 
     return ret;
 }

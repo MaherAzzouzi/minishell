@@ -52,7 +52,7 @@ int two_successive_pars(t_lnode *head)
 	return(SUCCESS);
 }
 
-int check_left_right(t_lnode *head)
-{
+// int check_left_right(t_lnode *head)
+// {
 
-}
+// }

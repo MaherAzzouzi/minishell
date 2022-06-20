@@ -66,6 +66,7 @@ t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end)
 {
     t_parsing_node *node;
 
+    node = NULL;
     node = parse_parenthesis(start, end);
     if (node == NULL)
     {
