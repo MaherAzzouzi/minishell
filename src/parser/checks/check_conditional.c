@@ -38,7 +38,11 @@ int check_left_right(t_lnode* condt, t_lnode *head)
     while ((get_token(head) != get_token(condt)) 
         && get_token(head) != EOL)
     {
-        if (get_token(head) == CMD)
+        if (get_token(head) == CMD
+         || get_token(head) == REDRI
+         || get_token(head) == REDRO
+         || get_token(head) == APPND
+         || get_token(head) == DLMI)
         {
             check_right = 1;
             break;

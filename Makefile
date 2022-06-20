@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/06/18 19:02:45 by snagat           ###   ########.fr        #
+#    Updated: 2022/06/20 15:37:32 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ PARSERC=$(addprefix parser/, )
 PARSETREE=$(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
 PARSEPIPE=$(addprefix parser/pipe/, pipe.c)
 PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c)
-PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c) 
+PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c check_paranthesis.c) 
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP))

@@ -71,6 +71,7 @@ t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end);
 
 // Parenthesis.
 t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end);
+int check_left_par(t_lnode *head);
 
 
 # endif

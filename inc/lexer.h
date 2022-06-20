@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 20:23:48 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/02 11:06:25 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/20 14:56:55 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@
 // cat flag.txt cat is a command but flag.txt is a string.
 
 typedef enum {
-	SGLQT,
-	DBLQT,
+	SGLQT, 
+	DBLQT, 
 	REDRI,
 	REDRO,
 	DLMI,
 	APPND,
 	PIPE,
-	CMD,
+	CMD, 
 	EOL,
-	SPACE,
+	SPACE, 
 	RPAR,
 	LPAR,
 	OR,
 	AND,
 	DLR,
-	LEFT_PAR,
-	RIGHT_PAR,
+	LEFT_PAR, 
+	RIGHT_PAR, 
 } e_token;
 
 typedef	struct s_type
