@@ -77,3 +77,13 @@ char *check_if_bin_exist(char *bin_name, char *path_env)
     free_charpp(paths);
     return NULL;
 }
+
+
+void init(t_exec_struct *exec_s, char *envp[])
+{
+    if (exec_s->path == NULL)
+        exec_s->path = get_env("PATH", envp);
+
+    if (exec_s->envp == NULL)
+        exec_s->envp = envp;
+}

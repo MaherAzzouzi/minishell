@@ -19,6 +19,7 @@
     "tuple": "c",
     "utility": "c",
     "__node_handle": "c",
-    "minishell.h": "c"
+    "minishell.h": "c",
+    "__config": "c"
   }
 }

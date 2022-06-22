@@ -101,7 +101,7 @@ t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end)
 t_parsing_node *parse_tree(t_lnode *head)
 {
     t_parsing_node * root = recursive_tree_creation(head, get_end(head));
-    inorder_show(root);
+    preorder_show(root);
     print2D(root);
     return root;
 }

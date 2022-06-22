@@ -50,3 +50,12 @@ void inorder_show(t_parsing_node *root)
 	show_node(root);
 	inorder_show(root->rchild);
 }
+
+void preorder_show(t_parsing_node *root)
+{
+	if (root == NULL)
+		return;
+	show_node(root);
+	inorder_show(root->lchild);
+	inorder_show(root->rchild);
+}
