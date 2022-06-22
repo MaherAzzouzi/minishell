@@ -29,7 +29,8 @@ PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_qu
 PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c check_paranthesis.c) 
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP) $(PARSERC))
+EXEC=$(addprefix exec/, exec.c)
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell

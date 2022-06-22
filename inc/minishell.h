@@ -15,12 +15,14 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include "lexer.h"
 # include "parser.h"
 # include "utils.h"
 # include "libft.h"
 # include "redirections.h"
 # include "checks.h"
+# include "exec.h"
 
 # define INFINIT    666
 # define RED        "\033[0;31m"

@@ -16,7 +16,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int core()
+int core(char *envp[])
 {
 	char *cmd;
 	t_lnode	*head;
@@ -30,11 +30,14 @@ int core()
 		add_history(cmd);
 		head = lex(cmd);
 		root = parse(head);
+		execute(root, envp);
 		free_all(cmd, head, root);
 	}
 }
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
-	core();
+	(void)argc;
+	(void)argv;
+	core(envp);
 }

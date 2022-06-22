@@ -36,15 +36,22 @@ t_parsing_node *pack_in_node(t_lnode *head, t_lnode *end)
         }
         head = head->next;
     }
+    
     if (head == end)
     {
+        node->cmd.argv = (char **)malloc(sizeof(char *) * 2);
+        node->cmd.argv[0] = ft_strdup(node->cmd.cmd);
+        node->cmd.argv[1] = NULL;
         return (node);
     }
+
     current = (head)->next;
-    node->cmd.argv = (char **)malloc(sizeof(char *) * (cmd_count(current, end) + 1));
+    node->cmd.argv = (char **)malloc(sizeof(char *) * (cmd_count(current, end) + 2));
     if (node->cmd.argv == NULL)
         exit(-1);
-    i = 0;
+    node->cmd.argv[0] = ft_strdup(node->cmd.cmd);
+    printf("It contains %s\n", node->cmd.argv[0]);
+    i = 1;
     while (current != end->next)
     {
         if (current == end)
