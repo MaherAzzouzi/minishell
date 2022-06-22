@@ -21,6 +21,9 @@ int core(char *envp[])
 	char *cmd;
 	t_lnode	*head;
 	t_parsing_node *root;
+	t_exec_struct exec_struct;
+
+	ft_memset(&exec_struct, 0, sizeof(exec_struct));
 
 	setbuf(stdout, NULL);
 
@@ -30,7 +33,7 @@ int core(char *envp[])
 		add_history(cmd);
 		head = lex(cmd);
 		root = parse(head);
-		execute(root, envp);
+		execute(root, &exec_struct, envp);
 		free_all(cmd, head, root);
 	}
 }

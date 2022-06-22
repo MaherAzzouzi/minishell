@@ -1,32 +1,23 @@
 #include "minishell.h"
 
-char **show_envp(char *envp[])
+void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 {
-    int i;
-
-    i = 0;
-    while (envp[i])
-    {
-        printf("%s\n", envp[i]);
-        i++;
-    }
-    return NULL;
-}
-
-void execute(t_parsing_node *root, char *envp[])
-{
-    //pid_t pid;
-
+    pid_t pid;
     (void)root;
 
-    show_envp(envp);
-    /*
+    if (exec_s->path == NULL)
+        exec_s->path = get_env("PATH", envp);
+    
     pid = fork();
     if (pid == 0)
     {
-        printf("Executing %s\n", root->cmd.cmd);
-        printf("ARGV %s\n", root->cmd.argv[0]);
-        execve(root->cmd.cmd, root->cmd.argv, envp);
+        char *p;
+
+        p = check_if_bin_exist(root->cmd.cmd, exec_s->path);
+        if (p == NULL)
+            show_errno();
+        printf("Executing %s\n", p);
+        execve(p, root->cmd.argv, envp);
         exit(0);
     }
     else
@@ -34,5 +25,5 @@ void execute(t_parsing_node *root, char *envp[])
         int status;
         waitpid(pid, &status, 0);
     }
-    */
+    
 }
