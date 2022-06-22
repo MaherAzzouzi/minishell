@@ -20,6 +20,7 @@ void execute(t_parsing_node *root, char *envp[])
     (void)root;
 
     show_envp(envp);
+    builtins(root);
     /*
     pid = fork();
     if (pid == 0)

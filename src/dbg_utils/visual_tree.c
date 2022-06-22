@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   visua_tree.c                                       :+:      :+:    :+:   */
+/*   visual_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:16:26 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/15 11:21:25 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/21 13:58:50 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void print2DUtil(t_parsing_node *root, int space)
     space += COUNT;
  
     // Process right child first
-    print2DUtil(root->rchild, space);
+    print2DUtil(root->lchild, space);
  
     // Print current node after space
     // count
+ 
     printf("\n");
     for (int i = COUNT; i < space; i++)
         printf(" ");
     printf("%s\n", enum_to_str(root->type));
- 
     // Process left child
-    print2DUtil(root->lchild, space);
+    print2DUtil(root->rchild, space);
 }
 
 

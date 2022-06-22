@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/13 15:20:40 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/22 15:40:33 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "redirections.h"
 # include "checks.h"
 # include "exec.h"
+# include "builtins.h"
 
 # define INFINIT    666
 # define RED        "\033[0;31m"
