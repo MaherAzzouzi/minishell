@@ -40,19 +40,19 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
         if (in != 0)
         {
             dup2(in, 0);
-           // ft_close(in, 0);
+           close(in);
         }
 
         if (out != 1)
         { 
             dup2(out, 1);
-           // ft_close(out, 0);
+           close(out);
         }
         p = return_cmd_full_path(root ,exec_s);
         if (p == NULL)
             show_errno();
-        ft_close(fd[0], 0);
-        ft_close(fd[1], 0);
+        close(fd[0]);
+        close(fd[1]);
         execve(p, root->cmd.argv, exec_s->envp);
         exit(0);
        
@@ -61,9 +61,12 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
     {
         //    waitpid(c, 0, 0);
         if (in != 0)
-            ft_close(in, 1);
+        {
+
+        }
+            close(in);
         if (out != 1)
-            ft_close(out, 1);
+            close(out);
         return (pid);
     }
 }
@@ -84,15 +87,16 @@ void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
     int pid1;
     int pid2;
     int fd2;
+    
 
     fd2 = dup(0);
     while (node->type == PIPE)
     {
         pipe(fd);
-        pid1 = spawn_process(0, fd[1], node->lchild, exec_s,fd);
+        pid1 = spawn_process(0, fd[1], node->lchild, exec_s, fd);
         if (node->rchild->type == CMD)
         {
-            pid2 = spawn_process(fd[0], 1, node->rchild, exec_s,fd);
+            pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd);
             // waitpid(pid1, &status, 0);
             waitpid(pid2, &status, 0);
         }
@@ -105,8 +109,7 @@ void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
     }
     dup2(fd2, 0);
     close(fd2);
-    while ( waitpid(-1, &status, 0) != -1 )
-       ;
+    while(waitpid(-1, &status, 0) != -1);
 }
 
 

@@ -6,19 +6,19 @@ void show_reds_node(char *name, char **p, char *cmd_name)
 	int i;
 	
 	if (cmd_name)
-		printf("%s ", cmd_name);
+		fprintf(stderr,"%s ", cmd_name);
 	if (p)
 	{
 		if (name)
-			printf("%s ", name);
+			fprintf(stderr,"%s ", name);
 		i = 0;
-		printf("\t[");
+		fprintf(stderr,"\t[");
 		while (p[i])
 		{
-			printf("%s ", p[i]);
+			fprintf(stderr,"%s ", p[i]);
 			i++;
 		}
-		printf("]\n");
+		fprintf(stderr,"]\n");
 	}
 }
 
@@ -35,11 +35,11 @@ void show_node(t_parsing_node *node)
 		
 		if (node->p.parenthesised)
 		{
-			printf("() -> %s\n", node->p.cmd);
+			fprintf(stderr ,"() -> %s\n", node->p.cmd);
 		}
 	}
 	else
-		printf("%s\n", enum_to_str(node->type));
+		fprintf(stderr, "%s\n", enum_to_str(node->type));
 }
 
 void inorder_show(t_parsing_node *root)

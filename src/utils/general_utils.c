@@ -9,7 +9,7 @@ int is_empty(char *p)
 
 void log_(t_lnode *head)
 {
-	printf("--------------------\n");
+	fprintf(stderr ,"--------------------\n");
 	ft_check_lists(head);
-	printf("--------------------\n");
+	fprintf(stderr,"--------------------\n");
 }
