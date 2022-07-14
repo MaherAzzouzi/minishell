@@ -20,6 +20,7 @@
 # include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 # include "lexer.h"
 # include "parser.h"

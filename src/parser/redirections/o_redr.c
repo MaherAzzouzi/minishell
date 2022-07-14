@@ -179,10 +179,11 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
         free(node->cmd.cmd);
         node->cmd.cmd = ft_strdup(get_cmd(cmd));
         count  = count_command_with_ore_args(cmd, head, end);
-        node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 1));
+        node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 2));
+        node->cmd.argv[0] = ft_strdup(get_cmd(cmd));
         if (node->cmd.argv == NULL)
             exit(-1);
-        fill_command_with_ore_args(cmd, head, node->cmd.argv, end);
+        fill_command_with_ore_args(cmd, head, &node->cmd.argv[1], end);
     }
     node->reds.i_r_params = alloc_redr_array(head, REDRI, end);
     node->reds.o_r_params = alloc_redr_array(head, REDRO, end);

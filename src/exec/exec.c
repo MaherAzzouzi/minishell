@@ -87,7 +87,7 @@ void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
 }
 
 
-void	exec_simple_cmd(t_parsing_node *root, t_exec_struct *exec_s)
+void	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 {
 	pid_t	pid;
 	char	*p;
@@ -95,14 +95,17 @@ void	exec_simple_cmd(t_parsing_node *root, t_exec_struct *exec_s)
 	pid = fork();
 	if (pid == 0)
 	{
-		p = return_cmd_full_path(root ,exec_s);
+		p = return_cmd_full_path(node, exec_s);
 		if (p == NULL)
 			show_errno();
-		execve(p, root->cmd.argv, exec_s->envp);
+		handle_output_redirect(node);
+		printf("%s\n", node->cmd.argv[0]);
+		execve(p, node->cmd.argv, exec_s->envp);
 		exit(0);
 	}
 	else
-		while(waitpid(-1, 0, 0) != -1);
+		wait(NULL);
+	
 }
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
@@ -110,9 +113,5 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 	init(exec_s, envp);
 	builtins(root);
 
-	//spawn_process(0, 1, root, exec_s);
-	if (root->type == CMD)
-		exec_simple_cmd(root, exec_s);
-	else
-		recursive_exec(root, exec_s);
+	exec_simple_cmd(root, exec_s);
 }

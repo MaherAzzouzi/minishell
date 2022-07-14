@@ -17,4 +17,10 @@ char **show_envp(char *envp[]);
 void init(t_exec_struct *exec_s, char *envp[]);
 int show_errno();
 
+int is_input_redirected(t_parsing_node *node);
+int is_output_redirected(t_parsing_node *node);
+int is_heredoc(t_parsing_node *node);
+int is_append(t_parsing_node *node);
+int handle_output_redirect(t_parsing_node *node);
+
 # endif
