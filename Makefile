@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 #FIXME: We should add checks on the headers too.
-CC=cc
+CC=gcc
 INC=inc/
 FLAGS=-Wall -Wextra -Werror
 MAIN=main.c
@@ -40,11 +40,11 @@ all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
 	@cd libft && make
-	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g -lreadline $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM)
+	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g  $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM) -lreadline
 	
 $(B_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -c $< -o $@
+	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -g -c $< -o $@
 
 clean:
 	rm -rf $(B_DIR)

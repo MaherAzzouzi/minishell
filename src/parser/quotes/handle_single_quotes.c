@@ -84,8 +84,9 @@ t_lnode*    handle_quote(t_lnode *head, e_token dlm)
     p = sg->next;
     while (p != current)
     {
+        t_lnode *tmp = p->next;
         free_lexer_node(p);
-        p = p->next;
+        p = tmp;
     }
     sg->next = node;
     node->next = current;
@@ -148,6 +149,7 @@ void join_cmd_with_quotes(t_lnode **head)
     t_lnode *prev;
     t_lnode *tmp;
 
+    prev = NULL;
     current = *head;
     while (current)
     {

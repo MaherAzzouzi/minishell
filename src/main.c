@@ -13,8 +13,8 @@
 #include "minishell.h"
 #include "lexer.h"
 #include "parser.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "/usr/include/readline/readline.h"
+#include "/usr/include/readline/history.h"
 
 int core(char *envp[])
 {
@@ -33,7 +33,8 @@ int core(char *envp[])
 		add_history(cmd);
 		head = lex(cmd);
 		root = parse(head);
-		execute(root, &exec_struct, envp);
+		if (root)
+			execute(root, &exec_struct, envp);
 		free_all(cmd, head, root);
 	}
 }

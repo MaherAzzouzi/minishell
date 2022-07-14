@@ -11,22 +11,6 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 	return p;
 }
 
-void ft_close(int fd, int p)
-{
-	if (p)
-		write(1, "PARENT :", 9);
-	else
-		write(1, "CHILD :", 8);
-	printf("%d\n", fd);
-	close(fd);
-}
-
-void ft_pipe(int *fd)
-{
-	pipe(fd);
-	printf("pipe : %d %d\n", fd[0], fd[1]);
-}
-
 pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s, int *fd)
 {
 	pid_t pid;
@@ -70,20 +54,10 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	}
 }
 
-void show_content(int fd)
-{
-	char p[4096];
-	int ret;
-
-	ret = read(fd, p, 4096);
-	write(1, p, ret);
-}
-
 void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
 {
 	static int fd[2];
 	int status;
-	int pid1;
 	int pid2;
 	int fd2;
 	
@@ -91,12 +65,13 @@ void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
 	fd2 = dup(0);
 	while (node->type == PIPE)
 	{
-		pipe(fd);
-		pid1 = spawn_process(0, fd[1], node->lchild, exec_s, fd);
+		int ret = pipe(fd);
+		if (ret < 0)
+			exit(-1);
+		spawn_process(0, fd[1], node->lchild, exec_s, fd);
 		if (node->rchild->type == CMD)
 		{
 			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd);
-			// waitpid(pid1, &status, 0);
 			waitpid(pid2, &status, 0);
 		}
 		else
@@ -114,7 +89,6 @@ void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
 
 void	exec_simple_cmd(t_parsing_node *root, t_exec_struct *exec_s)
 {
-	// int status;
 	pid_t	pid;
 	char	*p;
 
@@ -130,22 +104,6 @@ void	exec_simple_cmd(t_parsing_node *root, t_exec_struct *exec_s)
 	else
 		while(waitpid(-1, 0, 0) != -1);
 }
-
-
-// void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
-// {
-//     // int pid;
-//     // int status;
-//     int fd[2];
-
-//     if (node->type == PIPE)
-//     {
-//         ft_pipe(fd);
-//         spawn_process(0, fd[1], node->lchild, exec_s,fd);
-//         //waitpid(pid, &status, 0);
-//         spawn_process(fd[0], 1, node->rchild, exec_s,fd);
-//     }
-// }
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 {

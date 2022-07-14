@@ -82,6 +82,7 @@ t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end)
     t_parsing_node *node;
     t_lnode *highest;
 
+    node = NULL;
     // Problem fixed do not change anything!
     // We just have to return node.
     highest = return_highest_priv(start, end);
