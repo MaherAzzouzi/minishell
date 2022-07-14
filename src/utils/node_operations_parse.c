@@ -46,7 +46,7 @@ void ignore_spaces(t_lnode **head)
 {
     t_lnode *current;
 
-    while (get_token(*head) == SPACE)
+    while (get_token(*head) == SPC)
     {
         current = *(head);
         *head = (*head)->next;
@@ -56,7 +56,7 @@ void ignore_spaces(t_lnode **head)
 
 t_lnode *ignore_spaces_ret(t_lnode *head)
 {
-    while (get_token(head) == SPACE)
+    while (get_token(head) == SPC)
         head = head->next;
     return head;
 }

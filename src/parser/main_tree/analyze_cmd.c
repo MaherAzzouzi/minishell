@@ -27,7 +27,7 @@ t_parsing_node *pack_in_node(t_lnode *head, t_lnode *end)
 
     node = alloc_node(CMD);
     head = ignore_spaces_ret(head);
-    while (get_token(head) != SPACE && head != end)
+    while (get_token(head) != SPC && head != end)
     {
         printf("%s\n", convert_token(get_token(end)));
         if (get_token(head) == CMD)

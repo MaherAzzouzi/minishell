@@ -22,5 +22,6 @@ int is_output_redirected(t_parsing_node *node);
 int is_heredoc(t_parsing_node *node);
 int is_append(t_parsing_node *node);
 int handle_output_redirect(t_parsing_node *node);
+int handle_herdoc(t_parsing_node *node);
 
 # endif

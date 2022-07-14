@@ -34,7 +34,7 @@ char    *convert_token(e_token  token)
         return (">>");
     else if (token == PIPE)
         return ("|");
-    else if (token == SPACE)
+    else if (token == SPC)
         return(" ");
     else if (token == AND)
         return ("&&");

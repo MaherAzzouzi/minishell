@@ -46,7 +46,7 @@ t_lnode *get_command(t_lnode *head, t_lnode *end)
         {
             if (get_token(p) == CMD && last_token == CMD)
                 return(p);
-            if (get_token(p) != SPACE && get_token(p) != SGLQT && get_token(p) != DBLQT)
+            if (get_token(p) != SPC && get_token(p) != SGLQT && get_token(p) != DBLQT)
                 last_token = get_token(p);
             p = p->next;
         }
@@ -148,7 +148,7 @@ char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
         if (get_token(head) == redr)
         {
             head = head->next;
-            while (get_token(head) == SPACE)
+            while (get_token(head) == SPC)
                 head = head->next;
             if (get_token(head) == SGLQT || get_token(head) == DBLQT)
                 head = head->next;

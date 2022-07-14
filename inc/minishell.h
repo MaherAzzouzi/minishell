@@ -21,6 +21,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include "/usr/include/readline/readline.h"
+#include "/usr/include/readline/history.h"
+
 
 # include "lexer.h"
 # include "parser.h"

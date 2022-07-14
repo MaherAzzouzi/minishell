@@ -22,12 +22,12 @@ e_token lexer_get_type(char a, char b)
 		if (b == '>')
 			return (APPND);
 		else
-			return (REDRI);
+			return (REDRO);
 	else if (a == '<')
 		if (b == '<')
 			return (DLMI);
 		else
-			return (REDRO);
+			return (REDRI);
 	else if (a == '|')
 		if (b == '|')
 			return (OR);
@@ -40,7 +40,7 @@ e_token lexer_get_type(char a, char b)
 	else if (a == '\0')
 		return (EOL);
 	else if (a == ' ')
-		return (SPACE);
+		return (SPC);
 	else if (a == '(')
 		return (LEFT_PAR);
 	else if (a == ')')

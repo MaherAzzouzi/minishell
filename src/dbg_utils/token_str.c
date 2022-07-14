@@ -34,7 +34,7 @@ char    *enum_to_str(e_token   token)
         return("cmd");
     else if (token == EOL)
         return("end of line");
-    else if (token == SPACE)
+    else if (token == SPC)
         return("space");
     else if (token == AND)
         return ("and");

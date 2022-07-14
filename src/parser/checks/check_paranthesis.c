@@ -78,7 +78,7 @@ static t_lnode *return_lp(t_lnode *head)
 // 	t = PIPE;
 // 	while (head != lp)
 // 	{
-// 		if (get_token(head) != SPACE)
+// 		if (get_token(head) != SPC)
 // 			t = get_token(head);
 // 		head = head->next;
 // 	}
@@ -94,7 +94,7 @@ static int check_left(t_lnode *head, t_lnode *lp)
 	t = PIPE;
 	while (head != lp)
 	{
-		if (get_token(head) != SPACE)
+		if (get_token(head) != SPC)
 			t = get_token(head);
 		head = head->next;
 	}

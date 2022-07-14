@@ -28,8 +28,8 @@ void show_node(t_parsing_node *node)
 	if (node->type == CMD)
 	{
 		show_reds_node(NULL, node->cmd.argv, node->cmd.cmd);
-		show_reds_node("'>' ", node->reds.i_r_params, NULL);
-		show_reds_node("'<' ", node->reds.o_r_params, NULL);
+		show_reds_node("'>' ", node->reds.o_r_params, NULL);
+		show_reds_node("'<' ", node->reds.i_r_params, NULL);
 		show_reds_node("'>>'", node->reds.append_array, NULL);
 		show_reds_node("'<<'", node->reds.herdoc_array, NULL);
 		

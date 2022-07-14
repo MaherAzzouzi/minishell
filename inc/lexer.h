@@ -30,7 +30,7 @@ typedef enum {
 	PIPE,
 	CMD, 
 	EOL,
-	SPACE, 
+	SPC, 
 	RPAR,
 	LPAR,
 	OR,

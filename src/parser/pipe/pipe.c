@@ -55,7 +55,7 @@
 //     int i;
 
 //     node = alloc_node(CMD);
-//     while (get_token(head) != SPACE && get_token(head) != PIPE && get_token(head) != EOL)
+//     while (get_token(head) != SPC && get_token(head) != PIPE && get_token(head) != EOL)
 //     {
 //         if (get_token(head) != CMD)
 //             node->cmd.cmd = ft_strjoin(node->cmd.cmd, convert_token(get_token(head)), 0);

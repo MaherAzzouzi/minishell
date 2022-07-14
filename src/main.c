@@ -13,8 +13,6 @@
 #include "minishell.h"
 #include "lexer.h"
 #include "parser.h"
-#include "/usr/include/readline/readline.h"
-#include "/usr/include/readline/history.h"
 
 int core(char *envp[])
 {
