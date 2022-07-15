@@ -30,6 +30,10 @@ typedef struct s_parat
 
 struct s_parsing_node
 {
+    // In some cases we need to know is << or < is at the end of the command.
+    e_token last_in_token;
+    // In some cases we need to know is > or >> is at the end of the command.
+    e_token last_out_token;
     e_token type;
     t_parat p;
     struct s_command cmd;

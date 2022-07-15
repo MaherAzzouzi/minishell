@@ -99,8 +99,8 @@ void	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		if (p == NULL)
 			show_errno();
 		printf("Handle output redirect!\n");
-		handle_herdoc(node);
-		handle_output_redirect(node);
+		handle_herdoc_iredr(node);
+		handle_append_oredr(node);
 		execve(p, node->cmd.argv, exec_s->envp);
 		exit(0);
 	}

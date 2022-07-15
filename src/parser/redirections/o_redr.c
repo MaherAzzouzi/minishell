@@ -161,6 +161,38 @@ char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
     return redri_array;
 }
 
+e_token get_last_output_red(t_lnode *head)
+{
+    e_token t;
+
+    t = EOL;
+    while (get_token(head) != EOL)
+    {
+
+        if (get_token(head) == REDRO || get_token(head) == APPND)
+            t = get_token(head);
+        head = head->next;
+    }
+
+    return t;
+}
+
+e_token get_last_in_red(t_lnode *head)
+{
+    e_token t;
+
+    t = EOL;
+    while (get_token(head) != EOL)
+    {
+
+        if (get_token(head) == DLMI || get_token(head) == REDRI)
+            t = get_token(head);
+        head = head->next;
+    }
+
+    return t;
+}
+
 t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
 {
     t_parsing_node  *node;
@@ -189,5 +221,7 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
     node->reds.o_r_params = alloc_redr_array(head, REDRO, end);
     node->reds.append_array = alloc_redr_array(head, APPND, end);
     node->reds.herdoc_array = alloc_redr_array(head, DLMI, end);
+    node->last_out_token = get_last_output_red(head);
+    node->last_in_token = get_last_in_red(head);
     return node;
 }
