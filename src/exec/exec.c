@@ -36,6 +36,8 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 			show_errno();
 		close(fd[0]);
 		close(fd[1]);
+		handle_herdoc_iredr(root);
+		handle_append_oredr(root);
 		execve(p, root->cmd.argv, exec_s->envp);
 		exit(0);
 	   
@@ -54,7 +56,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	}
 }
 
-void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
+void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 {
 	static int fd[2];
 	int status;
@@ -87,10 +89,12 @@ void recursive_exec(t_parsing_node *node, t_exec_struct *exec_s)
 }
 
 
-void	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
+int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 {
 	pid_t	pid;
 	char	*p;
+	int		status;
+	int		es;
 
 	pid = fork();
 	if (pid == 0)
@@ -98,21 +102,34 @@ void	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		p = return_cmd_full_path(node, exec_s);
 		if (p == NULL)
 			show_errno();
-		printf("Handle output redirect!\n");
 		handle_herdoc_iredr(node);
 		handle_append_oredr(node);
 		execve(p, node->cmd.argv, exec_s->envp);
 		exit(0);
 	}
 	else
-		wait(NULL);
-	
+	{	
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			es = WEXITSTATUS(status);
+			exec_s->exit_status = es;
+			printf("Exit status is %d\n", es);
+			return es;
+		}
+	}
+	return 0;
 }
+
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 {
 	init(exec_s, envp);
 	builtins(root);
 
-	exec_simple_cmd(root, exec_s);
+	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
+	if (root->type == CMD)
+		exec_simple_cmd(root, exec_s);
+	else
+		pipe_chain_exec(root, exec_s);
 }

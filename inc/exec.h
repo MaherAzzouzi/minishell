@@ -3,9 +3,12 @@
 
 typedef struct s_exec_struct
 {
-    /*environment variables*/
+    /*Environment variables*/
     char *path;
     char **envp;
+
+    /*The last exit status will e stored here.*/
+    int exit_status;
 } t_exec_struct;
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[]);
