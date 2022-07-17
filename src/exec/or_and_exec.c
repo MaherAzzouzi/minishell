@@ -16,3 +16,5 @@ void exec_and_or(t_parsing_node *root, t_exec_struct *exec_s, char **envp)
 			execute(root->rchild, exec_s, envp);
 	}
 }
+
+
