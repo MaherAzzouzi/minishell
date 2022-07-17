@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 15 15:26:51 2022
+# Make data base, printed on Sun Jul 17 15:12:59 2022
 
 # Variables
 
@@ -15,9 +15,13 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
+GNOME_SHELL_SESSION_MODE = ubuntu
+# environment
+SSH_AGENT_LAUNCHER = gnome-keyring
+# environment
 SNAP_INSTANCE_KEY = 
 # environment
-I3SOCK = /run/user/1000/i3/ipc-socket.3052
+GJS_DEBUG_OUTPUT = stderr
 # makefile (from 'Makefile', line 22)
 UTILS = $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c general_utils.c number_utils.c free_tree.c)
 # makefile (from 'Makefile', line 35)
@@ -25,7 +29,7 @@ OFILES = $(addprefix build/, $(CFILES:.c=.o))
 # makefile (from 'Makefile', line 34)
 CFILES = $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
 # environment
-MANDATORY_PATH = /usr/share/gconf/i3.mandatory.path
+MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
 # environment
 LC_NAME = en_US.UTF-8
 # environment
@@ -65,7 +69,9 @@ PWD = /home/maher/Documents/42-cursus/minishell
 # makefile (from 'Makefile', line 24)
 LEXERC = $(addprefix lexer/, lexing.c)
 # environment
-XDG_DATA_DIRS = /usr/share/i3:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
 OLDPWD = /home/maher
 # automatic
@@ -96,14 +102,16 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 *D = $(patsubst %/,%,$(dir $*))
 # environment
 MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # default
 .SHELLFLAGS := -c
 # environment
-XDG_CONFIG_DIRS = /etc/xdg/xdg-i3:/etc/xdg
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-XDG_SESSION_DESKTOP = i3
+XDG_SESSION_DESKTOP = ubuntu
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST := Makefile
 # environment
@@ -111,13 +119,21 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 4401
+ZSH = /home/maher/.oh-my-zsh
+# environment
+VSCODE_PID = 15641
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 16)
 FLAGS = -Wall -Wextra -Werror
+# environment
+WORKSPACE = /home/maher/pwn/ubuntu/userland/NetworkManager/NetworkManager
+# environment
+SESSION_MANAGER = local/maher:@/tmp/.ICE-unix/12704,unix/maher:/tmp/.ICE-unix/12704
 # automatic
 *F = $(notdir $*)
 # environment
@@ -129,11 +145,13 @@ PARSERC = $(addprefix parser/, parser.c)
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # makefile (from 'Makefile', line 32)
-EXEC = $(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c)
+EXEC = $(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and_exec.c)
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # makefile
 SHELL = /bin/sh
 # default
@@ -141,7 +159,9 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-SHLVL = 1
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 0
 # environment
 MAKELEVEL := 0
 # default
@@ -167,6 +187,8 @@ SNAP = /snap/code/101
 # makefile (from 'Makefile', line 17)
 MAIN = main.c
 # environment
+INVOCATION_ID = d7fd1a51a5d14c788fa21f36b1a1be7b
+# environment
 SNAP_REVISION = 101
 # environment
 SNAP_REAL_HOME = /home/maher
@@ -181,31 +203,29 @@ LC_TELEPHONE = en_US.UTF-8
 # makefile (from 'Makefile', line 15)
 INC = inc/
 # environment
-XDG_SEAT = seat0
+XDG_CURRENT_DESKTOP = Unity
 # environment
-GTK_IM_MODULE = ibus
-# environment
-XDG_CURRENT_DESKTOP = i3
+LS_COLORS = 
 # automatic
 +F = $(notdir $+)
 # environment
-DESKTOP_SESSION = i3
+LESS = -R
 # environment
-ORIGINAL_XDG_CURRENT_DESKTOP = i3
+DESKTOP_SESSION = ubuntu
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
-CLUTTER_IM_MODULE = ibus
-# environment
 LOGNAME = maher
 # environment
-SNAP_ARCH = amd64
+GIO_LAUNCHED_DESKTOP_FILE = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-XDG_VTNR = 2
+SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 2583
+SYSTEMD_EXEC_PID = 12724
 # environment
 DISPLAY = :1
 # environment
@@ -213,7 +233,7 @@ USER = maher
 # environment
 GTK_MODULES = gail:atk-bridge
 # environment
-DEFAULTS_PATH = /usr/share/gconf/i3.default.path
+DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
 # default
 MAKE_VERSION := 4.3
 # environment
@@ -223,7 +243,15 @@ SNAP_DATA = /var/snap/code/101
 # environment
 SNAP_CONTEXT = GXX-uDWXebJpDVosdo9ekcAKlAD_X2NtPzx-iXN6RBXYkB-zFnYh
 # environment
+MANAGERPID = 5293
+# environment
 LC_MEASUREMENT = en_US.UTF-8
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 15597
+# environment
+PAGER = less
+# environment
+_ = /snap/code/101/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -234,6 +262,8 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 PARSEP = $(addprefix parser/parenthesis/, parse_parenthesis.c)
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/maher/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# environment
+JOURNAL_STREAM = 8:101441
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -255,8 +285,6 @@ SNAP_NAME = code
 # environment
 GSETTINGS_SCHEMA_DIR = /snap/code/101/usr/share/glib-2.0/schemas
 # environment
-XDG_SESSION_ID = 2
-# environment
 PAPERSIZE = letter
 # default
 .RECIPEPREFIX := 
@@ -268,6 +296,7 @@ SNAP_VERSION = b06ae3b2
 SUFFIXES := 
 # environment
 VSCODE_CLI = 1
+ 
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
@@ -280,19 +309,20 @@ CC = gcc
 PARSETREE = $(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
 # environment
 SNAP_USER_DATA = /home/maher/snap/code/101
+# environment
+XDG_MENU_PREFIX = gnome-
 # makefile (from 'Makefile', line 27)
 PARSEPIPE = $(addprefix parser/pipe/, pipe.c)
 # environment
-GDMSESSION = i3
+GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=139/1024=14%, Rehash=0, Collisions=10/194=5%
+# Load=154/1024=15%, Rehash=0, Collisions=11/209=5%
 
 # Pattern-specific Variable Values
- 
 
 # No pattern-specific variable values.
 
@@ -334,7 +364,7 @@ build/src/exec/builtins/check_builtins.o:
 # Not a target:
 src/lexer/lexing.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-15 00:07:06.714369949
+#  Last modified 2022-07-17 14:45:55.769817527
 #  File has been updated.
 #  Successfully updated.
 
@@ -356,7 +386,7 @@ build/src/exec/exec.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: build/src/lexer/lexing.o build/src/main.o build/src/utils/ft_new_node.o build/src/utils/node_operations_parse.o build/src/utils/get_token.o build/src/utils/get_cmd.o build/src/utils/free_list.o build/src/utils/general_utils.o build/src/utils/number_utils.o build/src/utils/free_tree.o build/src/dbg_utils/token_str.o build/src/dbg_utils/check_lists.o build/src/dbg_utils/tree_debug.o build/src/dbg_utils/visual_tree.o build/src/parser/checks/check_quotes.o build/src/parser/checks/check_all.o build/src/parser/checks/two_nearby_tokens.o build/src/parser/checks/check_conditional.o build/src/parser/checks/check_paranthesis.o build/src/parser/pipe/pipe.o build/src/parser/quotes/handle_single_quotes.o build/src/parser/quotes/handle_double_quotes.o build/src/parser/quotes/handle_quotes.o build/src/parser/redirections/o_redr.o build/src/parser/main_tree/main_tree.o build/src/parser/main_tree/analyze_cmd.o build/src/parser/parenthesis/parse_parenthesis.o build/src/parser/parser.o build/src/exec/exec.o build/src/exec/gen_utils.o build/src/exec/error_handling.o build/src/exec/reds_exec.o build/src/exec/builtins/check_builtins.o build/src/exec/builtins/echo.o
+minishell: build/src/lexer/lexing.o build/src/main.o build/src/utils/ft_new_node.o build/src/utils/node_operations_parse.o build/src/utils/get_token.o build/src/utils/get_cmd.o build/src/utils/free_list.o build/src/utils/general_utils.o build/src/utils/number_utils.o build/src/utils/free_tree.o build/src/dbg_utils/token_str.o build/src/dbg_utils/check_lists.o build/src/dbg_utils/tree_debug.o build/src/dbg_utils/visual_tree.o build/src/parser/checks/check_quotes.o build/src/parser/checks/check_all.o build/src/parser/checks/two_nearby_tokens.o build/src/parser/checks/check_conditional.o build/src/parser/checks/check_paranthesis.o build/src/parser/pipe/pipe.o build/src/parser/quotes/handle_single_quotes.o build/src/parser/quotes/handle_double_quotes.o build/src/parser/quotes/handle_quotes.o build/src/parser/redirections/o_redr.o build/src/parser/main_tree/main_tree.o build/src/parser/main_tree/analyze_cmd.o build/src/parser/parenthesis/parse_parenthesis.o build/src/parser/parser.o build/src/exec/exec.o build/src/exec/gen_utils.o build/src/exec/error_handling.o build/src/exec/reds_exec.o build/src/exec/or_and_exec.o build/src/exec/builtins/check_builtins.o build/src/exec/builtins/echo.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
@@ -377,7 +407,7 @@ build/src/exec/gen_utils.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-14 21:35:07.098497154
+#  Last modified 2022-07-17 15:01:38.404532932
 #  File has been updated.
 #  Successfully updated.
 
@@ -414,6 +444,12 @@ build/src/dbg_utils/visual_tree.o:
 #  File has not been updated.
 
 # Not a target:
+build/src/exec/or_and_exec.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 build/src/parser/checks/check_quotes.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -427,7 +463,6 @@ re: fclean all
 # Not a target:
 build/src/utils/number_utils.o:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -519,7 +554,6 @@ build/src/dbg_utils/tree_debug.o:
 
 # Not a target:
 build/src/parser/quotes/handle_double_quotes.o:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -567,6 +601,7 @@ build/src/parser/checks/check_paranthesis.o:
 #  File has not been updated.
 
 # Not a target:
+ 
 build/src/utils/ft_new_node.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -597,26 +632,25 @@ build/src/parser/checks/check_all.o:
 #  File has not been updated.
 
 # Not a target:
- 
 build/src/exec/reds_exec.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=43/1024=4%, Rehash=0, Collisions=0/96=0%
+# Load=44/1024=4%, Rehash=0, Collisions=0/98=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 58 / storage = 1360 B / avg = 23 B
-# current buf: size = 8162 B / used = 1360 B / count = 58 / avg = 23 B
+# strcache buffers: 1 (0) / strings = 59 / storage = 1389 B / avg = 23 B
+# current buf: size = 8162 B / used = 1389 B / count = 59 / avg = 23 B
 
-# strcache performance: lookups = 75 / hit rate = 22%
+# strcache performance: lookups = 76 / hit rate = 22%
 # hash-table stats:
-# Load=58/8192=1%, Rehash=0, Collisions=0/75=0%
-# Finished Make data base on Fri Jul 15 15:26:51 2022
+# Load=59/8192=1%, Rehash=0, Collisions=0/76=0%
+# Finished Make data base on Sun Jul 17 15:12:59 2022
 
  
