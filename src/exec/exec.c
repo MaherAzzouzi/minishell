@@ -112,7 +112,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 		{
-			es = WEXITSTATUS(status);
+			es = status;
 			exec_s->exit_status = es;
 			printf("Exit status is %d\n", es);
 			return es;
@@ -130,6 +130,10 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
 		exec_simple_cmd(root, exec_s);
-	else
+	else if (root->type == PIPE)
 		pipe_chain_exec(root, exec_s);
+	else if (root->type == OR)
+		or_chain_exec(root, exec_s);
+	else if (root->type == AND)
+		and_chain_exec(root, exec_s);
 }
