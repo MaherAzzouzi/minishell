@@ -29,5 +29,9 @@ int handle_herdoc(t_parsing_node *node);
 int handle_append(t_parsing_node *node);
 int handle_append_oredr(t_parsing_node *node);
 int handle_herdoc_iredr(t_parsing_node *node);
+void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[]);
+
+void exec_and_or(t_parsing_node *root, t_exec_struct *exec_s, char **envp);
+
 
 # endif

@@ -2,17 +2,17 @@
 #include "exec.h"
 
 
-void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
+void exec_and_or(t_parsing_node *root, t_exec_struct *exec_s, char **envp)
 {
-	static int fd[2];
-	int status;
-	int pid2;
-	int fd2;
-	
-
-	while (node->type == OR)
+	execute(root->lchild, exec_s, envp);
+	if (root->type == AND)
 	{
-        
-		node = node->rchild;
+		if (WIFEXITED(exec_s->exit_status) && WEXITSTATUS(exec_s->exit_status) == 0)
+			execute(root->rchild, exec_s, envp);
+	}
+	else
+	{
+		if (WIFEXITED(exec_s->exit_status) && WEXITSTATUS(exec_s->exit_status) != 0)
+			execute(root->rchild, exec_s, envp);
 	}
 }

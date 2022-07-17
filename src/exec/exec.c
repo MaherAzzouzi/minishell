@@ -75,6 +75,7 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 		{
 			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd);
 			waitpid(pid2, &status, 0);
+			exec_s->exit_status = status;
 		}
 		else
 		{
@@ -130,6 +131,8 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
 		exec_simple_cmd(root, exec_s);
-	else
+	else if (root->type == PIPE)
 		pipe_chain_exec(root, exec_s);
+	else if (root->type == AND || root->type == OR)
+		exec_and_or(root, exec_s, envp);
 }
