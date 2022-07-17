@@ -30,7 +30,7 @@ void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 {
 	if (node->type == AND)
-	{	
+	{
 		printf("ITS OF TYPE %s\n", convert_token(node->lchild->type));
 		// First we execute the command at the left.
         if (node->lchild->type == CMD)

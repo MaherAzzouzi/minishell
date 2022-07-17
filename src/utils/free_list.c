@@ -43,6 +43,7 @@ void    free_list(t_lnode **head)
 
 void free_all(char *cmd, t_lnode *head, t_parsing_node *root)
 {
+    (void)head;
     free_list(&head);
 	free_tree(root);
 	free(cmd);

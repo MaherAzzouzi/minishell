@@ -110,6 +110,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 			show_errno();
 		handle_herdoc_iredr(node);
 		handle_append_oredr(node);
+		//TODO: check if it's a directory or not.
 		execve(p, node->cmd.argv, exec_s->envp);
 		exit(0);
 	}
@@ -131,7 +132,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 {
 	init(exec_s, envp);
-	builtins(root);
+	//builtins(root);
 
 	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
