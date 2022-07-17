@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 15 15:26:51 2022
+# Make data base, printed on Sun Jul 17 14:44:25 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ LC_ALL = C
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-I3SOCK = /run/user/1000/i3/ipc-socket.3052
+I3SOCK = /run/user/1000/i3/ipc-socket.5759
 # makefile (from 'Makefile', line 22)
 UTILS = $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c general_utils.c number_utils.c free_tree.c)
 # makefile (from 'Makefile', line 35)
@@ -111,7 +111,7 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 4401
+VSCODE_PID = 6953
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -205,7 +205,7 @@ XDG_VTNR = 2
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 2583
+SYSTEMD_EXEC_PID = 5293
 # environment
 DISPLAY = :1
 # environment
@@ -255,7 +255,7 @@ SNAP_NAME = code
 # environment
 GSETTINGS_SCHEMA_DIR = /snap/code/101/usr/share/glib-2.0/schemas
 # environment
-XDG_SESSION_ID = 2
+XDG_SESSION_ID = 4
 # environment
 PAPERSIZE = letter
 # default
@@ -281,6 +281,7 @@ PARSETREE = $(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
 # environment
 SNAP_USER_DATA = /home/maher/snap/code/101
 # makefile (from 'Makefile', line 27)
+ 
 PARSEPIPE = $(addprefix parser/pipe/, pipe.c)
 # environment
 GDMSESSION = i3
@@ -292,7 +293,6 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 # Load=139/1024=14%, Rehash=0, Collisions=10/194=5%
 
 # Pattern-specific Variable Values
- 
 
 # No pattern-specific variable values.
 
@@ -427,7 +427,6 @@ re: fclean all
 # Not a target:
 build/src/utils/number_utils.o:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -519,7 +518,6 @@ build/src/dbg_utils/tree_debug.o:
 
 # Not a target:
 build/src/parser/quotes/handle_double_quotes.o:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -563,6 +561,7 @@ build/src/utils/free_list.o:
 # Not a target:
 build/src/parser/checks/check_paranthesis.o:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -597,7 +596,6 @@ build/src/parser/checks/check_all.o:
 #  File has not been updated.
 
 # Not a target:
- 
 build/src/exec/reds_exec.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -617,6 +615,6 @@ build/src/exec/reds_exec.o:
 # strcache performance: lookups = 75 / hit rate = 22%
 # hash-table stats:
 # Load=58/8192=1%, Rehash=0, Collisions=0/75=0%
-# Finished Make data base on Fri Jul 15 15:26:51 2022
+# Finished Make data base on Sun Jul 17 14:44:25 2022
 
  
