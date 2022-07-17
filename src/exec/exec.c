@@ -115,6 +115,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		{
 			es = WEXITSTATUS(status);
 			exec_s->exit_status = es;
+			exec_s->exit_status = status;
 			printf("Exit status is %d\n", es);
 			return es;
 		}

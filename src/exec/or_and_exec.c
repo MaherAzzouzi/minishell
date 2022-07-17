@@ -10,7 +10,7 @@ void exec_and_or(t_parsing_node *root, t_exec_struct *exec_s, char **envp)
 		if (WIFEXITED(exec_s->exit_status) && WEXITSTATUS(exec_s->exit_status) == 0)1
 			execute(root->rchild, exec_s, envp);
 	}
-	else
+	else if (root->type == OR)
 	{
 		if (WIFEXITED(exec_s->exit_status) && WEXITSTATUS(exec_s->exit_status) != 0)
 			execute(root->rchild, exec_s, envp);
