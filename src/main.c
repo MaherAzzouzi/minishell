@@ -24,13 +24,13 @@ int core(char *envp[])
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
 
 	setbuf(stdout, NULL);
-
+	init(&exec_struct, envp);
 	while (INFINIT)
 	{
 		cmd = readline("$PWNAI> ");
 		add_history(cmd);
 		head = lex(cmd);
-		root = parse(head);
+		root = parse(&head, &exec_struct);
 		if (root)
 			execute(root, &exec_struct, envp);
 		free_all(cmd, head, root);

@@ -48,6 +48,9 @@ mkdir -p build/src/parser/quotes/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/quotes/handle_quotes.c -o build/src/parser/quotes/handle_quotes.o
 mkdir -p build/src/parser/redirections/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/redirections/o_redr.c -o build/src/parser/redirections/o_redr.o
+ 
+mkdir -p build/src/parser/env_var_expansion/
+gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/env_var_expansion/expand.c -o build/src/parser/env_var_expansion/expand.o
 mkdir -p build/src/parser/main_tree/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/main_tree/main_tree.c -o build/src/parser/main_tree/main_tree.o
 mkdir -p build/src/parser/main_tree/
@@ -71,6 +74,10 @@ gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/builtins/check_builtins.c -o b
 mkdir -p build/src/exec/builtins/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/builtins/echo.c -o build/src/exec/builtins/echo.o
 cd libft && make
+<<<<<<< HEAD
 gcc -Wall -Wextra -Werror   -g  build/src/lexer/lexing.o build/src/main.o build/src/utils/ft_new_node.o build/src/utils/node_operations_parse.o build/src/utils/get_token.o build/src/utils/get_cmd.o build/src/utils/free_list.o build/src/utils/general_utils.o build/src/utils/number_utils.o build/src/utils/free_tree.o build/src/dbg_utils/token_str.o build/src/dbg_utils/check_lists.o build/src/dbg_utils/tree_debug.o build/src/dbg_utils/visual_tree.o build/src/parser/checks/check_quotes.o build/src/parser/checks/check_all.o build/src/parser/checks/two_nearby_tokens.o build/src/parser/checks/check_conditional.o build/src/parser/checks/check_paranthesis.o build/src/parser/pipe/pipe.o build/src/parser/quotes/handle_single_quotes.o build/src/parser/quotes/handle_double_quotes.o build/src/parser/quotes/handle_quotes.o build/src/parser/redirections/o_redr.o build/src/parser/main_tree/main_tree.o build/src/parser/main_tree/analyze_cmd.o build/src/parser/parenthesis/parse_parenthesis.o build/src/parser/parser.o build/src/exec/exec.o build/src/exec/gen_utils.o build/src/exec/error_handling.o build/src/exec/reds_exec.o build/src/exec/or_and_exec.o build/src/exec/builtins/check_builtins.o build/src/exec/builtins/echo.o libft/libft.a -I inc/ -o minishell -lreadline
+=======
+gcc -Wall -Wextra -Werror   -g  build/src/lexer/lexing.o build/src/main.o build/src/utils/ft_new_node.o build/src/utils/node_operations_parse.o build/src/utils/get_token.o build/src/utils/get_cmd.o build/src/utils/free_list.o build/src/utils/general_utils.o build/src/utils/number_utils.o build/src/utils/free_tree.o build/src/dbg_utils/token_str.o build/src/dbg_utils/check_lists.o build/src/dbg_utils/tree_debug.o build/src/dbg_utils/visual_tree.o build/src/parser/checks/check_quotes.o build/src/parser/checks/check_all.o build/src/parser/checks/two_nearby_tokens.o build/src/parser/checks/check_conditional.o build/src/parser/checks/check_paranthesis.o build/src/parser/pipe/pipe.o build/src/parser/quotes/handle_single_quotes.o build/src/parser/quotes/handle_double_quotes.o build/src/parser/quotes/handle_quotes.o build/src/parser/redirections/o_redr.o build/src/parser/env_var_expansion/expand.o build/src/parser/main_tree/main_tree.o build/src/parser/main_tree/analyze_cmd.o build/src/parser/parenthesis/parse_parenthesis.o build/src/parser/parser.o build/src/exec/exec.o build/src/exec/gen_utils.o build/src/exec/error_handling.o build/src/exec/reds_exec.o build/src/exec/or_and_exec.o build/src/exec/builtins/check_builtins.o build/src/exec/builtins/echo.o libft/libft.a -I inc/ -o minishell -lreadline
+>>>>>>> maher
 make: Leaving directory '/home/maher/Documents/42-cursus/minishell'
  

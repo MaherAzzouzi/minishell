@@ -3,8 +3,17 @@
 
 # include "lexer.h"
 
-
 // Struct for both redirections < and >
+
+typedef struct s_exec_struct
+{
+    /*Environment variables*/
+    char *path;
+    char **envp;
+
+    /*The last exit status will e stored here.*/
+    int exit_status;
+} t_exec_struct;
 
 struct s_redirections
 {
@@ -77,7 +86,8 @@ t_parsing_node *analyze_return_node(t_lnode *start, t_lnode *end);
 t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end);
 int check_left_par(t_lnode *head);
 
-t_parsing_node *parse(t_lnode *head);
+void expand_env_variables(t_lnode **head, t_exec_struct* exec_s);
+t_parsing_node *parse(t_lnode **head, t_exec_struct* s);
 
 
 # endif
