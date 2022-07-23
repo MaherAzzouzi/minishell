@@ -76,15 +76,11 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 			printf("HERE IM PIPE\n");
 			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd);
 			waitpid(pid2, &status, 0);
-<<<<<<< HEAD
-			exec_s->exit_status = status;
-=======
 			if (WIFEXITED(status))
 			{
 				exec_s->exit_status = status;
 				printf("Exit status is %d\n", WEXITSTATUS(status));
 			}
->>>>>>> maher
 		}
 		else
 		{
@@ -125,12 +121,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		{
 			es = status;
 			exec_s->exit_status = es;
-<<<<<<< HEAD
-			exec_s->exit_status = status;
-			printf("Exit status is %d\n", es);
-=======
 			printf("Exit status is %d\n", WEXITSTATUS(es));
->>>>>>> maher
 			return es;
 		}
 	}
@@ -141,17 +132,13 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 {
 	init(exec_s, envp);
-	//builtins(root);
+	builtins(root, exec_s);
 
 	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
 		exec_simple_cmd(root, exec_s);
 	else if (root->type == PIPE)
 		pipe_chain_exec(root, exec_s);
-<<<<<<< HEAD
-	else if (root->type == AND || root->type == OR)
-		exec_and_or(root, exec_s, envp);
-=======
 	else if (root->type == OR)
 		or_chain_exec(root, exec_s);
 	else if (root->type == AND)
@@ -159,5 +146,4 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 		printf("Executing AND\n");
 		and_chain_exec(root, exec_s);
 	}
->>>>>>> maher
 }
