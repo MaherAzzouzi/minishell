@@ -74,8 +74,8 @@ int count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end)
                 head = head->next;
             if (get_token(head) != CMD)
             {
-                printf("type %s\n", convert_token(get_token(head)));
-                printf("[count_command_with_ore_args] Parse error!\n");
+                //printf("type %s\n", convert_token(get_token(head)));
+                //printf("[count_command_with_ore_args] Parse error!\n");
                 exit(0);
             }
         } else if (get_token(head) == CMD)
@@ -103,8 +103,8 @@ int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv, t_lnode
                 head = head->next;
             if (get_token(head) != CMD)
             {
-                printf("type %s\n", convert_token(get_token(head)));
-                printf("[count_command_with_ore_args] Parse error!\n");
+                //printf("type %s\n", convert_token(get_token(head)));
+                //printf("[count_command_with_ore_args] Parse error!\n");
                 exit(0);
             }
         } else if (get_token(head) == CMD)

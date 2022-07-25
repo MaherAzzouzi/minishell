@@ -39,7 +39,7 @@ int	ft_check_siblings(t_lnode	*head, e_token dlm)
 		}
 		current = current->next;
 	}
-	printf("b is  %d\n", b);
+	//printf("b is  %d\n", b);
 	if (b == 0)
 		return(SUCCESS);
 	else
@@ -57,10 +57,11 @@ void	ft_check_lists(t_lnode  *head)
 		exit(1);
 	while (current)
 	{
-		if (get_token(current) == CMD)
-			printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
-		else
-			printf("[token = %s]\n", enum_to_str(current->type.token));
+		// if and else should bot be uncommented for logs!
+		// if (get_token(current) == CMD)
+			//printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
+		// else
+			//printf("[token = %s]\n", enum_to_str(current->type.token));
 		current = current->next;
 	}
 }

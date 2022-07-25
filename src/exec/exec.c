@@ -14,32 +14,39 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s, int *fd)
 {
 	pid_t pid;
+	char *p;
 
-	printf("Executing %s\n", root->cmd.cmd);
+	//printf("Executing %s\n", root->cmd.cmd);
 	pid = fork();
 	if (pid == 0)
 	{
-		char *p;
-
 		if (in != 0)
 		{
 			dup2(in, 0);
-		   close(in);
+			close(in);
 		}
 		if (out != 1)
 		{ 
 			dup2(out, 1);
-		   close(out);
+			close(out);
 		}
-		p = return_cmd_full_path(root ,exec_s);
-		if (p == NULL)
-			show_errno();
 		close(fd[0]);
 		close(fd[1]);
-		handle_herdoc_iredr(root);
-		handle_append_oredr(root);
-		execve(p, root->cmd.argv, exec_s->envp);
-		exit(0);
+		if (root->p.parenthesised == 0)
+		{
+			p = return_cmd_full_path(root ,exec_s);
+			if (p == NULL)
+				show_errno();
+			handle_herdoc_iredr(root);
+			handle_append_oredr(root);
+			execve(p, root->cmd.argv, exec_s->envp);
+			exit(0);
+		}
+		else
+		{
+			core(ft_strdup(root->p.cmd), exec_s->envp, exec_s);
+			exit(0);
+		}
 	}
 	else
 	{
@@ -66,20 +73,20 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 	fd2 = dup(0);
 	while (node->type == PIPE)
 	{
-		printf("HERE1\n");
+		//printf("HERE1\n");
 		int ret = pipe(fd);
 		if (ret < 0)
 			exit(-1);
 		spawn_process(0, fd[1], node->lchild, exec_s, fd);
 		if (node->rchild->type == CMD)
 		{
-			printf("HERE IM PIPE\n");
+			//printf("HERE IM PIPE\n");
 			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd);
 			waitpid(pid2, &status, 0);
 			if (WIFEXITED(status))
 			{
 				exec_s->exit_status = status;
-				printf("Exit status is %d\n", WEXITSTATUS(status));
+				//printf("Exit status is %d\n", WEXITSTATUS(status));
 			}
 		}
 		else
@@ -105,14 +112,23 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 	pid = fork();
 	if (pid == 0)
 	{
-		p = return_cmd_full_path(node, exec_s);
-		if (p == NULL)
-			show_errno();
-		handle_herdoc_iredr(node);
-		handle_append_oredr(node);
-		//TODO: check if it's a directory or not.
-		execve(p, node->cmd.argv, exec_s->envp);
-		exit(0);
+		if (node->p.parenthesised == 0)
+		{
+			p = return_cmd_full_path(node, exec_s);
+			if (p == NULL)
+				show_errno();
+			handle_herdoc_iredr(node);
+			handle_append_oredr(node);
+			//TODO: check if it's a directory or not.
+			execve(p, node->cmd.argv, exec_s->envp);
+			exit(0);
+		}
+		else
+		{
+			//printf("HANDLE PARANTHESIS!\n");
+			core(ft_strdup(node->p.cmd), exec_s->envp, exec_s);
+			//exit(0);
+		}
 	}
 	else
 	{	
@@ -121,7 +137,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		{
 			es = status;
 			exec_s->exit_status = es;
-			printf("Exit status is %d\n", WEXITSTATUS(es));
+			//printf("Exit status is %d\n", WEXITSTATUS(es));
 			return es;
 		}
 	}
@@ -134,7 +150,7 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 	init(exec_s, envp);
 	//builtins(root);
 
-	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
+	////printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
 		exec_simple_cmd(root, exec_s);
 	else if (root->type == PIPE)
@@ -143,7 +159,7 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 		or_chain_exec(root, exec_s);
 	else if (root->type == AND)
 	{
-		printf("Executing AND\n");
+		//printf("Executing AND\n");
 		and_chain_exec(root, exec_s);
 	}
 }

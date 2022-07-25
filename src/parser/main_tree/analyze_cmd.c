@@ -29,7 +29,7 @@ t_parsing_node *pack_in_node(t_lnode *head, t_lnode *end)
     head = ignore_spaces_ret(head);
     while (get_token(head) != SPC && head != end)
     {
-        printf("%s\n", convert_token(get_token(end)));
+        //printf("%s\n", convert_token(get_token(end)));
         if (get_token(head) == CMD)
         {
             node->cmd.cmd = ft_strjoin(node->cmd.cmd, get_cmd(head), 0);
@@ -50,7 +50,7 @@ t_parsing_node *pack_in_node(t_lnode *head, t_lnode *end)
     if (node->cmd.argv == NULL)
         exit(-1);
     node->cmd.argv[0] = ft_strdup(node->cmd.cmd);
-    printf("It contains %s\n", node->cmd.argv[0]);
+    //printf("It contains %s\n", node->cmd.argv[0]);
     i = 1;
     while (current != end->next)
     {

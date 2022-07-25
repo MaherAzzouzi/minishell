@@ -37,7 +37,7 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 
 	if (order_quotes(head) == FAIL || check_all(*head) == FAIL)
 	{
-		printf("Syntax Error!\n");
+		//printf("Syntax Error!\n");
 		return (NULL);
 	}
 	clean_empty_quote(head, SGLQT);

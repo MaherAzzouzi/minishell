@@ -7,7 +7,7 @@ char **show_envp(char *envp[])
     i = 0;
     while (envp[i])
     {
-        printf("%s\n", envp[i]);
+        //printf("%s\n", envp[i]);
         i++;
     }
     return NULL;

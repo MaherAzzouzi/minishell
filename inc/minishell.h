@@ -46,6 +46,7 @@
 void    free_list(t_lnode **head);
 int order_quotes(t_lnode **head);
 void fix_after_expansion(t_lnode *head);
+int core(char *cmd, char *envp[], t_exec_struct *exec_struct);
 
 
 

@@ -29,10 +29,10 @@ void print2DUtil(t_parsing_node *root, int space)
     // Print current node after space
     // count
  
-    printf("\n");
+    //printf("\n");
     for (int i = COUNT; i < space; i++)
-        printf(" ");
-    printf("%s\n", enum_to_str(root->type));
+        //printf(" ");
+    //printf("%s\n", enum_to_str(root->type));
     // Process left child
     print2DUtil(root->rchild, space);
 }

@@ -14,7 +14,7 @@ t_parsing_node *parse_output_redirection(t_lnode *head)
         node->reds.o_r_param = ft_strdup(get_cmd(head));
     else
     {
-        printf("Parsing < failed!\n");
+        //printf("Parsing < failed!\n");
         exit('<');
     }
     

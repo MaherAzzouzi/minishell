@@ -38,7 +38,7 @@ int handle_output_redirect(t_parsing_node *node)
     if (!is_output_redirected(node))
         return (-1);
     
-    printf("REDOUTPUT!\n");
+    //printf("REDOUTPUT!\n");
 
     i = 0;
     while (node->reds.o_r_params[i] && node->reds.o_r_params[i + 1] != NULL)
@@ -46,17 +46,17 @@ int handle_output_redirect(t_parsing_node *node)
         fd = open(node->reds.o_r_params[i], O_CREAT , 0664);
         if (fd < 0)
         {
-            printf("Error creating file %s\n", node->reds.o_r_params[i]);
+            //printf("Error creating file %s\n", node->reds.o_r_params[i]);
             exit(-1);
         }
         i++;
     }
     // The actual file we want to redirect the output to.
     fd = open(node->reds.o_r_params[i], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-    printf("redirect to %s\n", node->reds.o_r_params[i]);
+    //printf("redirect to %s\n", node->reds.o_r_params[i]);
     if (fd < 0)
     {
-        printf("Error creating file %s\n", node->reds.o_r_params[i]);
+        //printf("Error creating file %s\n", node->reds.o_r_params[i]);
         exit(-1);
     }
     return (fd);
@@ -79,16 +79,16 @@ int handle_append(t_parsing_node *node)
         fd = open(node->reds.append_array[i], O_CREAT , 0664);
         if (fd < 0)
         {
-            printf("Error creating file %s\n", node->reds.append_array[i]);
+            //printf("Error creating file %s\n", node->reds.append_array[i]);
             exit(-1);
         }
         i++;
     }
     fd = open(node->reds.append_array[i], O_CREAT | O_WRONLY | O_APPEND, 0664);
-    printf("redirect to %s\n", node->reds.append_array[i]);
+    //printf("redirect to %s\n", node->reds.append_array[i]);
     if (fd < 0)
     {
-        printf("Error creating file %s\n", node->reds.append_array[i]);
+        //printf("Error creating file %s\n", node->reds.append_array[i]);
         exit(-1);
     }
     return (fd);
@@ -170,7 +170,7 @@ int handle_input_redirect(t_parsing_node *node)
         fd = open(node->reds.i_r_params[i], O_CREAT , 0664);
         if (fd < 0)
         {
-            printf("Error creating file %s\n", node->reds.i_r_params[i]);
+            //printf("Error creating file %s\n", node->reds.i_r_params[i]);
             exit(-1);
         }
         i++;
@@ -179,10 +179,10 @@ int handle_input_redirect(t_parsing_node *node)
     if (access(node->reds.i_r_params[i], R_OK) != 0)
         show_errno();
     fd = open(node->reds.i_r_params[i], O_RDONLY, 0664);
-    printf("redirect to %s\n", node->reds.i_r_params[i]);
+    //printf("redirect to %s\n", node->reds.i_r_params[i]);
     if (fd < 0)
     {
-        printf("Error creating file %s\n", node->reds.o_r_params[i]);
+        //printf("Error creating file %s\n", node->reds.o_r_params[i]);
         exit(-1);
     }
     return (fd);
