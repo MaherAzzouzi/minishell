@@ -20,6 +20,7 @@ mkdir -p build/src/utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/utils/number_utils.c -o build/src/utils/number_utils.o
 mkdir -p build/src/utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/utils/free_tree.c -o build/src/utils/free_tree.o
+ 
 mkdir -p build/src/dbg_utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/dbg_utils/token_str.c -o build/src/dbg_utils/token_str.o
 mkdir -p build/src/dbg_utils/
@@ -38,19 +39,17 @@ mkdir -p build/src/parser/checks/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/checks/check_conditional.c -o build/src/parser/checks/check_conditional.o
 mkdir -p build/src/parser/checks/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/checks/check_paranthesis.c -o build/src/parser/checks/check_paranthesis.o
- 
 mkdir -p build/src/parser/pipe/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/pipe/pipe.c -o build/src/parser/pipe/pipe.o
- 
 mkdir -p build/src/parser/quotes/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/quotes/handle_single_quotes.c -o build/src/parser/quotes/handle_single_quotes.o
 mkdir -p build/src/parser/quotes/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/quotes/handle_double_quotes.c -o build/src/parser/quotes/handle_double_quotes.o
 mkdir -p build/src/parser/quotes/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/quotes/handle_quotes.c -o build/src/parser/quotes/handle_quotes.o
+ 
 mkdir -p build/src/parser/redirections/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/redirections/o_redr.c -o build/src/parser/redirections/o_redr.o
- 
 mkdir -p build/src/parser/env_var_expansion/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/env_var_expansion/expand.c -o build/src/parser/env_var_expansion/expand.o
 mkdir -p build/src/parser/main_tree/
@@ -70,6 +69,7 @@ gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/error_handling.c -o build/src/
 mkdir -p build/src/exec/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/reds_exec.c -o build/src/exec/reds_exec.o
 mkdir -p build/src/exec/
+ 
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/or_and_exec.c -o build/src/exec/or_and_exec.o
 mkdir -p build/src/exec/builtins/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/builtins/check_builtins.c -o build/src/exec/builtins/check_builtins.o

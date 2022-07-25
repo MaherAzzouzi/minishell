@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 17 17:53:22 2022
+# Make data base, printed on Mon Jul 25 12:01:32 2022
 
 # Variables
 
@@ -57,7 +57,7 @@ SNAP_INSTANCE_NAME = code
 # makefile (from 'Makefile', line 29)
 PARSCHECK = $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c check_paranthesis.c) 
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/101/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/102/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -79,7 +79,7 @@ OLDPWD = /home/maher
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/maher/.config/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
+VSCODE_CODE_CACHE_PATH = /home/maher/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # makefile (from 'Makefile', line 37)
 LIBFT = libft/libft.a
 # environment
@@ -99,7 +99,7 @@ PARSENV = $(addprefix parser/env_var_expansion/, expand.c)
 # makefile
 CURDIR := /home/maher/Documents/42-cursus/minishell
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -123,7 +123,7 @@ SNAP_REEXEC =
 # environment
 ZSH = /home/maher/.oh-my-zsh
 # environment
-VSCODE_PID = 35789
+VSCODE_PID = 10206
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -135,7 +135,7 @@ FLAGS = -Wall -Wextra -Werror
 # environment
 WORKSPACE = /home/maher/pwn/ubuntu/userland/NetworkManager/NetworkManager
 # environment
-SESSION_MANAGER = local/maher:@/tmp/.ICE-unix/12704,unix/maher:/tmp/.ICE-unix/12704
+SESSION_MANAGER = local/maher:@/tmp/.ICE-unix/3330,unix/maher:/tmp/.ICE-unix/3330
 # automatic
 *F = $(notdir $*)
 # environment
@@ -151,7 +151,6 @@ EXEC = $(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # default
- 
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
@@ -172,7 +171,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = GXX-uDWXebJpDVosdo9ekcAKlAD_X2NtPzx-iXN6RBXYkB-zFnYh
 # environment
-PATH = /home/maher/.cargo/bin:/home/maher/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/maher/.cargo/bin:/home/maher/.local/bin:/home/maher/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -186,13 +185,13 @@ SNAP_USER_COMMON = /home/maher/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/101
+SNAP = /snap/code/102
 # makefile (from 'Makefile', line 17)
 MAIN = main.c
 # environment
-INVOCATION_ID = d7fd1a51a5d14c788fa21f36b1a1be7b
+INVOCATION_ID = 68cea944c6c04b6f8d996ced42a17b76
 # environment
-SNAP_REVISION = 101
+SNAP_REVISION = 102
 # environment
 SNAP_REAL_HOME = /home/maher
 # environment
@@ -228,7 +227,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 12724
+SYSTEMD_EXEC_PID = 3349
 # environment
 DISPLAY = :1
 # environment
@@ -242,19 +241,19 @@ MAKE_VERSION := 4.3
 # environment
 DISABLE_WAYLAND = 1
 # environment
-SNAP_DATA = /var/snap/code/101
+SNAP_DATA = /var/snap/code/102
 # environment
 SNAP_CONTEXT = GXX-uDWXebJpDVosdo9ekcAKlAD_X2NtPzx-iXN6RBXYkB-zFnYh
 # environment
-MANAGERPID = 5293
+MANAGERPID = 2750
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 35739
+GIO_LAUNCHED_DESKTOP_FILE_PID = 10158
 # environment
 PAGER = less
 # environment
-_ = /snap/code/101/usr/share/code/code
+_ = /snap/code/102/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -266,7 +265,7 @@ PARSEP = $(addprefix parser/parenthesis/, parse_parenthesis.c)
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/maher/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:101441
+JOURNAL_STREAM = 8:42041
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -282,11 +281,11 @@ B_DIR = build
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-e7a5cfa6-1.69.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-e7a5cfa6-1.69.2-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/101/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/102/usr/share/glib-2.0/schemas
 # environment
 PAPERSIZE = letter
 # default
@@ -294,7 +293,7 @@ PAPERSIZE = letter
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = b06ae3b2
+SNAP_VERSION = 3b889b09
 # default
 SUFFIXES := 
 # environment
@@ -303,6 +302,7 @@ VSCODE_CLI = 1
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 SNAP_COMMON = /var/snap/code/common
+ 
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -310,7 +310,7 @@ CC = gcc
 # makefile (from 'Makefile', line 26)
 PARSETREE = $(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
 # environment
-SNAP_USER_DATA = /home/maher/snap/code/101
+SNAP_USER_DATA = /home/maher/snap/code/102
 # environment
 XDG_MENU_PREFIX = gnome-
 # makefile (from 'Makefile', line 27)
@@ -340,7 +340,6 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 # src/parser (device 2051, inode 20193151): 11 files, no impossibilities.
 # src/parser/env_var_expansion (device 2051, inode 20193178): 1 files, no impossibilities so far.
 # src/parser/main_tree (device 2051, inode 20193160): 4 files, no impossibilities.
- 
 # . (device 2051, inode 16394082): 12 files, no impossibilities.
 # src/parser/pipe (device 2051, inode 20193166): 2 files, no impossibilities so far.
 # src/utils (device 2051, inode 20317372): 9 files, no impossibilities so far.
@@ -362,14 +361,14 @@ build/%.o: %.c
 # Not a target:
 src/exec/gen_utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-17 17:52:37.015864059
+#  Last modified 2022-07-17 19:01:33.607607877
 #  File has been updated.
 #  Successfully updated.
 
 build/src/utils/get_cmd.o: src/utils/get_cmd.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/get_cmd'
-#  Last modified 2022-07-17 16:12:14.93530921
+#  Last modified 2022-07-24 16:17:39.989091936
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -386,7 +385,7 @@ src/utils/number_utils.c:
 build/src/parser/main_tree/analyze_cmd.o: src/parser/main_tree/analyze_cmd.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/main_tree/analyze_cmd'
-#  Last modified 2022-07-17 16:12:15.819310689
+#  Last modified 2022-07-24 16:17:41.061216003
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -396,7 +395,7 @@ build/src/parser/main_tree/analyze_cmd.o: src/parser/main_tree/analyze_cmd.c
 build/src/exec/builtins/check_builtins.o: src/exec/builtins/check_builtins.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/builtins/check_builtins'
-#  Last modified 2022-07-17 16:12:16.191311311
+#  Last modified 2022-07-24 16:17:41.561273008
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -427,7 +426,7 @@ src/parser/main_tree/analyze_cmd.c:
 build/src/parser/parenthesis/parse_parenthesis.o: src/parser/parenthesis/parse_parenthesis.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/parenthesis/parse_parenthesis'
-#  Last modified 2022-07-17 16:12:15.859310756
+#  Last modified 2022-07-24 16:17:41.117222387
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -437,7 +436,7 @@ build/src/parser/parenthesis/parse_parenthesis.o: src/parser/parenthesis/parse_p
 build/src/exec/error_handling.o: src/exec/error_handling.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/error_handling'
-#  Last modified 2022-07-17 16:12:16.039311058
+#  Last modified 2022-07-24 16:17:41.361250206
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -447,7 +446,7 @@ build/src/exec/error_handling.o: src/exec/error_handling.c
 build/src/exec/exec.o: src/exec/exec.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/exec'
-#  Last modified 2022-07-17 16:12:15.955310917
+#  Last modified 2022-07-24 16:17:41.245236981
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -457,7 +456,6 @@ build/src/exec/exec.o: src/exec/exec.c
 # Not a target:
 src/utils/free_tree.c:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-07-14 21:22:18.791268763
 #  File has been updated.
 #  Successfully updated.
@@ -485,7 +483,7 @@ src/parser/redirections/o_redr.c:
 
 minishell: build/src/lexer/lexing.o build/src/main.o build/src/utils/ft_new_node.o build/src/utils/node_operations_parse.o build/src/utils/get_token.o build/src/utils/get_cmd.o build/src/utils/free_list.o build/src/utils/general_utils.o build/src/utils/number_utils.o build/src/utils/free_tree.o build/src/dbg_utils/token_str.o build/src/dbg_utils/check_lists.o build/src/dbg_utils/tree_debug.o build/src/dbg_utils/visual_tree.o build/src/parser/checks/check_quotes.o build/src/parser/checks/check_all.o build/src/parser/checks/two_nearby_tokens.o build/src/parser/checks/check_conditional.o build/src/parser/checks/check_paranthesis.o build/src/parser/pipe/pipe.o build/src/parser/quotes/handle_single_quotes.o build/src/parser/quotes/handle_double_quotes.o build/src/parser/quotes/handle_quotes.o build/src/parser/redirections/o_redr.o build/src/parser/env_var_expansion/expand.o build/src/parser/main_tree/main_tree.o build/src/parser/main_tree/analyze_cmd.o build/src/parser/parenthesis/parse_parenthesis.o build/src/parser/parser.o build/src/exec/exec.o build/src/exec/gen_utils.o build/src/exec/error_handling.o build/src/exec/reds_exec.o build/src/exec/or_and_exec.o build/src/exec/builtins/check_builtins.o build/src/exec/builtins/echo.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-17 17:52:38.635866153
+#  Last modified 2022-07-24 18:26:39.991860021
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 43):
@@ -496,7 +494,7 @@ minishell: build/src/lexer/lexing.o build/src/main.o build/src/utils/ft_new_node
 build/src/exec/gen_utils.o: src/exec/gen_utils.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/gen_utils'
-#  Last modified 2022-07-17 17:52:38.591866096
+#  Last modified 2022-07-24 16:17:41.313244733
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -513,7 +511,7 @@ Makefile:
 build/src/utils/get_token.o: src/utils/get_token.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/get_token'
-#  Last modified 2022-07-17 16:12:14.891309137
+#  Last modified 2022-07-24 16:17:39.953087699
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -523,7 +521,7 @@ build/src/utils/get_token.o: src/utils/get_token.c
 build/src/parser/checks/check_conditional.o: src/parser/checks/check_conditional.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/checks/check_conditional'
-#  Last modified 2022-07-17 16:12:15.41931002
+#  Last modified 2022-07-24 16:17:40.497150792
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -533,7 +531,7 @@ build/src/parser/checks/check_conditional.o: src/parser/checks/check_conditional
 build/src/utils/node_operations_parse.o: src/utils/node_operations_parse.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/node_operations_parse'
-#  Last modified 2022-07-17 16:12:14.83930905
+#  Last modified 2022-07-24 16:17:39.909082522
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -558,8 +556,7 @@ clean:
 build/src/dbg_utils/visual_tree.o: src/dbg_utils/visual_tree.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/dbg_utils/visual_tree'
- 
-#  Last modified 2022-07-17 16:12:15.247309732
+#  Last modified 2022-07-24 16:17:40.305128556
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -569,7 +566,7 @@ build/src/dbg_utils/visual_tree.o: src/dbg_utils/visual_tree.c
 build/src/exec/or_and_exec.o: src/exec/or_and_exec.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/or_and_exec'
-#  Last modified 2022-07-17 16:59:11.267552218
+#  Last modified 2022-07-24 16:17:41.501266167
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -579,7 +576,7 @@ build/src/exec/or_and_exec.o: src/exec/or_and_exec.c
 build/src/parser/checks/check_quotes.o: src/parser/checks/check_quotes.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/checks/check_quotes'
-#  Last modified 2022-07-17 16:12:15.291309806
+#  Last modified 2022-07-24 16:17:40.345133188
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -598,12 +595,12 @@ src/exec/builtins/check_builtins.c:
 #  Implicit rule search has been done.
 #  Last modified 2022-07-14 21:22:18.787268603
 #  File has been updated.
+ 
 #  Successfully updated.
 
 # Not a target:
 src/exec/reds_exec.c:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-07-17 14:45:55.769817527
 #  File has been updated.
 #  Successfully updated.
@@ -611,7 +608,7 @@ src/exec/reds_exec.c:
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-17 17:43:19.787140764
+#  Last modified 2022-07-17 20:11:41.731908487
 #  File has been updated.
 #  Successfully updated.
 
@@ -637,7 +634,7 @@ src/dbg_utils/visual_tree.c:
 build/src/utils/number_utils.o: src/utils/number_utils.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/number_utils'
-#  Last modified 2022-07-17 16:12:15.039309384
+#  Last modified 2022-07-24 16:17:40.08910354
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -654,14 +651,14 @@ src/dbg_utils/tree_debug.c:
 # Not a target:
 src/exec/exec.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-17 16:08:21.318876577
+#  Last modified 2022-07-17 19:53:04.82344777
 #  File has been updated.
 #  Successfully updated.
 
 build/src/parser/checks/two_nearby_tokens.o: src/parser/checks/two_nearby_tokens.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/checks/two_nearby_tokens'
-#  Last modified 2022-07-17 16:12:15.375309946
+#  Last modified 2022-07-24 16:17:40.441144306
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -679,14 +676,13 @@ src/exec/error_handling.c:
 src/exec/builtins/echo.c:
 #  Implicit rule search has been done.
 #  Last modified 2022-07-17 14:45:55.769817527
- 
 #  File has been updated.
 #  Successfully updated.
 
 build/src/lexer/lexing.o: src/lexer/lexing.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/lexer/lexing'
-#  Last modified 2022-07-17 16:12:14.723308855
+#  Last modified 2022-07-24 16:17:39.805070283
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -716,7 +712,7 @@ fclean: clean
 build/src/parser/parser.o: src/parser/parser.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/parser'
-#  Last modified 2022-07-17 16:59:11.223552163
+#  Last modified 2022-07-24 18:25:15.22163648
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -733,7 +729,7 @@ src/utils/get_token.c:
 build/src/utils/free_tree.o: src/utils/free_tree.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/free_tree'
-#  Last modified 2022-07-17 16:12:15.087309465
+#  Last modified 2022-07-24 16:17:40.141109562
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -750,7 +746,7 @@ src/parser/quotes/handle_single_quotes.c:
 build/src/parser/pipe/pipe.o: src/parser/pipe/pipe.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/pipe/pipe'
-#  Last modified 2022-07-17 16:12:15.503310161
+#  Last modified 2022-07-24 16:17:40.6051633
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -760,7 +756,7 @@ build/src/parser/pipe/pipe.o: src/parser/pipe/pipe.c
 build/src/utils/general_utils.o: src/utils/general_utils.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/general_utils'
-#  Last modified 2022-07-17 16:12:15.023309358
+#  Last modified 2022-07-24 16:17:40.077102151
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -770,18 +766,17 @@ build/src/utils/general_utils.o: src/utils/general_utils.c
 build/src/dbg_utils/tree_debug.o: src/dbg_utils/tree_debug.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/dbg_utils/tree_debug'
-#  Last modified 2022-07-17 16:12:15.203309659
+#  Last modified 2022-07-24 16:17:40.265123923
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
 	@mkdir -p $(dir $@)
- 
 	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -g -c $< -o $@
 
 build/src/parser/quotes/handle_double_quotes.o: src/parser/quotes/handle_double_quotes.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/quotes/handle_double_quotes'
-#  Last modified 2022-07-17 16:12:15.599310322
+#  Last modified 2022-07-24 16:17:40.725177198
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -791,14 +786,14 @@ build/src/parser/quotes/handle_double_quotes.o: src/parser/quotes/handle_double_
 # Not a target:
 src/utils/free_list.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-14 21:22:18.791268763
+#  Last modified 2022-07-17 20:07:26.101270025
 #  File has been updated.
 #  Successfully updated.
 
 build/src/exec/builtins/echo.o: src/exec/builtins/echo.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/builtins/echo'
-#  Last modified 2022-07-17 16:12:16.235311385
+#  Last modified 2022-07-24 16:17:41.62928076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -815,7 +810,7 @@ src/utils/general_utils.c:
 build/src/parser/redirections/o_redr.o: src/parser/redirections/o_redr.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/redirections/o_redr'
-#  Last modified 2022-07-17 16:12:15.719310522
+#  Last modified 2022-07-24 16:17:40.853192021
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -825,7 +820,7 @@ build/src/parser/redirections/o_redr.o: src/parser/redirections/o_redr.c
 build/src/dbg_utils/check_lists.o: src/dbg_utils/check_lists.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/dbg_utils/check_lists'
-#  Last modified 2022-07-17 16:12:15.171309606
+#  Last modified 2022-07-24 16:17:40.229119754
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -842,7 +837,7 @@ src/parser/checks/check_quotes.c:
 build/src/parser/quotes/handle_single_quotes.o: src/parser/quotes/handle_single_quotes.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/quotes/handle_single_quotes'
-#  Last modified 2022-07-17 16:12:15.555310248
+#  Last modified 2022-07-24 16:17:40.669170712
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -852,7 +847,7 @@ build/src/parser/quotes/handle_single_quotes.o: src/parser/quotes/handle_single_
 build/src/parser/quotes/handle_quotes.o: src/parser/quotes/handle_quotes.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/quotes/handle_quotes'
-#  Last modified 2022-07-17 16:12:15.647310402
+#  Last modified 2022-07-24 18:26:39.955848731
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -862,9 +857,8 @@ build/src/parser/quotes/handle_quotes.o: src/parser/quotes/handle_quotes.c
 build/src/utils/free_list.o: src/utils/free_list.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/free_list'
-#  Last modified 2022-07-17 16:12:14.979309284
+#  Last modified 2022-07-24 16:17:40.029096592
 #  File has been updated.
- 
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
 	@mkdir -p $(dir $@)
@@ -873,13 +867,14 @@ build/src/utils/free_list.o: src/utils/free_list.c
 # Not a target:
 src/parser/quotes/handle_quotes.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-14 21:22:18.787268603
+#  Last modified 2022-07-24 18:26:39.235622915
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/utils/node_operations_parse.c:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-07-17 14:45:55.773817505
 #  File has been updated.
 #  Successfully updated.
@@ -887,7 +882,7 @@ src/utils/node_operations_parse.c:
 build/src/parser/checks/check_paranthesis.o: src/parser/checks/check_paranthesis.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/checks/check_paranthesis'
-#  Last modified 2022-07-17 16:12:15.463310094
+#  Last modified 2022-07-24 16:17:40.557157741
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -897,14 +892,14 @@ build/src/parser/checks/check_paranthesis.o: src/parser/checks/check_paranthesis
 # Not a target:
 src/parser/parser.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-17 16:56:07.655326899
+#  Last modified 2022-07-24 18:25:14.217672574
 #  File has been updated.
 #  Successfully updated.
 
 build/src/utils/ft_new_node.o: src/utils/ft_new_node.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/utils/ft_new_node'
-#  Last modified 2022-07-17 16:12:14.807308996
+#  Last modified 2022-07-24 16:17:39.881079226
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -921,7 +916,7 @@ src/utils/ft_new_node.c:
 build/src/parser/env_var_expansion/expand.o: src/parser/env_var_expansion/expand.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/env_var_expansion/expand'
-#  Last modified 2022-07-17 17:52:38.527866013
+#  Last modified 2022-07-24 17:19:08.570522398
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -936,17 +931,16 @@ src/parser/checks/check_conditional.c:
 #  Successfully updated.
 
 # Not a target:
- 
 src/parser/env_var_expansion/expand.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-17 17:52:00.751817195
+#  Last modified 2022-07-24 17:19:07.902539687
 #  File has been updated.
 #  Successfully updated.
 
 build/src/parser/main_tree/main_tree.o: src/parser/main_tree/main_tree.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/main_tree/main_tree'
-#  Last modified 2022-07-17 16:12:15.775310616
+#  Last modified 2022-07-24 16:17:40.993208236
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -956,7 +950,7 @@ build/src/parser/main_tree/main_tree.o: src/parser/main_tree/main_tree.c
 build/src/main.o: src/main.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/main'
-#  Last modified 2022-07-17 17:43:22.863144783
+#  Last modified 2022-07-24 16:17:39.849075461
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -973,7 +967,7 @@ src/exec/or_and_exec.c:
 build/src/dbg_utils/token_str.o: src/dbg_utils/token_str.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/dbg_utils/token_str'
-#  Last modified 2022-07-17 16:12:15.131309538
+#  Last modified 2022-07-24 16:17:40.185114658
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -997,7 +991,7 @@ src/dbg_utils/token_str.c:
 build/src/parser/checks/check_all.o: src/parser/checks/check_all.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/parser/checks/check_all'
-#  Last modified 2022-07-17 16:12:15.331309873
+#  Last modified 2022-07-24 16:17:40.389138284
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -1015,14 +1009,13 @@ src/parser/quotes/handle_double_quotes.c:
 src/parser/parenthesis/parse_parenthesis.c:
 #  Implicit rule search has been done.
 #  Last modified 2022-07-14 21:22:18.787268603
- 
 #  File has been updated.
 #  Successfully updated.
 
 build/src/exec/reds_exec.o: src/exec/reds_exec.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'src/exec/reds_exec'
-#  Last modified 2022-07-17 16:12:16.103311164
+#  Last modified 2022-07-24 16:17:41.433258415
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -1043,6 +1036,6 @@ build/src/exec/reds_exec.o: src/exec/reds_exec.c
 # strcache performance: lookups = 270 / hit rate = 28%
 # hash-table stats:
 # Load=192/8192=2%, Rehash=0, Collisions=1/270=0%
-# Finished Make data base on Sun Jul 17 17:53:22 2022
+# Finished Make data base on Mon Jul 25 12:01:32 2022
 
  

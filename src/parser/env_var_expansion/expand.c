@@ -58,11 +58,21 @@ char* find_env_expand(t_lnode *node, t_exec_struct* exec_s)
 
     result = NULL;
     p = ft_strdup(node->type.cmd);
+    // The case when dollar sign is given alone like this "$"
     while (1)
     {
         q = strchr(p, '$');
         if (q == NULL)
+        {
+            free(node->type.cmd);
             break;
+        }
+        if (q[1] == 0)
+        {
+            //p = ft_strjoin(p, "$", 0);
+            free(node->type.cmd);
+            break;
+        }
         env = return_env(q);
         result = (char *)malloc((q - p + 1)*sizeof(char));
         if (result == NULL)
@@ -145,7 +155,6 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
         // The case like this echo "$HOME"
         if (get_token(current) == DBLQT)
         {
-            //free(current->next->type.cmd);
             current->next->type.cmd = find_env_expand(current->next, exec_s);
             current = current->next;
         }
@@ -181,10 +190,11 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
                 }
             }
             // simple dolar sign should work too.
-            // else
-            // {
-
-            // }
+            else //if (get_token(current->next) == EOL)
+            {
+                current->type.token = CMD;
+                current->type.cmd = ft_strdup("$");
+            }
         }
         else
             current = current->next;
