@@ -102,6 +102,8 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 	int		status;
 	int		es;
 
+	if (builtins(node, exec_s))
+		return 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -132,8 +134,6 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
 {
 	init(exec_s, envp);
-	builtins(root, exec_s);
-
 	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
 		exec_simple_cmd(root, exec_s);
