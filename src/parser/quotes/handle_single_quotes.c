@@ -24,9 +24,9 @@ char    *convert_token(e_token  token)
         return("'");
     else if (token == DBLQT)
         return("\"");
-    else if (token == REDRI)
-        return(">");
     else if (token == REDRO)
+        return(">");
+    else if (token == REDRI)
         return("<");
     else if (token == DLMI)
         return ("<<");

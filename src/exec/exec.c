@@ -44,6 +44,8 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		else
 		{
+			handle_herdoc_iredr(root);
+			handle_append_oredr(root);
 			core(ft_strdup(root->p.cmd), exec_s->envp, exec_s);
 			exit(0);
 		}
@@ -126,8 +128,10 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		else
 		{
 			//printf("HANDLE PARANTHESIS!\n");
+			handle_herdoc_iredr(node);
+			handle_append_oredr(node);
 			core(ft_strdup(node->p.cmd), exec_s->envp, exec_s);
-			//exit(0);
+			exit(0);
 		}
 	}
 	else

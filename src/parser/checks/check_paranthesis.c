@@ -120,6 +120,13 @@ int check_left_of_left_p(t_lnode *head)
 	return (SUCCESS);
 }
 
+int is_red(t_lnode *node)
+{
+	e_token t;
+
+	t = node->type.token;
+	return (t == DLMI || t == APPND || t == REDRI || t == REDRO);
+}
 
 int	check_right_part(t_lnode *head)
 {
@@ -139,7 +146,8 @@ int	check_right_part(t_lnode *head)
 				&& get_token(current) != AND
 				&& get_token(current) != OR
 				&& get_token(current) != EOL
-				&& get_token(current) != RIGHT_PAR)
+				&& get_token(current) != RIGHT_PAR
+				&& !is_red(current))
 					return(FAIL); 	
 		}
 		else

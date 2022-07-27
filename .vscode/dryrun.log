@@ -20,7 +20,6 @@ mkdir -p build/src/utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/utils/number_utils.c -o build/src/utils/number_utils.o
 mkdir -p build/src/utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/utils/free_tree.c -o build/src/utils/free_tree.o
- 
 mkdir -p build/src/dbg_utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/dbg_utils/token_str.c -o build/src/dbg_utils/token_str.o
 mkdir -p build/src/dbg_utils/
@@ -29,6 +28,7 @@ mkdir -p build/src/dbg_utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/dbg_utils/tree_debug.c -o build/src/dbg_utils/tree_debug.o
 mkdir -p build/src/dbg_utils/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/dbg_utils/visual_tree.c -o build/src/dbg_utils/visual_tree.o
+ 
 mkdir -p build/src/parser/checks/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/checks/check_quotes.c -o build/src/parser/checks/check_quotes.o
 mkdir -p build/src/parser/checks/
@@ -39,6 +39,7 @@ mkdir -p build/src/parser/checks/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/checks/check_conditional.c -o build/src/parser/checks/check_conditional.o
 mkdir -p build/src/parser/checks/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/checks/check_paranthesis.c -o build/src/parser/checks/check_paranthesis.o
+ 
 mkdir -p build/src/parser/pipe/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/pipe/pipe.c -o build/src/parser/pipe/pipe.o
 mkdir -p build/src/parser/quotes/
@@ -47,7 +48,6 @@ mkdir -p build/src/parser/quotes/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/quotes/handle_double_quotes.c -o build/src/parser/quotes/handle_double_quotes.o
 mkdir -p build/src/parser/quotes/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/quotes/handle_quotes.c -o build/src/parser/quotes/handle_quotes.o
- 
 mkdir -p build/src/parser/redirections/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/redirections/o_redr.c -o build/src/parser/redirections/o_redr.o
 mkdir -p build/src/parser/env_var_expansion/
@@ -60,16 +60,17 @@ mkdir -p build/src/parser/parenthesis/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/parenthesis/parse_parenthesis.c -o build/src/parser/parenthesis/parse_parenthesis.o
 mkdir -p build/src/parser/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/parser/parser.c -o build/src/parser/parser.o
+ 
 mkdir -p build/src/exec/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/exec.c -o build/src/exec/exec.o
 mkdir -p build/src/exec/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/gen_utils.c -o build/src/exec/gen_utils.o
 mkdir -p build/src/exec/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/error_handling.c -o build/src/exec/error_handling.o
+ 
 mkdir -p build/src/exec/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/reds_exec.c -o build/src/exec/reds_exec.o
 mkdir -p build/src/exec/
- 
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/or_and_exec.c -o build/src/exec/or_and_exec.o
 mkdir -p build/src/exec/builtins/
 gcc -Wall -Wextra -Werror  -I inc/ -g -c src/exec/builtins/check_builtins.c -o build/src/exec/builtins/check_builtins.o

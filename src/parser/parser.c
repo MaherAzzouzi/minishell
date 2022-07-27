@@ -37,12 +37,12 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 
 	if (order_quotes(head) == FAIL || check_all(*head) == FAIL)
 	{
-		//printf("Syntax Error!\n");
+		printf("Syntax Error!\n");
 		return (NULL);
 	}
 	clean_empty_quote(head, SGLQT);
 	clean_empty_quote(head, DBLQT);
-	log_(*head);
+	//log_(*head);
 	expand_env_variables(head, exec_s);
 	consolidate_commands(head);
 	//fix_after_expansion(*head);

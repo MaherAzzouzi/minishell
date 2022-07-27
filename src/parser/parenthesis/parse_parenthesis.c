@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+t_lnode *find_next_right_par_or_eol(t_lnode *start)
+{
+    while (1)
+    {
+        if (get_token(start) == RIGHT_PAR || get_token(start) == EOL)
+            return start;
+        start = start->next;
+    }
+    return NULL;
+}
+
 t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end)
 {
     t_lnode *current;
@@ -37,9 +48,22 @@ t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end)
     }
     if (cmd[0] != 0)
     {
-        node->p.parenthesised = 1;
-        node->p.cmd = cmd;
-        return (node);
+        t_parsing_node *n = parse_redirections(current->next, find_next_right_par_or_eol(current->next));
+        printf("node is %p\n", n);
+        if (n == NULL)
+        {
+            node->p.parenthesised = 1;
+            node->p.cmd = cmd;
+            // Before exiting we should look for redirections too.
+            return (node);
+        }
+        else
+        {
+            free_node(node);
+            n->p.cmd = cmd;
+            n->p.parenthesised = 1;
+            return n;
+        }
     }
     else
     {
