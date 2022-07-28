@@ -11,7 +11,7 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 	return p;
 }
 
-pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s, int *fd)
+pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s, int *fd, t_envp *env)
 {
 	pid_t pid;
 
@@ -34,11 +34,11 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		p = return_cmd_full_path(root ,exec_s);
 		if (p == NULL)
 			show_errno();
-		close(fd[0]);
-		close(fd[1]);
 		handle_herdoc_iredr(root);
 		handle_append_oredr(root);
-		execve(p, root->cmd.argv, exec_s->envp);
+		exec_simple_cmd(root, exec_s,env);
+		close(fd[0]);
+		close(fd[1]);
 		exit(0);
 	}
 	else
@@ -55,7 +55,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	}
 }
 
-void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
+void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 {
 	static int fd[2];
 	int status;
@@ -70,11 +70,11 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 		int ret = pipe(fd);
 		if (ret < 0)
 			exit(-1);
-		spawn_process(0, fd[1], node->lchild, exec_s, fd);
+		spawn_process(0, fd[1], node->lchild, exec_s, fd, env);
 		if (node->rchild->type == CMD)
 		{
 			printf("HERE IM PIPE\n");
-			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd);
+			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd, env);
 			waitpid(pid2, &status, 0);
 			if (WIFEXITED(status))
 			{
@@ -95,15 +95,17 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s)
 }
 
 
-int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
+int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 {
 	pid_t	pid;
 	char	*p;
 	int		status;
 	int		es;
 
-	if (builtins(node, exec_s))
-		return 0;
+	if (builtins(node, exec_s, env))
+	{
+		return(0);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -131,14 +133,14 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 }
 
 
-void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[])
+void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[], t_envp *env)
 {
 	init(exec_s, envp);
 	//printf("LEFT-> %s\n", root->lchild->cmd.cmd);
 	if (root->type == CMD)
-		exec_simple_cmd(root, exec_s);
+		exec_simple_cmd(root, exec_s, env);
 	else if (root->type == PIPE)
-		pipe_chain_exec(root, exec_s);
+		pipe_chain_exec(root, exec_s, env);
 	else if (root->type == OR)
 		or_chain_exec(root, exec_s);
 	else if (root->type == AND)

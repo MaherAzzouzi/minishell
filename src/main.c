@@ -20,11 +20,14 @@ int core(char *envp[])
 	t_lnode	*head;
 	t_parsing_node *root;
 	t_exec_struct exec_struct;
+	t_envp *env;
+
 
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
 
 	setbuf(stdout, NULL);
 	init(&exec_struct, envp);
+	env = ennv(&exec_struct);
 	while (INFINIT)
 	{
 		cmd = readline("$PWNAI> ");
@@ -32,7 +35,7 @@ int core(char *envp[])
 		head = lex(cmd);
 		root = parse(&head, &exec_struct);
 		if (root)
-			execute(root, &exec_struct, envp);
+			execute(root, &exec_struct, envp, env);
 		free_all(cmd, head, root);
 	}
 }
