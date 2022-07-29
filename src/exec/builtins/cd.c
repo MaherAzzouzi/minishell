@@ -41,8 +41,6 @@ char *get_cwd(void)
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		ft_putstr_fd("couldnt find the directory", 2);
 	return(cwd);
 	
 }
@@ -51,6 +49,8 @@ int	change_dir(char *dir, t_envp *en)
 	char *curr_path;
 
 	curr_path = get_cwd();
+	if (!curr_path && errno == ENOENT)
+		curr_path = find_env("PWD", en);
 	if ((!ft_strcmp(dir, "..") || !ft_strcmp(dir,  ".")) && errno == ENOENT)
 	{
 		ft_putstr_fd("couldnt find dir\n", 2);

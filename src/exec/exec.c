@@ -142,10 +142,10 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[], t_envp *
 	else if (root->type == PIPE)
 		pipe_chain_exec(root, exec_s, env);
 	else if (root->type == OR)
-		or_chain_exec(root, exec_s);
+		or_chain_exec(root, exec_s, env);
 	else if (root->type == AND)
 	{
 		printf("Executing AND\n");
-		and_chain_exec(root, exec_s);
+		and_chain_exec(root, exec_s, env);
 	}
 }

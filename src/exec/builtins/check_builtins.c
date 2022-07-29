@@ -14,7 +14,7 @@ int    builtins(t_parsing_node *root, t_exec_struct *exec_s, t_envp * env)
     }
     if (ft_strcmp("pwd", root->cmd.cmd) == 0)
     {
-        ft_pwd(root);
+        ft_pwd(root, env);
         return 1;
     }
     if (ft_strcmp("env", root->cmd.cmd) == 0)

@@ -11,7 +11,6 @@ int ft_env(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 
 	while(head)
 	{
-		puts("");
 		fprintf(stdout,"%s\n", head->str);
 		head = head->next;
 	}
