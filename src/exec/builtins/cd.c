@@ -4,17 +4,23 @@ char *find_env(char *str, t_envp *env)
 {
 	t_envp *curr;
 	char *path;
+	char *env_var;
 
 	curr = env;
 	path = NULL;
 	while (curr)
 	{
-		if (ft_strncmp(str, curr->str, ft_strlen(str)) == 0)
+		env_var = ft_strdup(curr->str);
+		path = ft_strchr(env_var, '=');
+		*path = 0;
+		if (ft_strcmp(str, env_var) == 0)
 		{
-			path = ft_strchr(curr->str, '=');
 			path++;
+			path = ft_strdup(path);
+			free(env_var);
 			return (path);
 		}
+		free(env_var);
 		curr = curr->next;
 	}
 	return (NULL);
@@ -34,6 +40,7 @@ int change_dir_old(char *str, t_envp *env)
 		ft_putstr_fd("couldnt change directory\n", 2);
 		return (FAIL);
 	}
+	free(path);
 	return (SUCCESS);
 }
 char *get_cwd(void)
@@ -43,10 +50,13 @@ char *get_cwd(void)
 	cwd = getcwd(NULL, 0);
 	return (cwd);
 }
+
 int change_dir(char *dir, t_envp *en)
 {
 	char *curr_path;
+	char *new_path;
 
+	new_path = NULL;
 	curr_path = get_cwd();
 	if (!curr_path && errno == ENOENT)
 		curr_path = find_env("PWD", en);
@@ -62,10 +72,12 @@ int change_dir(char *dir, t_envp *en)
 	}
 	else
 	{
-		printf("%s\n", get_cwd());
-		update_env(&en, ft_strdup("OLDPWD"), ft_strdup(curr_path));
-		update_env(&en, ft_strdup("PWD"), get_cwd());
+		update_env(&en, ft_strdup("OLDPWD"), curr_path);
+		new_path = get_cwd();
+		update_env(&en, ft_strdup("PWD"), new_path);
+		free(new_path);
 	}
+	free(curr_path);
 	return (SUCCESS);
 }
 
@@ -89,6 +101,7 @@ int change_dir_home(char *dir, t_exec_struct *exec_s, t_envp *env)
 	}
 	update_env(&env, "OLDPWD", curr_path);
 	update_env(&env, "PWD", get_cwd());
+	free(path);
 	return (SUCCESS);
 }
 
