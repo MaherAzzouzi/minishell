@@ -8,7 +8,6 @@ int ft_env(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 	t_envp *head;
 
 	head = env;
-
 	while(head)
 	{
 		fprintf(stdout,"%s\n", head->str);

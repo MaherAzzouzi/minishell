@@ -22,5 +22,20 @@ int    builtins(t_parsing_node *root, t_exec_struct *exec_s, t_envp * env)
         ft_env(root, exec_s, env);
         return(1);
     }
+    if (ft_strcmp("exit", root->cmd.cmd) == 0)
+    {
+        ft_exit(root, exec_s);
+        return 1;
+    }
+    if (ft_strcmp("unset", root->cmd.cmd) == 0)
+    {
+        ft_unset(root, &env);
+        return 1;
+    }
+    if (ft_strcmp("export", root->cmd.cmd) == 0)
+    {
+        ft_export(root, &env);
+        return 1;
+    }
     return(0);
 }

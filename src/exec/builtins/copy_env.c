@@ -30,7 +30,6 @@ t_envp	*new_env(t_envp **head, char *str)
 t_envp	*ennv(t_exec_struct *exec)
 {
 	t_envp *test;
-	// t_envp *curr;
 
 	test = NULL;
 	int i;
@@ -41,4 +40,19 @@ t_envp	*ennv(t_exec_struct *exec)
 		i++;
 	}
 	return(test);
+}
+
+t_envp	*exxport(t_envp **envp)
+{
+	t_envp	*dup_env;
+	t_envp	*curr;
+
+	dup_env = NULL;
+	curr = *envp;
+	while(curr)
+	{
+		new_env(&dup_env, curr->str);
+		curr = curr->next;
+	}
+	return(dup_env);
 }
