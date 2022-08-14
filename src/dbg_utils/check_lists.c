@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 10:46:14 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/10 18:39:44 by snagat           ###   ########.fr       */
+/*   Updated: 2022/08/14 21:22:07 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	ft_check_lists(t_lnode  *head)
 		exit(1);
 	while (current)
 	{
-		if (get_token(current) == CMD)
-			printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
-		else
-			printf("[token = %s]\n", enum_to_str(current->type.token));
+		// if (get_token(current) == CMD)
+		// 	printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
+		// else
+		// 	printf("[token = %s]\n", enum_to_str(current->type.token));
 		current = current->next;
 	}
 }

@@ -16,6 +16,8 @@ char *find_env(char *str, t_envp *env);
 void    ft_exit(t_parsing_node *root,t_exec_struct *exec_s);
 void	ft_unset(t_parsing_node *root, t_envp **env);
 t_envp	*exxport(t_envp **envp);
-void	ft_export(t_parsing_node *node, t_envp **env);
+int	ft_export(t_parsing_node *node, t_envp **env);
+int check_export_syntax(char *str);
+t_envp	*new_env(t_envp **head, char *str);
 
 #endif

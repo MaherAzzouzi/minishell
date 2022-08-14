@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/08/13 13:20:34 by snagat           ###   ########.fr        #
+#    Updated: 2022/08/14 19:52:29 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ PARSRED= $(addprefix parser/redirections/, o_redr.c)
 PARSENV= $(addprefix parser/env_var_expansion/, expand.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
 EXEC=$(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and_exec.c)
-BUILTINS= $(addprefix exec/builtins/, check_builtins.c echo.c cd.c pwd.c env.c copy_env.c cd_utils.c exit.c ft_unset.c export.c)
+BUILTINS= $(addprefix exec/builtins/, check_builtins.c echo.c cd.c pwd.c env.c copy_env.c cd_utils.c exit.c ft_unset.c export.c export_utils.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSENV) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
