@@ -1,4 +1,7 @@
 #include "minishell.h"
+
+
+
 int	ft_egale_len(char *str)
 {
 	int	i;
@@ -78,7 +81,7 @@ int	ft_export(t_parsing_node *node, t_envp **env)
 	t_envp  *export;
 	t_envp  *current;
 	int	i;
-	(void)node;
+	int t;
 
 	export = exxport(env);
 	ft_sort_export(export);
@@ -96,17 +99,17 @@ int	ft_export(t_parsing_node *node, t_envp **env)
 		i = 1;
 		while(node->cmd.argv[i])
 		{
-			if (check_export_syntax(node->cmd.argv[i]) == -1)
+			t = check_new_env(node->cmd.argv[i], env);
+			if (check_export_syntax(node->cmd.argv[i]) == -1 || ft_check_var_syntx(node->cmd.argv[i]) == 0)
 			{
 				ft_putstr_fd("not a valid identifier\n",2);
 				return(FAIL);
 			}
-			else if (check_export_syntax(node->cmd.argv[i]) == 2)
-				new_env(env, node->cmd.argv[i]);
-			else if (check_export_syntax(node->cmd.argv[i]) == 1)
+			else if (check_export_syntax(node->cmd.argv[i]) == 1 && t == 0)
 				new_env(env, node->cmd.argv[i]);
 			i++;
 		}
 	}
+	free_env(&export);
 	return(SUCCESS);
 }
