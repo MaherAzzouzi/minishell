@@ -64,7 +64,7 @@ void	p_(char *str, int len)
 	}
 	else
 	{
-		while(i <= len)
+		while(str[i])
 		{
 			printf("%c", str[i]);
 			i++;
@@ -102,15 +102,9 @@ int	ft_export(t_parsing_node *node, t_envp **env)
 				return(FAIL);
 			}
 			else if (check_export_syntax(node->cmd.argv[i]) == 2)
-			{
-				new_env(&export, node->cmd.argv[i]);
 				new_env(env, node->cmd.argv[i]);
-			}
 			else if (check_export_syntax(node->cmd.argv[i]) == 1)
-			{
-				new_env(&export,node->cmd.argv[i]);
 				new_env(env, node->cmd.argv[i]);
-			}
 			i++;
 		}
 	}

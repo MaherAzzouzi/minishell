@@ -19,5 +19,6 @@ t_envp	*exxport(t_envp **envp);
 int	ft_export(t_parsing_node *node, t_envp **env);
 int check_export_syntax(char *str);
 t_envp	*new_env(t_envp **head, char *str);
+int	ft_egale_len(char *str);
 
 #endif
