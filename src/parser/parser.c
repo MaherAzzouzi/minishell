@@ -45,7 +45,7 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	//log_(*head);
 	expand_env_variables(head, exec_s);
 	consolidate_commands(head);
-	//fix_after_expansion(*head);
+	handle_wildcard(*head);
 	log_(*head);
 	root = parse_tree(*head);
     return root;

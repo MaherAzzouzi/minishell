@@ -46,6 +46,40 @@ char*   return_env(char *p)
     return env;
 }
 
+char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
+{
+    char* result;
+    char* q;
+    char    *env;
+
+    result = NULL;
+    while (1)
+    {
+        q = strchr(p, '$');
+        if (q == NULL)
+        {
+            break;
+        }
+        if (q[1] == 0)
+        {
+            break;
+        }
+        env = return_env(q);
+        result = (char *)malloc((q - p + 1)*sizeof(char));
+        if (result == NULL)
+            exit(-1);
+        ft_memcpy(result, p, q-p);
+        result[q-p] = 0;
+
+        result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+        result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        free(env);
+        free(p);
+        p = result;
+    }
+    return result;
+}
+
 char* find_env_expand(t_lnode *node, t_exec_struct* exec_s)
 {
     char* result;
@@ -148,15 +182,31 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
     //char* value;
     t_lnode *current;
     t_lnode *p;
+    int should_expand;
 
+    should_expand = 1;
     current = *head;
     while (current && get_token(current) != EOL)
     {
-        // The case like this echo "$HOME"
-        if (get_token(current) == DBLQT)
+        printf("%s\n", convert_token(get_token(current)));
+        if (get_token(current) == DLMI)
         {
-            current->next->type.cmd = find_env_expand(current->next, exec_s);
+            should_expand = 0;
             current = current->next;
+        }
+        // The case like this echo "$HOME"
+        else if (get_token(current) == DBLQT)
+        {
+            if (should_expand)
+            {
+                current->next->type.cmd = find_env_expand(current->next, exec_s);
+                current = current->next;
+            }
+            else
+            {
+                should_expand = 1;
+                current = current->next;
+            }
         }
         // Now the case if no single of double quotes is given before the dlr sign
         // We should parse it too.
@@ -166,38 +216,43 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
             // Should be handeled here.
             if (get_token(current->next) == DLR)
             {
-                current = case_of_one_char_dollar(head, current, exec_s);
+                    // The case of cat << $$ is not yet handled
+                    current = case_of_one_char_dollar(head, current, exec_s);
             }
             // In this case we just append a dollar at the start
             else if (get_token(current->next) == CMD)
             {
-                current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
-                current->next->type.cmd = find_env_expand(current->next, exec_s);
-                
-                if (current == (*head))
-                {
-                    *head = (*head)->next;
-                    current = current->next;
-                }
-                else
-                {
-                    p = *head;
-                    while (p->next != current)
-                        p = p->next;
-                    p->next = current->next;
-                    free_lexer_node(current);
-                    current = p->next;
-                }
+                    current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
+                    if (should_expand)
+                        current->next->type.cmd = find_env_expand(current->next, exec_s);  
+                    should_expand = 1;
+
+                    if (current == (*head))
+                    {
+                        *head = (*head)->next;
+                        current = current->next;
+                    }
+                    else
+                    {
+                        p = *head;
+                        while (p->next != current)
+                            p = p->next;
+                        p->next = current->next;
+                        free_lexer_node(current);
+                        current = p->next;
+                    }
             }
             // simple dolar sign should work too.
             else //if (get_token(current->next) == EOL)
             {
-                current->type.token = CMD;
-                current->type.cmd = ft_strdup("$");
+                    current->type.token = CMD;
+                    current->type.cmd = ft_strdup("$");
             }
         }
         else
+        {
             current = current->next;
+        }
     }
     combine_successive_cmds(*head);
 }

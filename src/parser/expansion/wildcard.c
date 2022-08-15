@@ -1,5 +1,12 @@
 #include "minishell.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <sys/types.h>
+#include <dirent.h>
+
 #define TRUE 1
 #define FALSE 0
 
@@ -56,11 +63,13 @@ int is_matching(char *str, char *pattern, int n, int m) {
     return ret;
 }
 
-void open_current_dir(char *pattern)
+char    *open_current_dir(char *pattern)
 {
     DIR *d;
     struct dirent *content;
+    char *p;
 
+    p = ft_strdup("");
     d = opendir(".");
     while (1)
     {
@@ -68,16 +77,39 @@ void open_current_dir(char *pattern)
         if (content == NULL)
             break;
         if (content->d_name[0] != '.' &&
-        is_matching(content->d_name, pattern, strlen(content->d_name), strlen(pattern)))
-            printf("%s\n", content->d_name);
+        is_matching(content->d_name, pattern, ft_strlen(content->d_name), ft_strlen(pattern)))
+        {
+            p = ft_strjoin(p, content->d_name, 0);
+            p = ft_strjoin(p, " ", 0);
+        }
     }
     closedir(d);
+    p[ft_strlen(p) - 1] = 0;
+    return p;
 }
 
-int main() {
-    char *p = "in*st";
-    char *s = "includes";
-    int ret = is_matching(s, p, strlen(s), strlen(p));
-    open_current_dir("*.c");
-    printf("ret %d\n", ret);
+void handle_wildcard(t_lnode *head)
+{
+    e_token t;
+    t_lnode *current;
+    char *tmp;
+    char *p;
+
+    current = head;
+    t = EOL;
+    while (get_token(current) != EOL)
+    {
+        if (t != SGLQT && t != DBLQT && get_token(current) == CMD && ft_strchr(get_cmd(current), '*'))
+        {
+            tmp = get_cmd(current);
+            p = open_current_dir(get_cmd(current));
+            if (p[0] != 0)
+            {
+                set_cmd(current, p);
+                free(tmp);
+            }
+        }
+        t = get_token(current);
+        current = current->next;
+    }
 }

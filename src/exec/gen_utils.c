@@ -79,7 +79,7 @@ char *itoa(int d)
     return ft_strdup(p);
 }
 
-// It will be used as envp just at the very first
+// `flag` will be used as envp just at the very first
 char *get_env(char *var, void* exec_s, int flag)
 {
     int i;

@@ -10,7 +10,7 @@ static int check_redirections(t_lnode **current)
 		*current = (*current)->next;
 		*current = ignore_spaces_ret(*current);
 		if (get_token(*current) != SGLQT && get_token(*current) != DBLQT
-		&& get_token(*current) != CMD)
+		&& get_token(*current) != CMD && get_token(*current) != DLR)
 			return FAIL;
 	}
 	return SUCCESS;

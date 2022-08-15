@@ -11,7 +11,7 @@ typedef struct s_exec_struct
     char *path;
     char **envp;
 
-    /*The last exit status will e stored here.*/
+    /*The last exit status will be stored here.*/
     int exit_status;
 } t_exec_struct;
 
@@ -87,6 +87,8 @@ t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end);
 int check_left_par(t_lnode *head);
 
 void expand_env_variables(t_lnode **head, t_exec_struct* exec_s);
+void handle_wildcard(t_lnode *head);
+char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s);
 t_parsing_node *parse(t_lnode **head, t_exec_struct* s);
 
 

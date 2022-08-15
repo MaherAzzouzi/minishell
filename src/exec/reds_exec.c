@@ -100,6 +100,7 @@ int handle_append_oredr(t_parsing_node *node)
 {
     int out;
 
+    out = -1;
     if (node->last_out_token == EOL)
         return 0;
     else if (node->last_out_token == REDRO)
@@ -193,6 +194,7 @@ int handle_herdoc_iredr(t_parsing_node *node)
 {
     int in;
 
+    in = -1;
     if (node->last_in_token == EOL)
         return (0);
     else if (node->last_in_token == REDRI)
