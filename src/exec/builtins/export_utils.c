@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+
+int check_equal(char *str);
 void    free_env(t_envp **head)
 {
     t_envp  *curr;
@@ -56,29 +58,30 @@ int check_new_env(char *str, t_envp **env)
 {
 	t_envp *curr;
 	char *s;
+	char	*var;
 	int t;
 
 	curr = *env;
 	t = 0;
-	s = ft_strndup(str, ft_egale_len(str));
-	printf("%s\n", s);
-	// printf("%lu\n", ft_strlen(s) - 2);
-	// printf("%lu\n", ft_strlen(s) - 1);
-	// printf("%c\n", str[ft_strlen(s) - 2]);
-	// printf("%c\n", str[ft_strlen(s) - 1]);
+	if (check_equal(str) == 2)
+		s = ft_strndup(str, ft_egale_len(str) - 1);
+	else
+		s = ft_strndup(str, ft_egale_len(str));
 	while (curr)
 	{
-		if (!ft_strncmp(s, curr->str, ft_strlen(s) - 1) && s[ft_strlen(s) - 1] == '+')
+		var = ft_strndup(curr->str, ft_egale_len(curr->str));
+		if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] =='=' && check_equal(str) == 2)
 		{
 			t = 1;
 			curr->str = ft_strjoin(curr->str, &ft_strchr(str, '=')[1], 0);
 		}
-		else if (!ft_strncmp(s, curr->str, ft_strlen(s)) && s[ft_strlen(s)] == '=')
+		else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] == '=')
 		{
 			t = 1;
 			free(curr->str);
 			curr->str = ft_strdup(str);
 		}
+		free(var);
 		curr = curr->next;
 	}
 	free(s);
