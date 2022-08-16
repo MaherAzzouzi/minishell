@@ -51,6 +51,7 @@ void	p_(char *str, int len)
 
 	if (len != -1)
 	{
+		printf("declare -x ");
 		while(i <= len)
 		{
 			printf("%c", str[i]);
@@ -85,7 +86,7 @@ int	ft_export(t_parsing_node *node, t_envp **env)
 
 	export = exxport(env);
 	ft_sort_export(export);
-	current = *env;
+	current = export;
 	if(node->cmd.argv[1] == NULL)
 	{
 		while(current)
