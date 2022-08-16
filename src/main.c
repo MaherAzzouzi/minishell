@@ -28,9 +28,6 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct)
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
 
-t_exec_struct *g_exec_struct;
-char **g_envp;
-
 int	main(int argc, char *argv[], char *envp[]);
 void loop_handler(char *envp[], t_exec_struct* exec_s);
 
@@ -41,6 +38,10 @@ void ctrl_c_handler(int p)
 		printf("\n" GREEN "$PWNAI> " WHITE);
 	else
 		printf("\n" RED "$PWNAI> " WHITE); 
+<<<<<<< HEAD
+	return;
+=======
+>>>>>>> 9243b2def81f97e705ff694f604883804ead22b7
 }
 
 void loop_handler(char *envp[], t_exec_struct* exec_s)
@@ -48,19 +49,42 @@ void loop_handler(char *envp[], t_exec_struct* exec_s)
 	while (INFINIT)
 	{
 		char *cmd = read_command_line(exec_s);
+		if (!cmd)
+			exit(1);
 		core(cmd, envp, exec_s);
 	}
 }
 
+<<<<<<< HEAD
+void ctrl_b_ignore(int p)
+{
+	(void)p;
+	return;
+}
+
+void ctrl_b_handler(int p)
+{
+	printf("Quit: %d\n", p);
+	if (g_exec_struct->exit_status == 0)
+		printf("\n" GREEN "$PWNAI> " WHITE);
+	else
+		printf("\n" RED "$PWNAI> " WHITE); 
+	return;
+}
+
+=======
+>>>>>>> 9243b2def81f97e705ff694f604883804ead22b7
 int	main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	t_exec_struct exec_struct;
-	signal(SIGINT, ctrl_c_handler);
+	
+	rl_catch_signals = 0;
 
+	signal(SIGINT,  ctrl_c_handler);
+	signal(SIGQUIT, ctrl_b_ignore);
 	g_exec_struct = &exec_struct;
-	g_envp = envp;
 
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
 
