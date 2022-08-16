@@ -121,7 +121,7 @@ int handle_append_oredr(t_parsing_node *node)
 
 // <<
 
-int handle_herdoc(t_parsing_node *node)
+int handle_herdoc(t_parsing_node *node, t_exec_struct *exec_s)
 {
     int i;
     int fd[2];
@@ -137,7 +137,7 @@ int handle_herdoc(t_parsing_node *node)
     while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
     {
         p = readline("> ");
-        if (ft_strcmp(p, node->reds.herdoc_array[i]) == 0)
+        if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
             i++;
         free(p);
     }
@@ -146,8 +146,10 @@ int handle_herdoc(t_parsing_node *node)
     while (1)
     {
         p = readline("> ");
-        if (ft_strcmp(p, node->reds.herdoc_array[i]) == 0)
+        if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
             break;
+        if (!node->reds.herdoc_array[i]->is_quoted && ft_strchr(p, '$'))
+            p = expand_an_array_having_dlr(p, exec_s);
         write(fd[1], p, ft_strlen(p));
         write(fd[1], "\n", 1);
         free(p);
@@ -190,7 +192,7 @@ int handle_input_redirect(t_parsing_node *node)
 }
 
 // This function will redirect the input of the child!
-int handle_herdoc_iredr(t_parsing_node *node)
+int handle_herdoc_iredr(t_parsing_node *node, t_exec_struct *exec_s)
 {
     int in;
 
@@ -200,11 +202,11 @@ int handle_herdoc_iredr(t_parsing_node *node)
     else if (node->last_in_token == REDRI)
     {
         in = handle_input_redirect(node);
-        handle_herdoc(node);
+        handle_herdoc(node, exec_s);
     }
     else if (node->last_in_token == DLMI)
     {
-        in = handle_herdoc(node);
+        in = handle_herdoc(node, exec_s);
         handle_input_redirect(node);
     }
     

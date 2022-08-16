@@ -15,12 +15,19 @@ typedef struct s_exec_struct
     int exit_status;
 } t_exec_struct;
 
+// We will handle herdoc a bit special here due to environment variables expansion thing..
+struct herdoc_exp
+{
+    char    *herdoc_keyword;
+    int     is_quoted;
+};
+
 struct s_redirections
 {
-    char    **o_r_params;
-    char    **i_r_params;
-    char    **herdoc_array;
-    char    **append_array;
+    char                **o_r_params;
+    char                **i_r_params;
+    struct herdoc_exp   **herdoc_array;
+    char                **append_array;
 };
 
 typedef struct s_redirections t_reds;

@@ -40,6 +40,7 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 		printf("Syntax Error!\n");
 		return (NULL);
 	}
+	log_(*head);
 	clean_empty_quote(head, SGLQT);
 	clean_empty_quote(head, DBLQT);
 	//log_(*head);
@@ -48,5 +49,6 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	handle_wildcard(*head);
 	log_(*head);
 	root = parse_tree(*head);
+	
     return root;
 }

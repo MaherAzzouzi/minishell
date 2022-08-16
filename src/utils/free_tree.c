@@ -17,6 +17,23 @@ void free_array_of_pointers(char **p)
 	}
 }
 
+void free_herdocs(struct herdoc_exp **p)
+{
+	int i;
+
+	if (p)
+	{
+		i = 0;
+		while (p[i])
+		{
+			free(p[i]->herdoc_keyword);
+			free(p[i]);
+			i++;
+		}
+		free(p);
+	}
+}
+
 void free_node(t_parsing_node *node)
 {
 	if (node->cmd.cmd)
@@ -24,7 +41,7 @@ void free_node(t_parsing_node *node)
 
 	free_array_of_pointers(node->cmd.argv);
 	free_array_of_pointers(node->reds.append_array);
-	free_array_of_pointers(node->reds.herdoc_array);
+	free_herdocs(node->reds.herdoc_array);
 	free_array_of_pointers(node->reds.i_r_params);
 	free_array_of_pointers(node->reds.o_r_params);
 

@@ -22,6 +22,27 @@ void show_reds_node(char *name, char **p, char *cmd_name)
 	}
 }
 
+void show_herdoc_node(char *name, struct herdoc_exp **p, char *cmd_name)
+{
+	int i;
+	
+	if (cmd_name)
+		fprintf(stderr,"%s ", cmd_name);
+	if (p)
+	{
+		if (name)
+			fprintf(stderr,"%s ", name);
+		i = 0;
+		fprintf(stderr,"\t[");
+		while (p[i])
+		{
+			fprintf(stderr,"%s %d", p[i]->herdoc_keyword, p[i]->is_quoted);
+			i++;
+		}
+		fprintf(stderr,"]\n");
+	}
+}
+
 void show_node(t_parsing_node *node)
 {
 	printf("------------------------------\n");
@@ -31,7 +52,7 @@ void show_node(t_parsing_node *node)
 		show_reds_node("'>' ", node->reds.o_r_params, NULL);
 		show_reds_node("'<' ", node->reds.i_r_params, NULL);
 		show_reds_node("'>>'", node->reds.append_array, NULL);
-		show_reds_node("'<<'", node->reds.herdoc_array, NULL);
+		show_herdoc_node("'<<'", node->reds.herdoc_array, NULL);
 		
 		if (node->p.parenthesised)
 		{

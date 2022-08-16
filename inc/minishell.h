@@ -25,6 +25,7 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <signal.h>
 
 
 # include "lexer.h"

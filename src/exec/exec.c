@@ -37,14 +37,14 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 			p = return_cmd_full_path(root ,exec_s);
 			if (p == NULL)
 				show_errno();
-			handle_herdoc_iredr(root);
+			handle_herdoc_iredr(root, exec_s);
 			handle_append_oredr(root);
 			execve(p, root->cmd.argv, exec_s->envp);
 			exit(0);
 		}
 		else
 		{
-			handle_herdoc_iredr(root);
+			handle_herdoc_iredr(root, exec_s);
 			handle_append_oredr(root);
 			core(ft_strdup(root->p.cmd), exec_s->envp, exec_s);
 			exit(0);
@@ -119,7 +119,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 			p = return_cmd_full_path(node, exec_s);
 			if (p == NULL)
 				show_errno();
-			handle_herdoc_iredr(node);
+			handle_herdoc_iredr(node, exec_s);
 			handle_append_oredr(node);
 			//TODO: check if it's a directory or not.
 			execve(p, node->cmd.argv, exec_s->envp);
@@ -128,10 +128,10 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 		else
 		{
 			//printf("HANDLE PARANTHESIS!\n");
-			handle_herdoc_iredr(node);
+			handle_herdoc_iredr(node, exec_s);
 			handle_append_oredr(node);
-			core(ft_strdup(node->p.cmd), exec_s->envp, exec_s);
-			exit(0);
+			int ret = core(ft_strdup(node->p.cmd), exec_s->envp, exec_s);
+			exit(ret);
 		}
 	}
 	else

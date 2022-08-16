@@ -131,6 +131,43 @@ int count_redirections(t_lnode *head, e_token redr, t_lnode *end)
     return (count);
 }
 
+struct herdoc_exp **alloc_herdoc_array(t_lnode *head, e_token redr, t_lnode *end)
+{
+    int count;
+    int i;
+    struct herdoc_exp   **redri_array;
+    struct herdoc_exp   *herdoc;
+
+    count = count_redirections(head, redr, end);
+    redri_array = (struct herdoc_exp **)malloc((count + 1) * sizeof(struct herdoc_exp *));
+    i = 0;
+    if (!redri_array)
+        exit(0);
+    while (head != end && head != NULL)
+    {
+        if (get_token(head) == redr)
+        {
+            herdoc = (struct herdoc_exp *)malloc(sizeof(struct herdoc_exp));
+            herdoc->is_quoted = 0;
+            head = head->next;
+            while (get_token(head) == SPC)
+                head = head->next;
+            if (get_token(head) == SGLQT || get_token(head) == DBLQT)
+            {
+                herdoc->is_quoted = 1;
+                head = head->next;
+            }
+            if (get_token(head) != EOL)
+            {
+                herdoc->herdoc_keyword = ft_strdup(get_cmd(head));
+                redri_array[i++] = herdoc;
+            }
+        }
+        head = head->next;
+    }
+    redri_array[i] = NULL;
+    return redri_array;
+}
 
 char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
 {
@@ -168,7 +205,6 @@ e_token get_last_output_red(t_lnode *head)
     t = EOL;
     while (get_token(head) != EOL)
     {
-
         if (get_token(head) == REDRO || get_token(head) == APPND)
             t = get_token(head);
         head = head->next;
@@ -220,7 +256,7 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
     node->reds.i_r_params = alloc_redr_array(head, REDRI, end);
     node->reds.o_r_params = alloc_redr_array(head, REDRO, end);
     node->reds.append_array = alloc_redr_array(head, APPND, end);
-    node->reds.herdoc_array = alloc_redr_array(head, DLMI, end);
+    node->reds.herdoc_array = alloc_herdoc_array(head, DLMI, end);
     node->last_out_token = get_last_output_red(head);
     node->last_in_token = get_last_in_red(head);
     return node;
