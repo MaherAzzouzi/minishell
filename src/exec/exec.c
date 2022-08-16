@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+// void ctrl_b_handler(int p)
+// {
+// 	printf("Quit: %d\n", p);
+// 	if (g_exec_struct->exit_status == 0)
+// 		printf("\n" GREEN "$PWNAI> " WHITE);
+// 	else
+// 		printf("\n" RED "$PWNAI> " WHITE); 
+// 	return;
+// }
+
 char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 {
 	char *p;
@@ -32,6 +42,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		close(fd[0]);
 		close(fd[1]);
+		printf("SETUP SIGNAL\n");
 		if (root->p.parenthesised == 0)
 		{
 			p = return_cmd_full_path(root ,exec_s);
@@ -114,6 +125,7 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 	pid = fork();
 	if (pid == 0)
 	{
+		printf("SETUP SIGNAL\n");
 		if (node->p.parenthesised == 0)
 		{
 			p = return_cmd_full_path(node, exec_s);
@@ -143,6 +155,14 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s)
 			exec_s->exit_status = es;
 			//printf("Exit status is %d\n", WEXITSTATUS(es));
 			return es;
+		}
+		else if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) != 11)
+			{
+				printf("Quit: %d\n",WTERMSIG(status));
+				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
+			}
 		}
 	}
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/22 15:40:33 by snagat           ###   ########.fr       */
+/*   Updated: 2022/08/16 15:54:51 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # include "checks.h"
 # include "exec.h"
 # include "builtins.h"
+
+t_exec_struct *g_exec_struct;
 
 # define INFINIT    666
 # define RED        "\033[0;31m"

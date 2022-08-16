@@ -28,17 +28,16 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct)
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
 
-t_exec_struct *g_exec_struct;
-char **g_envp;
-
 int	main(int argc, char *argv[], char *envp[]);
 void loop_handler(char *envp[], t_exec_struct* exec_s);
 
 void ctrl_c_handler(int p)
 {
 	(void)p;
-	write(1, "HH", 2);
-	//loop_handler(g_envp, g_exec_struct);
+	if (g_exec_struct->exit_status == 0)
+		printf("\n" GREEN "$PWNAI> " WHITE);
+	else
+		printf("\n" RED "$PWNAI> " WHITE); 
 	return;
 }
 
@@ -47,56 +46,39 @@ void loop_handler(char *envp[], t_exec_struct* exec_s)
 	while (INFINIT)
 	{
 		char *cmd = read_command_line(exec_s);
+		if (!cmd)
+			exit(1);
 		core(cmd, envp, exec_s);
 	}
 }
 
-struct termios ts;
-
-void reset_the_terminal()
+void ctrl_b_ignore(int p)
 {
-	tcsetattr(0, 0, &ts);
+	(void)p;
+	return;
 }
 
-void handle_the_stuff(int num)
+void ctrl_b_handler(int p)
 {
-char buff[4];
-buff[0] = '[';
-buff[2] = '0' + num%10;
-num /= 10;
-buff[1] = '0' + num%10;
-buff[3] = ']';
-write(0, buff, sizeof buff);
+	printf("Quit: %d\n", p);
+	if (g_exec_struct->exit_status == 0)
+		printf("\n" GREEN "$PWNAI> " WHITE);
+	else
+		printf("\n" RED "$PWNAI> " WHITE); 
+	return;
 }
-
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	t_exec_struct exec_struct;
-	int ret;
 	
-	struct termios tn;
 	rl_catch_signals = 0;
 
-	ret = tcgetattr(0, &ts);
-	if (ret) {printf("ERROR!");}
-
-	atexit(reset_the_terminal);
-	tn = ts;
-
-	tn.c_lflag &= ~ECHOCTL;
-
-	ret = tcsetattr(0, 0, &tn);
-	if (ret) {printf("ERROR!");}
-	signal(SIGINT, ctrl_c_handler);
-
-	printf("(pseudoshell)Start typing:\n" );
-//while(1) {getc(stdin);}
-//	exit (0);
+	signal(SIGINT,  ctrl_c_handler);
+	signal(SIGQUIT, ctrl_b_ignore);
 	g_exec_struct = &exec_struct;
-	g_envp = envp;
 
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
 

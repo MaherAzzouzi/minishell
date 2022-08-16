@@ -137,15 +137,23 @@ int handle_herdoc(t_parsing_node *node, t_exec_struct *exec_s)
     while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
     {
         p = readline("> ");
+        // if (p == NULL)
+        // {
+        //     i++;
+        //     continue;
+        // }
         if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
             i++;
         free(p);
     }
-
     pipe(fd);
     while (1)
     {
         p = readline("> ");
+        if (p == NULL)
+        {
+            break;
+        }
         if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
             break;
         if (!node->reds.herdoc_array[i]->is_quoted && ft_strchr(p, '$'))
