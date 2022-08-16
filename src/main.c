@@ -38,10 +38,7 @@ void ctrl_c_handler(int p)
 		printf("\n" GREEN "$PWNAI> " WHITE);
 	else
 		printf("\n" RED "$PWNAI> " WHITE); 
-<<<<<<< HEAD
 	return;
-=======
->>>>>>> 9243b2def81f97e705ff694f604883804ead22b7
 }
 
 void loop_handler(char *envp[], t_exec_struct* exec_s)
@@ -55,7 +52,6 @@ void loop_handler(char *envp[], t_exec_struct* exec_s)
 	}
 }
 
-<<<<<<< HEAD
 void ctrl_b_ignore(int p)
 {
 	(void)p;
@@ -72,8 +68,6 @@ void ctrl_b_handler(int p)
 	return;
 }
 
-=======
->>>>>>> 9243b2def81f97e705ff694f604883804ead22b7
 int	main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
