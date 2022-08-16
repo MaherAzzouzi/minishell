@@ -124,15 +124,22 @@ char* find_env_expand(t_lnode *node, t_exec_struct* exec_s)
     return p;
 }
 
-t_lnode * case_of_one_char_dollar(t_lnode **head, t_lnode *current, t_exec_struct* exec_s)
+t_lnode * case_of_one_char_dollar(t_lnode **head, t_lnode *current, t_exec_struct* exec_s, int se)
 {
     t_lnode *node;
     t_lnode *p;
     char *val;
-
-    val = get_env(convert_token(get_token(current->next)), exec_s, 0);
+    (void)exec_s;
+    if (se == 0)
+    {
+        val = ft_strdup("$$");
+    }
+    else
+        val = get_env(convert_token(get_token(current->next)), exec_s, 0);
+    printf("va lis %s\n", val);
     node = ft_new_node_lex(CMD, val);
-
+    free(node->type.cmd);
+    node->type.cmd = val;
     if (*head == current)
     {
         *head = node;
@@ -216,8 +223,9 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
             // Should be handeled here.
             if (get_token(current->next) == DLR)
             {
-                    // The case of cat << $$ is not yet handled
-                    current = case_of_one_char_dollar(head, current, exec_s);
+                // The case of cat << $$ is not yet handled
+                current = case_of_one_char_dollar(head, current, exec_s, should_expand);
+                should_expand = 1;
             }
             // In this case we just append a dollar at the start
             else if (get_token(current->next) == CMD)
