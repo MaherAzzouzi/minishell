@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 12:27:59 by snagat            #+#    #+#             */
-/*   Updated: 2022/08/16 15:54:51 by snagat           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -51,7 +40,7 @@ t_exec_struct *g_exec_struct;
 void    free_list(t_lnode **head);
 int order_quotes(t_lnode **head);
 void fix_after_expansion(t_lnode *head);
-int core(char *cmd, char *envp[], t_exec_struct *exec_struct);
+int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp *env);
 
 
 
