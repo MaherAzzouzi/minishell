@@ -6,11 +6,11 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:07:37 by mazzouzi          #+#    #+#             */
-/*   Updated: 2022/06/02 11:21:45 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/08 18:43:12 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
 e_token lexer_get_type(char a, char b)
 {
@@ -22,20 +22,29 @@ e_token lexer_get_type(char a, char b)
 		if (b == '>')
 			return (APPND);
 		else
-			return (REDRI);
+			return (REDRO);
 	else if (a == '<')
 		if (b == '<')
 			return (DLMI);
 		else
-			return (REDRO);
+			return (REDRI);
 	else if (a == '|')
-		return (PIPE);
+		if (b == '|')
+			return (OR);
+		else
+			return (PIPE);
+	else if (a == '&' && b == '&')
+		return (AND);
 	else if (a == '$')
 		return (DLR);
 	else if (a == '\0')
 		return (EOL);
 	else if (a == ' ')
-		return (SPACE);
+		return (SPC);
+	else if (a == '(')
+		return (LEFT_PAR);
+	else if (a == ')')
+		return (RIGHT_PAR);
 	else
 		return (CMD);
 }
@@ -47,7 +56,6 @@ t_lnode	*	ft_lexer(char *str)
 	size_t i;
 	int flag;
 
-	printf("Lexing \"%s\"\n", str);
 	i = 0;
 	head = NULL;
 	while (str[i])
@@ -60,7 +68,7 @@ t_lnode	*	ft_lexer(char *str)
 			flag = 1;
 			i++;
 		}
-		if (token == APPND || token == DLMI)
+		if (token == APPND || token == DLMI || token == OR || token == AND)
 			i++;
 		if (flag == 0)
 			i++;
@@ -68,5 +76,14 @@ t_lnode	*	ft_lexer(char *str)
 
 	// This is called when str[i] is NULL.
 	ft_add_back_lex(&head, EOL, NULL);
+	return (head);
+}
+
+t_lnode *lex(char *cmd)
+{
+	t_lnode *head;
+
+	head = ft_lexer(cmd);
+	ignore_spaces(&head);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 09:48:09 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/02 10:12:58 by snagat           ###   ########.fr       */
+/*   Updated: 2022/06/08 18:44:39 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,21 @@ char    *enum_to_str(e_token   token)
         return ("append");
     else if (token == PIPE)
         return ("PIPE");
-    else if (token == DLR)
-        return("$");
     else if (token == CMD)
         return("cmd");
     else if (token == EOL)
         return("end of line");
-    else if (token == SPACE)
+    else if (token == SPC)
         return("space");
+    else if (token == AND)
+        return ("and");
+    else if (token == OR)
+        return ("or");
+    else if (token == DLR)
+        return ("dollar");
+    else if (token == LEFT_PAR)
+        return ("left paranthesis");
+    else if (token == RIGHT_PAR)
+        return ("right paranthesis");
     return(NULL);
 }

@@ -13,3 +13,7 @@ right.
 
 First task a parser for : cat file | grep "D" && ls
 First task a parser for : (cat file && grep "D") | wc -l
+
+
+Tomorrow:
+    We need to fix this one `Hi f gfg  r && ffff >fffffrrrrrrrrrrrr`
