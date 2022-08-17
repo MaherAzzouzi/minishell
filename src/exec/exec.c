@@ -14,10 +14,20 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 {
 	char *p;
 
-	if (root->cmd.cmd[0] != '/')
+	if (root->cmd.cmd[0] == '.' && root->cmd.cmd[1] == '/')
+	{
+		p = getcwd(NULL, 0);
+		p = ft_strjoin(p, &root->cmd.cmd[1], 0);
+	}
+	else if (root->cmd.cmd[0] != '/' && root->cmd.cmd[0] != 0)
+	{
 		p = check_if_bin_exist(root->cmd.cmd, exec_s->path);
+		printf("%s\n", p);
+	}
 	else
+	{
 		p = root->cmd.cmd;
+	}
 	return p;
 }
 
@@ -25,13 +35,13 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 {
 	pid_t pid;
 	char *p;
+	struct stat sb;
 
 	//printf("Executing %s\n", root->cmd.cmd);
 	if (is_builtin(root))
 	{
 		int stdout_ = dup(1);
 		int stdin_ = dup(0);
-		printf("ENV IN PIPE %d %d\n", fd[0], fd[1]);
 		if (in != 0)
 		{
 			dup2(in, 0);
@@ -42,6 +52,8 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 			dup2(out, 1);
 			close(out);
 		}
+		handle_herdoc_iredr(root, exec_s);
+		handle_append_oredr(root);
 		builtins(root, exec_s, env);
 		dup2(stdout_, 1);
 		dup2(stdin_, 0);
@@ -62,12 +74,24 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		close(fd[0]);
 		close(fd[1]);
-		printf("SETUP SIGNAL\n");
 		if (root->p.parenthesised == 0)
 		{
 				p = return_cmd_full_path(root ,exec_s);
 				if (p == NULL)
-					show_errno();
+					show_errno(p);
+				printf("stat on %s\n", p);
+				if (p[0] != 0)
+				{
+					if (stat(p, &sb) < 0)
+						show_errno(p);
+					if (S_ISDIR(sb.st_mode))
+					{
+						printf("minishell: %s: is a directory\n", p);
+						exit(-2);
+					}
+				}
+				else
+					p = "/";
 				handle_herdoc_iredr(root, exec_s);
 				handle_append_oredr(root);
 				execve(p, root->cmd.argv, exec_s->envp);
@@ -141,21 +165,40 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 	char	*p;
 	int		status;
 	int		es;
+	struct stat sb;
 	
 	if (is_builtin(node))
 	{
+		int stdout_ = dup(1);
+		int stdin_ = dup(0);
+		handle_herdoc_iredr(node, exec_s);
+		handle_append_oredr(node);
 		builtins(node, exec_s, env);
+		dup2(stdout_, 1);
+		dup2(stdin_, 0);
 		return (0);
 	}
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("SETUP SIGNAL\n");
 		if (node->p.parenthesised == 0)
 		{
-				p = return_cmd_full_path(node, exec_s);
+			printf("CMD = %s\n", node->cmd.cmd);
+				p = return_cmd_full_path(node ,exec_s);
 				if (p == NULL)
-					show_errno();
+					show_errno(node->cmd.cmd);
+				if (p[0] != 0)
+				{
+					if (stat(p, &sb) < 0)
+						show_errno(p);
+					if (S_ISDIR(sb.st_mode))
+					{
+						printf("minishell: %s: is a directory\n", p);
+						exit(-2);
+					}
+				}
+				else
+					p = "/";
 				handle_herdoc_iredr(node, exec_s);
 				handle_append_oredr(node);
 				//TODO: check if it's a directory or not.

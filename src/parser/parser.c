@@ -49,6 +49,8 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	handle_wildcard(*head);
 	log_(*head);
 	root = parse_tree(*head);
+	printf("TREE\n");
+	print2D(root);
 	
     return root;
 }

@@ -44,7 +44,7 @@ t_lnode *return_highest_priv(t_lnode *start, t_lnode *end)
                 && count == 0)
         {
             p = current;
-            return p;
+            //return p;
         }
         if (get_token(current) == RIGHT_PAR)
             count--;
@@ -71,7 +71,14 @@ t_lnode *stop_at_higher_priv(t_lnode *highest)
     }
     else if (get_token(highest) == AND || get_token(highest) == OR)
     {
-        return get_end(current);
+        current = current->next;
+        while (get_token(current) != EOL)
+        {
+            if (get_token(current) == AND || get_token(current) == OR)
+                return current;
+            current = current->next;
+        }
+        return current;
     }
     else
         return (highest);

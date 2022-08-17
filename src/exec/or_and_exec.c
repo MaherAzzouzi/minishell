@@ -11,6 +11,10 @@ void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 			exec_simple_cmd(node->lchild, exec_s, env);
 		else if (node->lchild->type == PIPE)
 			pipe_chain_exec(node->lchild, exec_s, env);
+		if (node->lchild->type == AND)
+			and_chain_exec(node->lchild, exec_s, env);
+		else if (node->lchild->type == OR)
+			or_chain_exec(node->lchild, exec_s, env);
 		// We see if we should continue execution or no.
 		// 0 means false here.
 		if (WEXITSTATUS(exec_s->exit_status) == 0)
@@ -37,6 +41,10 @@ void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 			exec_simple_cmd(node->lchild, exec_s, env);
 		else if (node->lchild->type == PIPE)
 			pipe_chain_exec(node->lchild, exec_s ,env);
+		else if (node->lchild->type == AND)
+			and_chain_exec(node->lchild, exec_s,env);
+		else if (node->lchild->type == OR)
+			or_chain_exec(node->lchild, exec_s,env);
 
 		// We see if we should continue execution or no.
 		// 0 means false here.

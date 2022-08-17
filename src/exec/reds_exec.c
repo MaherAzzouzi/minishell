@@ -188,7 +188,7 @@ int handle_input_redirect(t_parsing_node *node)
     }
     // The actual file we want to redirect the output to.
     if (access(node->reds.i_r_params[i], R_OK) != 0)
-        show_errno();
+        show_errno(node->reds.i_r_params[i]);
     fd = open(node->reds.i_r_params[i], O_RDONLY, 0664);
     //printf("redirect to %s\n", node->reds.i_r_params[i]);
     if (fd < 0)

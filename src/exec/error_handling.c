@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-int show_errno()
+int show_errno(char *file)
 {
-    printf("Error opening file : %s\n", strerror(errno));
+    printf("minishell: %s: %s\n", file, strerror(errno));
     exit(-1);
 }
