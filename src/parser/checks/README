@@ -1,0 +1,6 @@
+--> function thats check on all checks and return faillure or success
+
+--> 2 successive tokens is error : Done!
+--> single token is error : Done!
+--> tokens checking left and right 
+--> check parenthesis parse error
