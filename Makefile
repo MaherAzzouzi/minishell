@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/08/14 19:52:29 by snagat           ###   ########.fr        #
+#    Updated: 2022/08/17 11:25:26 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,11 @@ all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
 	@cd libft && make
-	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g  $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM) -lreadline
+	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g   $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM) -lreadline
 	
 $(B_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -g -c $< -o $@
+	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -g  -c $< -o $@
 
 clean:
 	rm -rf $(B_DIR)

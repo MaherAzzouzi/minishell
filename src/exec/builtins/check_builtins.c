@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int    builtins(t_parsing_node *root, t_exec_struct *exec_s, t_envp * env)
+int    builtins(t_parsing_node *root, t_exec_struct *exec_s, t_envp ** env)
 {
     if (ft_strcmp("echo", root->cmd.cmd)==0)
     {
@@ -9,18 +9,13 @@ int    builtins(t_parsing_node *root, t_exec_struct *exec_s, t_envp * env)
     }
     if (ft_strcmp("cd", root->cmd.cmd) == 0)
     {
-        ft_cd(root, exec_s, env);
+        ft_cd(root, exec_s, *env);
         return(1);
     }
     if (ft_strcmp("pwd", root->cmd.cmd) == 0)
     {
-        ft_pwd(root, env);
+        ft_pwd(root, *env);
         return 1;
-    }
-    if (ft_strcmp("env", root->cmd.cmd) == 0)
-    {
-        ft_env(root, exec_s, env);
-        return(1);
     }
     if (ft_strcmp("exit", root->cmd.cmd) == 0)
     {
@@ -29,13 +24,18 @@ int    builtins(t_parsing_node *root, t_exec_struct *exec_s, t_envp * env)
     }
     if (ft_strcmp("unset", root->cmd.cmd) == 0)
     {
-        ft_unset(root, &env);
+        ft_unset(root, env);
         return 1;
     }
     if (ft_strcmp("export", root->cmd.cmd) == 0)
     {
-        ft_export(root, &env);
+        ft_export(root, env);
         return 1;
+    }
+    if (ft_strcmp("env", root->cmd.cmd) == 0)
+    {
+        ft_env(root, exec_s, env);
+        return(1);
     }
     return(0);
 }

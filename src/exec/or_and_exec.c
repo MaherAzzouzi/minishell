@@ -8,9 +8,9 @@ void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 	{
 		// First we execute the command at the left.
         if (node->lchild->type == CMD)
-			exec_simple_cmd(node->lchild, exec_s, env);
+			exec_simple_cmd(node->lchild, exec_s, &env);
 		else if (node->lchild->type == PIPE)
-			pipe_chain_exec(node->lchild, exec_s, env);
+			pipe_chain_exec(node->lchild, exec_s, &env);
 		if (node->lchild->type == AND)
 			and_chain_exec(node->lchild, exec_s, env);
 		else if (node->lchild->type == OR)
@@ -25,9 +25,9 @@ void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 		else if (node->rchild->type == OR)
 			or_chain_exec(node->rchild, exec_s, env);
 		else if (node->rchild->type == CMD)
-			exec_simple_cmd(node->rchild, exec_s, env);
+			exec_simple_cmd(node->rchild, exec_s, &env);
 		else if (node->rchild->type == PIPE)
-			pipe_chain_exec(node->rchild, exec_s, env);
+			pipe_chain_exec(node->rchild, exec_s, &env);
 	}
 }
 
@@ -38,9 +38,9 @@ void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 		//printf("ITS OF TYPE %s\n", convert_token(node->lchild->type));
 		// First we execute the command at the left.
         if (node->lchild->type == CMD)
-			exec_simple_cmd(node->lchild, exec_s, env);
+			exec_simple_cmd(node->lchild, exec_s, &env);
 		else if (node->lchild->type == PIPE)
-			pipe_chain_exec(node->lchild, exec_s ,env);
+			pipe_chain_exec(node->lchild, exec_s ,&env);
 		else if (node->lchild->type == AND)
 			and_chain_exec(node->lchild, exec_s,env);
 		else if (node->lchild->type == OR)
@@ -56,8 +56,8 @@ void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 		else if (node->rchild->type == OR)
 			or_chain_exec(node->rchild, exec_s,env);
 		else if (node->rchild->type == CMD)
-			exec_simple_cmd(node->rchild, exec_s,env);
+			exec_simple_cmd(node->rchild, exec_s,&env);
 		else if (node->rchild->type == PIPE)
-			pipe_chain_exec(node->rchild, exec_s, env);
+			pipe_chain_exec(node->rchild, exec_s, &env);
 	}
 }
