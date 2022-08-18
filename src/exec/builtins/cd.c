@@ -125,6 +125,7 @@ int ft_cd(t_parsing_node *root, t_exec_struct *exec_s, t_envp *en)
 		t = change_dir(root->cmd.argv[1], en);
 	if (t == SUCCESS)
 	{
+		convert(en);
 		exit_status_success();
 		return (SUCCESS);
 	}

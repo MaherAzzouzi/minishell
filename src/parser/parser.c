@@ -34,6 +34,7 @@ void consolidate_commands(t_lnode **head)
 t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 {
     t_parsing_node *root;
+	(void)exec_s;
 
 	if (order_quotes(head) == FAIL || check_all(*head) == FAIL)
 	{
@@ -44,7 +45,8 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	clean_empty_quote(head, SGLQT);
 	clean_empty_quote(head, DBLQT);
 	//log_(*head);
-	expand_env_variables(head, exec_s);
+	// expand_env_variables(head, exec_s);
+	consolidate_dlr_with_cmd(head, exec_s);
 	consolidate_commands(head);
 	handle_wildcard(*head);
 	log_(*head);

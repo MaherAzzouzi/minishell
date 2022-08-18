@@ -96,6 +96,8 @@ int check_left_par(t_lnode *head);
 void expand_env_variables(t_lnode **head, t_exec_struct* exec_s);
 void handle_wildcard(t_lnode *head);
 char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s);
+void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s);
+void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s);
 t_parsing_node *parse(t_lnode **head, t_exec_struct* s);
 
 

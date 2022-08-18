@@ -54,6 +54,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		handle_herdoc_iredr(root, exec_s);
 		handle_append_oredr(root);
+		expand_one_node(root, exec_s);
 		builtins(root, exec_s, env);
 		dup2(stdout_, 1);
 		dup2(stdin_, 0);
@@ -76,6 +77,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		close(fd[1]);
 		if (root->p.parenthesised == 0)
 		{
+				expand_one_node(root, exec_s);
 				p = return_cmd_full_path(root ,exec_s);
 				if (p == NULL)
 					show_errno(p);
@@ -172,6 +174,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		int stdin_ = dup(0);
 		handle_herdoc_iredr(node, exec_s);
 		handle_append_oredr(node);
+		expand_one_node(node, exec_s);
 		builtins(node, exec_s, env);
 		dup2(stdout_, 1);
 		dup2(stdin_, 0);
@@ -182,27 +185,24 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	{
 		if (node->p.parenthesised == 0)
 		{
+			expand_one_node(node, exec_s);
 			printf("CMD = %s\n", node->cmd.cmd);
-				p = return_cmd_full_path(node ,exec_s);
-				if (p == NULL)
-					show_errno(node->cmd.cmd);
-				if (p[0] != 0)
-				{
-					if (stat(p, &sb) < 0)
-						show_errno(p);
-					if (S_ISDIR(sb.st_mode))
-					{
-						printf("minishell: %s: is a directory\n", p);
-						exit(-2);
-					}
-				}
-				else
-					p = "/";
-				handle_herdoc_iredr(node, exec_s);
-				handle_append_oredr(node);
-				//TODO: check if it's a directory or not.
-				execve(p, node->cmd.argv, exec_s->envp);
-				exit(0);
+			p = return_cmd_full_path(node ,exec_s);
+			if (p == NULL)
+				show_errno(node->cmd.cmd);
+			if (stat(p, &sb) < 0)
+				show_errno(p);
+			if (S_ISDIR(sb.st_mode))
+			{
+				printf("minishell: %s: is a directory\n", p);
+				exit(-2);
+			}
+			handle_herdoc_iredr(node, exec_s);
+			handle_append_oredr(node);
+			
+			//TODO: check if it's a directory or not.
+			execve(p, node->cmd.argv, exec_s->envp);
+			exit(0);
 		}
 		else
 		{
@@ -220,7 +220,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		{
 			es = status;
 			exec_s->exit_status = es;
-			// printf("Exit status is %d\n", WEXITSTATUS(es));
+			//printf("Exit status is %d\n", WEXITSTATUS(es));
 			return es;
 		}
 		else if (WIFSIGNALED(status))

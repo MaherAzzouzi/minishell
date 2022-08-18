@@ -60,5 +60,6 @@ void	ft_unset(t_parsing_node *root, t_envp **env)
 
 	}
 	exit_status_success();
+	convert(*env);
 }
 	

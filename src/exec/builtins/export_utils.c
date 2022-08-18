@@ -127,7 +127,6 @@ int check_export_syntax(char *str)
 	i = 0;
 	if (ft_isalpha(str[0]) == 0 || (check_equal(str) == -1))
 	{
-		printf("[%d] love you honey\n", ft_isalpha(str[0]));
 		return (-1);
 	}
 	else

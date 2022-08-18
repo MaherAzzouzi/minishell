@@ -184,6 +184,84 @@ void combine_successive_cmds(t_lnode *head)
     }
 }
 
+void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
+{
+    char *p;
+    int i;
+
+    p = expand_an_array_having_dlr(ft_strdup(node->cmd.cmd), exec_s);
+    if (p != NULL)
+    {
+        free(node->cmd.cmd);
+        node->cmd.cmd = p;
+    }
+    i = 0;
+    while (node->cmd.argv[i])
+    {
+        p = expand_an_array_having_dlr(node->cmd.argv[i], exec_s);
+        printf("P is %s\n", p);
+        if (p != NULL)
+        {
+            node->cmd.argv[i] = p;
+        }
+        i++;
+    }
+}
+
+void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s)
+{
+    t_lnode *current;
+    t_lnode *p;
+    int is_current_changed;
+
+    current = *head;
+    while (current && get_token(current) != EOL)
+    {
+        is_current_changed = 0;
+        if (get_token(current) == DLR)
+        {
+            // If it is $$ or $?
+            // Should be handeled here.
+            if (get_token(current->next) == DLR)
+            {
+                current = case_of_one_char_dollar(head, current, exec_s, 0);
+                is_current_changed = 1;
+            }
+            // In this case we just append a dollar at the start
+            else if (get_token(current->next) == CMD)
+            {
+                current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
+                if (current == (*head))
+                {
+                    p = *head;
+                    *head = (*head)->next;
+                    current = current->next;
+                    free_lexer_node(p);
+                }
+                else
+                {
+                    p = *head;
+                    while (p->next != current)
+                        p = p->next;
+                    p->next = current->next;
+                    free_lexer_node(current);
+                    current = p->next;
+                }
+                is_current_changed = 1;
+            }
+            // simple dolar sign should work too.
+            else //if (get_token(current->next) == EOL)
+            {
+                    current->type.token = CMD;
+                    current->type.cmd = ft_strdup("$");
+            }
+        }
+        if (!is_current_changed)
+            current = current->next;
+    }
+    combine_successive_cmds(*head);
+}
+
 void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
 {
     //char* value;
@@ -195,7 +273,6 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
     current = *head;
     while (current && get_token(current) != EOL)
     {
-        printf("%s\n", convert_token(get_token(current)));
         if (get_token(current) == DLMI)
         {
             should_expand = 0;
@@ -230,25 +307,24 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
             // In this case we just append a dollar at the start
             else if (get_token(current->next) == CMD)
             {
-                    current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
-                    if (should_expand)
-                        current->next->type.cmd = find_env_expand(current->next, exec_s);  
-                    should_expand = 1;
-
-                    if (current == (*head))
-                    {
-                        *head = (*head)->next;
-                        current = current->next;
-                    }
-                    else
-                    {
-                        p = *head;
-                        while (p->next != current)
-                            p = p->next;
-                        p->next = current->next;
-                        free_lexer_node(current);
-                        current = p->next;
-                    }
+                current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
+                if (should_expand)
+                    current->next->type.cmd = find_env_expand(current->next, exec_s);  
+                should_expand = 1;
+                if (current == (*head))
+                {
+                    *head = (*head)->next;
+                    current = current->next;
+                }
+                else
+                {
+                    p = *head;
+                    while (p->next != current)
+                        p = p->next;
+                    p->next = current->next;
+                    free_lexer_node(current);
+                    current = p->next;
+                }
             }
             // simple dolar sign should work too.
             else //if (get_token(current->next) == EOL)

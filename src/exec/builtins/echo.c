@@ -27,7 +27,7 @@ void    ft_echo(t_parsing_node *root)
     }
     else
     {
-        while(root->cmd.argv[j])
+        while (root->cmd.argv[j])
         {
             if (root->cmd.argv[j + 1] == NULL)
                 printf("%s", root->cmd.argv[j]);

@@ -27,5 +27,6 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env);
 void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env);
 void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env);
 void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env);
+void convert(t_envp *env);
 
 #endif
