@@ -30,7 +30,7 @@ PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tok
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
 PARSENV= $(addprefix parser/expansion/, expand.c wildcard.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
-EXEC=$(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and_exec.c)
+EXEC=$(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and_exec.c change_exit_status.c)
 BUILTINS= $(addprefix exec/builtins/, check_builtins.c echo.c cd.c pwd.c env.c copy_env.c cd_utils.c exit.c ft_unset.c export.c export_utils.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSENV) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))

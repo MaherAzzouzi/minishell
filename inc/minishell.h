@@ -41,8 +41,9 @@ t_exec_struct *g_exec_struct;
 void    free_list(t_lnode **head);
 int order_quotes(t_lnode **head);
 void fix_after_expansion(t_lnode *head);
+void exit_status_success(void);
+void exit_status_fail(void);
+void show_errno_no_exit(char *file);
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp *env);
-
-
 
 #endif

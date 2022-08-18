@@ -67,7 +67,7 @@ int change_dir(char *dir, t_envp *en)
 	}
 	if (chdir(dir) == -1)
 	{
-		ft_putstr_fd("directory not found", 2);
+		show_errno_no_exit(dir);
 		return (FAIL);
 	}
 	else
@@ -85,6 +85,7 @@ int change_dir_home(char *dir, t_exec_struct *exec_s, t_envp *env)
 {
 	char *path;
 	char *curr_path;
+	char* pwd;
 
 	curr_path = get_cwd();
 
@@ -100,8 +101,11 @@ int change_dir_home(char *dir, t_exec_struct *exec_s, t_envp *env)
 		return (FAIL);
 	}
 	update_env(&env, "OLDPWD", curr_path);
-	update_env(&env, "PWD", get_cwd());
+	pwd = get_cwd();
+	update_env(&env, "PWD", pwd);
 	free(path);
+	free(curr_path);
+	free(pwd);
 	return (SUCCESS);
 }
 
@@ -117,6 +121,10 @@ int ft_cd(t_parsing_node *root, t_exec_struct *exec_s, t_envp *en)
 	else
 		t = change_dir(root->cmd.argv[1], en);
 	if (t == SUCCESS)
+	{
+		exit_status_success();
 		return (SUCCESS);
+	}
+	exit_status_fail();
 	return (FAIL);
 }
