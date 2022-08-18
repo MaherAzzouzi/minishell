@@ -54,5 +54,6 @@ void	ft_unset(t_parsing_node *root, t_envp **env)
 			i++;
 		}
 	}
+	exit_status_success();
 }
 	

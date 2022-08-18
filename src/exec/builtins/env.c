@@ -11,8 +11,9 @@ int ft_env(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 	while(head)
 	{
 		if(ft_egale_len(head->str) != -1)
-			fprintf(stdout,"%s\n", head->str);
+			printf("%s\n", head->str);
 		head = head->next;
 	}
+	ex
 	return 0;
 }

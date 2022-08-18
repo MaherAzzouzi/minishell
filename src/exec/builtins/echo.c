@@ -39,4 +39,5 @@ void    ft_echo(t_parsing_node *root)
         if (ret < 0)
             exit(-1);
     }
+    exit_status_success();
 }
