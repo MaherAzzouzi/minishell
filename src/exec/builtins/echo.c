@@ -8,7 +8,7 @@ void    ft_echo(t_parsing_node *root)
 
     i = 2;
     j = 1;
-    if (root->cmd.argv == NULL)
+    if (root->cmd.argv[1] == NULL)
     {
         ret = write(1, "\n", 2);
         if (ret < 0)

@@ -6,7 +6,7 @@
 /*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:43:29 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/03 11:28:30 by snagat           ###   ########.fr       */
+/*   Updated: 2022/08/17 11:15:16 by snagat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 	if (token == CMD)
 	{
 		size = 0;
-		while (lexer_get_type(cmd[size], cmd[size + 1]) == CMD)
+		while (cmd[size] && lexer_get_type(cmd[size], cmd[size + 1]) == CMD)
 			size++;
 		node->type.cmd = (char *)malloc((size + 1) * sizeof(char));
 		ft_memcpy(node->type.cmd, cmd, size * sizeof(char));

@@ -85,10 +85,12 @@ int change_dir_home(char *dir, t_exec_struct *exec_s, t_envp *env)
 {
 	char *path;
 	char *curr_path;
-
+	char *new_path;
+	(void)exec_s;
 	curr_path = get_cwd();
 
-	path = get_env(dir, exec_s, 0);
+	path = find_env(dir, env);;
+	new_path = NULL;
 	if (!path)
 	{
 		ft_putstr_fd("couldnt find path", 2);
@@ -99,8 +101,11 @@ int change_dir_home(char *dir, t_exec_struct *exec_s, t_envp *env)
 		ft_putstr_fd("couldnt change directory\n", 2);
 		return (FAIL);
 	}
-	update_env(&env, "OLDPWD", curr_path);
-	update_env(&env, "PWD", get_cwd());
+	update_env(&env, ft_strdup("OLDPWD"), curr_path);
+	new_path = get_cwd();
+	update_env(&env, ft_strdup("PWD"), new_path);
+	free(new_path);
+	free(curr_path);
 	free(path);
 	return (SUCCESS);
 }
