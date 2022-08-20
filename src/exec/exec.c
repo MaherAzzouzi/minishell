@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-// void ctrl_b_handler(int p)
-// {
-// 	printf("Quit: %d\n", p);
-// 	if (g_exec_struct->exit_status == 0)
-// 		printf("\n" GREEN "$PWNAI> " WHITE);
-// 	else
-// 		printf("\n" RED "$PWNAI> " WHITE);
-// 	return;
-// }
-
 char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 {
 	char *p;
@@ -77,48 +67,50 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		close(fd[1]);
 		if (root->p.parenthesised == 0)
 		{
-				expand_one_node(root, exec_s);
-				p = return_cmd_full_path(root ,exec_s);
-				if (p == NULL)
-					show_errno(p);
-				printf("stat on %s\n", p);
-				if (p[0] != 0)
-				{
-					if (stat(p, &sb) < 0)
-						show_errno(p);
-					if (S_ISDIR(sb.st_mode))
-					{
-						printf("minishell: %s: is a directory\n", p);
-						exit(-2);
-					}
-				}
-				else
-					p = "/";
-				handle_herdoc_iredr(root, exec_s);
-				handle_append_oredr(root);
-				execve(p, root->cmd.argv, exec_s->envp);
-				exit(0);
+			p = NULL;
+			if (root->cmd.cmd[0] != 0)
+			{
+			expand_one_node(root, exec_s);
+			printf("CMD = %s\n", root->cmd.cmd);
+			p = return_cmd_full_path(root ,exec_s);
+			if (p == NULL)
+				show_errno(root->cmd.cmd);
+			if (stat(p, &sb) < 0)
+				show_errno(p);
+			if (S_ISDIR(sb.st_mode))
+			{
+				printf("minishell: %s: is a directory\n", p);
+				exit(-2);
+			}
+			}
+			handle_herdoc_iredr(root, exec_s);
+			handle_append_oredr(root);
+			if (root->cmd.cmd[0] == 0)
+			{
+				p = "/";
+				root->cmd.argv[0] = "/";
+			}
+			execve(p, root->cmd.argv, exec_s->envp);
+			exit(0);
 		}
 		else
 		{
+			// printf("HANDLE PARANTHESIS!\n");
 			handle_herdoc_iredr(root, exec_s);
 			handle_append_oredr(root);
-			core(ft_strdup(root->p.cmd), exec_s->envp, exec_s, env);
-			exit(0);
+			int ret = core(ft_strdup(root->p.cmd), exec_s->envp, exec_s, env);
+			exit(ret);
 		}
 	}
 	else
 	{
-		// waitpid(-1, 0, 0);
 		if (in != 0)
-		{
 			close(in);
-		}
-		// close(in);
 		if (out != 1)
 			close(out);
 		return (pid);
 	}
+	return 0;
 }
 
 void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
@@ -185,6 +177,9 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	{
 		if (node->p.parenthesised == 0)
 		{
+			p = NULL;
+			if (node->cmd.cmd[0] != 0)
+			{
 			expand_one_node(node, exec_s);
 			printf("CMD = %s\n", node->cmd.cmd);
 			p = return_cmd_full_path(node ,exec_s);
@@ -197,10 +192,14 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 				printf("minishell: %s: is a directory\n", p);
 				exit(-2);
 			}
+			}
 			handle_herdoc_iredr(node, exec_s);
 			handle_append_oredr(node);
-			
-			//TODO: check if it's a directory or not.
+			if (node->cmd.cmd[0] == 0)
+			{
+				p = "/";
+				node->cmd.argv[0] = "/";
+			}
 			execve(p, node->cmd.argv, exec_s->envp);
 			exit(0);
 		}

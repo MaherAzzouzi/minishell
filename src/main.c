@@ -66,7 +66,7 @@ int main(int argc, char *argv[], char *envp[])
 	
 	// 
 
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
 
 	// signal(SIGINT,  ctrl_c_handler);
 	signal(SIGQUIT, ctrl_b_ignore);

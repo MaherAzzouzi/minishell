@@ -188,7 +188,8 @@ void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
 {
     char *p;
     int i;
-
+    if (node->cmd.cmd == NULL || node->cmd.cmd[0] == 0)
+        return ;
     p = expand_an_array_having_dlr(ft_strdup(node->cmd.cmd), exec_s);
     if (p != NULL)
     {
@@ -199,7 +200,6 @@ void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
     while (node->cmd.argv[i])
     {
         p = expand_an_array_having_dlr(node->cmd.argv[i], exec_s);
-        printf("P is %s\n", p);
         if (p != NULL)
         {
             node->cmd.argv[i] = p;
