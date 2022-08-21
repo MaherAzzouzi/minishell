@@ -7,8 +7,9 @@
 
 char *read_command_line(t_exec_struct *exec_struct)
 {
+	(void)exec_struct;
 	char *cmd;
-	if (exec_struct->exit_status == 0)
+	if (g_exec_struct->exit_status == 0)
 		cmd = readline(GREEN "$PWNAI> " WHITE);
 	else
 		cmd = readline(RED "$PWNAI> " WHITE);
@@ -63,11 +64,8 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	t_exec_struct exec_struct;
-	
-	// 
-
 	rl_catch_signals = 0;
-
+	
 	// signal(SIGINT,  ctrl_c_handler);
 	signal(SIGQUIT, ctrl_b_ignore);
 	g_exec_struct = &exec_struct;

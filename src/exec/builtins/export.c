@@ -68,6 +68,7 @@ void	p_(char *str, int len)
 	}
 	else
 	{
+		printf("declare -x ");
 		while(str[i])
 		{
 			printf("%c", str[i]);
@@ -103,8 +104,8 @@ int	ft_export(t_parsing_node *node, t_envp **env)
 			t = check_new_env(node->cmd.argv[i], env);
 			if (check_export_syntax(node->cmd.argv[i]) == -1 || ft_check_var_syntx(node->cmd.argv[i]) == 0)
 			{
-				show_message("export", "not a valid identifier.");
-				exit_status_fail();
+				free_env(&export);
+				ft_putstr_fd("not a valid identifier\n",2);
 				return(FAIL);
 			}
 			else if (check_export_syntax(node->cmd.argv[i]) == 1 && t == 0)

@@ -114,10 +114,6 @@ int check_equal(char *str)
 			return (-1);
 	}
 	return (1);
-	// if (ft_isalnum(str[x - 1]))
-	// 	return(1);
-	// else
-	// 	return(-1);
 }
 
 int check_export_syntax(char *str)

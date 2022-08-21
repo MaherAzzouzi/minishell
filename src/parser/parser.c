@@ -41,18 +41,11 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 		printf("Syntax Error!\n");
 		return (NULL);
 	}
-	log_(*head);
 	clean_empty_quote(head, SGLQT);
 	clean_empty_quote(head, DBLQT);
-	//log_(*head);
-	// expand_env_variables(head, exec_s);
 	consolidate_dlr_with_cmd(head, exec_s);
 	consolidate_commands(head);
 	handle_wildcard(*head);
-	log_(*head);
 	root = parse_tree(*head);
-	printf("TREE\n");
-	print2D(root);
-	
     return root;
 }

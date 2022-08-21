@@ -12,7 +12,6 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 	else if (root->cmd.cmd[0] != '/' && root->cmd.cmd[0] != 0)
 	{
 		p = check_if_bin_exist(root->cmd.cmd, exec_s->path);
-		printf("%s\n", p);
 	}
 	else
 	{
@@ -71,7 +70,6 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 			if (root->cmd.cmd[0] != 0)
 			{
 			expand_one_node(root, exec_s);
-			printf("CMD = %s\n", root->cmd.cmd);
 			p = return_cmd_full_path(root ,exec_s);
 			if (p == NULL)
 				show_errno(root->cmd.cmd);
@@ -159,7 +157,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	int		status;
 	int		es;
 	struct stat sb;
-	
+
 	if (is_builtin(node))
 	{
 		int stdout_ = dup(1);
@@ -180,18 +178,17 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			p = NULL;
 			if (node->cmd.cmd[0] != 0)
 			{
-			expand_one_node(node, exec_s);
-			printf("CMD = %s\n", node->cmd.cmd);
-			p = return_cmd_full_path(node ,exec_s);
-			if (p == NULL)
-				show_errno(node->cmd.cmd);
-			if (stat(p, &sb) < 0)
-				show_errno(p);
-			if (S_ISDIR(sb.st_mode))
-			{
-				printf("minishell: %s: is a directory\n", p);
-				exit(-2);
-			}
+				expand_one_node(node, exec_s);
+				p = return_cmd_full_path(node ,exec_s);
+				if (p == NULL)
+					show_errno(node->cmd.cmd);
+				if (stat(p, &sb) < 0)
+					show_errno(p);
+				if (S_ISDIR(sb.st_mode))
+				{
+					printf("minishell: %s: is a directory\n", p);
+					exit(-2);
+				}
 			}
 			handle_herdoc_iredr(node, exec_s);
 			handle_append_oredr(node);
@@ -218,8 +215,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		if (WIFEXITED(status))
 		{
 			es = status;
-			exec_s->exit_status = es;
-			//printf("Exit status is %d\n", WEXITSTATUS(es));
+			g_exec_struct->exit_status = es;
 			return es;
 		}
 		else if (WIFSIGNALED(status))
@@ -236,8 +232,9 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[], t_envp **env)
 {
-	init(exec_s, envp);
-	// printf("LEFT-> %s\n", root->lchild->cmd.cmd);
+	(void)envp;
+	free(exec_s->path);
+	exec_s->path = get_env("PATH", exec_s, 0);
 	if (root->type == CMD)
 		exec_simple_cmd(root, exec_s, env);
 	else if (root->type == PIPE)
@@ -245,8 +242,5 @@ void execute(t_parsing_node *root, t_exec_struct *exec_s, char *envp[], t_envp *
 	else if (root->type == OR)
 		or_chain_exec(root, exec_s, *env);
 	else if (root->type == AND)
-	{
-		printf("Executing AND\n");
 		and_chain_exec(root, exec_s, *env);
-	}
 }

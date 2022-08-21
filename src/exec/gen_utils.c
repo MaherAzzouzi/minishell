@@ -98,13 +98,13 @@ char *get_env(char *var, void* exec_s, int flag)
     }
     else if (ft_strcmp(var, "?") == 0)
     {
-        return itoa(WEXITSTATUS(((t_exec_struct*)exec_s)->exit_status));
+        return itoa(WEXITSTATUS(g_exec_struct->exit_status));
     }
     i= 0;
     while (envp[i])
     {
         envpline = ft_split(envp[i], '=');
-        if (ft_strncmp(envpline[0], var, ft_strlen(var)) == 0)
+        if (ft_strcmp(envpline[0], var) == 0)
         {
             val = ft_strdup(envpline[1]);
             free_charpp(envpline);

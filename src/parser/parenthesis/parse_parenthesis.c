@@ -4,7 +4,7 @@ t_lnode *find_next_right_par_or_eol(t_lnode *start)
 {
     while (1)
     {
-        if (get_token(start) == RIGHT_PAR || get_token(start) == EOL)
+        if (get_token(start) == RIGHT_PAR || get_token(start) == EOL || get_token(start) == AND || get_token(start) == OR || get_token(start) == PIPE)
             return start;
         start = start->next;
     }
@@ -49,7 +49,6 @@ t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end)
     if (cmd[0] != 0)
     {
         t_parsing_node *n = parse_redirections(current->next, find_next_right_par_or_eol(current->next));
-        printf("node is %p\n", n);
         if (n == NULL)
         {
             node->p.parenthesised = 1;

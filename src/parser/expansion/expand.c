@@ -136,7 +136,6 @@ t_lnode * case_of_one_char_dollar(t_lnode **head, t_lnode *current, t_exec_struc
     }
     else
         val = get_env(convert_token(get_token(current->next)), exec_s, 0);
-    printf("va lis %s\n", val);
     node = ft_new_node_lex(CMD, val);
     free(node->type.cmd);
     node->type.cmd = val;
@@ -184,14 +183,33 @@ void combine_successive_cmds(t_lnode *head)
     }
 }
 
+char * case_of_one_char_dlr(char *p, t_exec_struct* exec_s)
+{
+    if (ft_strcmp(p, "$?") == 0 || ft_strcmp(p, "$$") == 0)
+    {
+        p = get_env(p + 1, exec_s, 0);
+        return p;
+    }
+    return NULL;
+}
+
 void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
 {
     char *p;
     int i;
     if (node->cmd.cmd == NULL || node->cmd.cmd[0] == 0)
         return ;
-    p = expand_an_array_having_dlr(ft_strdup(node->cmd.cmd), exec_s);
-    if (p != NULL)
+
+    p = case_of_one_char_dlr(node->cmd.cmd, exec_s);
+    if (p == NULL)
+    {
+        p = expand_an_array_having_dlr(node->cmd.cmd, exec_s);
+        if (p != NULL)
+        {
+            node->cmd.cmd = p;
+        }
+    }
+    else
     {
         free(node->cmd.cmd);
         node->cmd.cmd = p;
@@ -199,9 +217,19 @@ void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
     i = 0;
     while (node->cmd.argv[i])
     {
-        p = expand_an_array_having_dlr(node->cmd.argv[i], exec_s);
-        if (p != NULL)
+        p = case_of_one_char_dlr(node->cmd.argv[i], exec_s);
+        if (p == NULL)
         {
+            p = expand_an_array_having_dlr(node->cmd.argv[i], exec_s);
+            if (p != NULL)
+            {
+
+                node->cmd.argv[i] = p;
+            }
+        }
+        else
+        {
+            free(node->cmd.argv[i]);
             node->cmd.argv[i] = p;
         }
         i++;
