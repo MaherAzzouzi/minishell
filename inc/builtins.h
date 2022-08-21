@@ -24,6 +24,7 @@ int	check_new_env(char *str, t_envp	**env);
 int	ft_check_var_syntx(char *str);
 void    free_env(t_envp **head);
 int is_builtin(t_parsing_node *root);
+char *ft_strndup(char *str, int j);
 
 
 #endif

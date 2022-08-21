@@ -33,8 +33,16 @@ void	ft_unset_node(t_envp **env, char *arg)
 				current->next = next;
 				break ;
 			}
+			else if (!ft_strncmp(arg, current->next->str, ft_strlen(arg))
+				&& current->next->str[ft_strlen(arg)] == '\0')
+				{
+					free(current->next->str);
+					free(current->next);
+					current->next = next;
+					break ;
+				}
 			if (current->next != NULL)
-			 	current = current->next;
+			 	current = current->next;	
 		}
 	}
 }

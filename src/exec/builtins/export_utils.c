@@ -114,10 +114,6 @@ int check_equal(char *str)
 			return (-1);
 	}
 	return (1);
-	// if (ft_isalnum(str[x - 1]))
-	// 	return(1);
-	// else
-	// 	return(-1);
 }
 
 int check_export_syntax(char *str)
@@ -127,7 +123,6 @@ int check_export_syntax(char *str)
 	i = 0;
 	if (ft_isalpha(str[0]) == 0 || (check_equal(str) == -1))
 	{
-		printf("[%d] love you honey\n", ft_isalpha(str[0]));
 		return (-1);
 	}
 	else

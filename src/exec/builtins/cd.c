@@ -32,12 +32,12 @@ int change_dir_old(char *str, t_envp *env)
 	path = find_env(str, env);
 	if (!path)
 	{
-		ft_putstr_fd("couldnt find path\n", 2);
+		ft_putstr_fd("Couldnt find path\n", 2);
 		return (FAIL);
 	}
 	if (chdir(path) != 0)
 	{
-		ft_putstr_fd("couldnt change directory\n", 2);
+		ft_putstr_fd("Couldnt change directory\n", 2);
 		return (FAIL);
 	}
 	free(path);
@@ -62,12 +62,14 @@ int change_dir(char *dir, t_envp *en)
 		curr_path = find_env("PWD", en);
 	if (!ft_strcmp(dir, ".") && errno == ENOENT)
 	{
-		ft_putstr_fd("couldnt find dir\n", 2);
+		free(curr_path);
+		ft_putstr_fd("Couldnt find dir\n", 2);
 		return (FAIL);
 	}
 	if (chdir(dir) == -1)
 	{
-		ft_putstr_fd("directory not found", 2);
+		free(curr_path);
+		ft_putstr_fd("Directory not found\n", 2);
 		return (FAIL);
 	}
 	else

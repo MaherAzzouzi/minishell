@@ -12,10 +12,12 @@ int    ft_pwd(t_parsing_node *node, t_envp *env)
         if (str == NULL)
         {
             str = find_env("PWD", env);
-            printf("pwd %s\n", str);
+            printf("%s\n", str);
         }
         else
-            printf(" str %s\n", str);
+            printf("%s\n", str);
+        if (!str)
+            free(str);
         return(SUCCESS);
     }
     else
