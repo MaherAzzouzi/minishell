@@ -212,11 +212,11 @@ int handle_herdoc_iredr(t_parsing_node *node, t_exec_struct *exec_s)
         in = handle_input_redirect(node);
         handle_herdoc(node, exec_s);
     }
-    else if (node->last_in_token == DLMI)
-    {
-        in = handle_herdoc(node, exec_s);
-        handle_input_redirect(node);
-    }
+    // else if (node->last_in_token == DLMI)
+    // {
+    //     in = handle_herdoc(node, exec_s);
+    //     handle_input_redirect(node);
+    // }
     
     // Make it read from here!
     dup2(in, 0);

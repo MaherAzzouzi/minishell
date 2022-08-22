@@ -46,6 +46,8 @@ typedef struct s_parat
 
 struct s_parsing_node
 {
+    // Those just in case of herdoc
+    int fd[2];
     // In some cases we need to know is << or < is at the end of the command.
     e_token last_in_token;
     // In some cases we need to know is > or >> is at the end of the command.
@@ -57,6 +59,7 @@ struct s_parsing_node
     t_reds reds;
     struct s_parsing_node *lchild;
     struct s_parsing_node *rchild;
+
 };
 
 typedef struct s_parsing_node t_parsing_node;

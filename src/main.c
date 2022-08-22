@@ -9,10 +9,10 @@ char *read_command_line(t_exec_struct *exec_struct)
 {
 	(void)exec_struct;
 	char *cmd;
-	if (g_exec_struct->exit_status == 0)
-		cmd = readline(GREEN "$PWNAI> " WHITE);
-	else
-		cmd = readline(RED "$PWNAI> " WHITE);
+	// if (g_exec_struct->exit_status == 0)
+	// 	cmd = readline(":)$ ");
+	// else
+	cmd = readline("$ ");
 	add_history(cmd);
 	return (cmd);
 }
@@ -29,9 +29,13 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
 
-void ctrl_b_ignore(int p)
+void ctrl_c_handler(int p)
 {
 	(void)p;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 	return;
 }
 
@@ -67,8 +71,8 @@ int main(int argc, char *argv[], char *envp[])
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
 	
-	// signal(SIGINT,  ctrl_c_handler);
-	signal(SIGQUIT, ctrl_b_ignore);
+	signal(SIGINT,  ctrl_c_handler);
+	signal(SIGQUIT, ctrl_b_handler);
 	g_exec_struct = &exec_struct;
 
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
