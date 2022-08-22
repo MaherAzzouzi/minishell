@@ -1,6 +1,6 @@
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +27,7 @@
 #include "builtins.h"
 
 t_exec_struct *g_exec_struct;
+int g_subshell_count;
 
 #define INFINIT 666
 #define RED "\033[0;31m"

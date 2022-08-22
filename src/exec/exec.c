@@ -179,6 +179,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			if (node->cmd.cmd[0] != 0)
 			{
 				expand_one_node(node, exec_s);
+
 				p = return_cmd_full_path(node ,exec_s);
 				if (p == NULL)
 					show_errno(node->cmd.cmd);

@@ -31,16 +31,57 @@ void consolidate_commands(t_lnode **head)
 	}
 }
 
+// replace a with b in string p.
+void  replace(char *p, char a, char b)
+{
+	int i;
+
+	i = 0;
+	while (p[i])
+	{
+		if (p[i] == a)
+			p[i] = b;
+		i++;
+	}
+}
+
+void replace_dlr_with_flag(t_lnode *head)
+{
+	t_lnode *current;
+
+	current = head;
+	while (get_token(current) != EOL)
+	{
+		if (get_token(current) == SGLQT)
+		{
+			current = current->next;
+			while (get_token(current) != SGLQT)
+			{
+				if (get_token(current) == CMD)
+				{
+					if (!strchr(get_cmd(current), '\xff'))
+						replace(get_cmd(current), '$', '\xff');
+				}
+				current = current->next;
+			}
+		}
+		current = current->next;
+	}
+}
+
 t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 {
     t_parsing_node *root;
 	(void)exec_s;
 
-	if (order_quotes(head) == FAIL || check_all(*head) == FAIL)
+	if ((order_quotes(head) == FAIL || check_all(*head) == FAIL))
 	{
 		printf("Syntax Error!\n");
 		return (NULL);
 	}
+	replace_dlr_with_flag(*head);
+	// Here I should replace $ with \xff in case a cmd is between single quotes.
+	join_quotes(*head);
 	clean_empty_quote(head, SGLQT);
 	clean_empty_quote(head, DBLQT);
 	consolidate_dlr_with_cmd(head, exec_s);

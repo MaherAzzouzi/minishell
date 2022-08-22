@@ -3,6 +3,10 @@
 // For Linxu the env variables can have an uppercase/lowercase or number + underscore
 // May require some fixes for macOS
 
+// An idea that I got to fix that ' quote expansion is to add a \xff at the end
+// Marking that it should not expand.
+
+
 // This function should get a pointer to the dollar sign and then something like this $HOME
 int get_env_variable_length(char *p)
 {
@@ -77,7 +81,16 @@ char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
         free(p);
         p = result;
     }
-    return result;
+    if (result)
+    {
+        replace(result, '\xff', '$');
+        return result;
+    }
+    else
+    {
+        replace(p, '\xff', '$');
+        return p;
+    }
 }
 
 char* find_env_expand(t_lnode *node, t_exec_struct* exec_s)
@@ -190,6 +203,11 @@ char * case_of_one_char_dlr(char *p, t_exec_struct* exec_s)
         p = get_env(p + 1, exec_s, 0);
         return p;
     }
+    else if (ft_strcmp(p, "\xff?") == 0 || ft_strcmp(p, "\xff\xff") == 0)
+    {
+        replace(p, '\xff', '$');
+        return ft_strdup(p);
+    }
     return NULL;
 }
 
@@ -199,7 +217,7 @@ void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
     int i;
     if (node->cmd.cmd == NULL || node->cmd.cmd[0] == 0)
         return ;
-
+    
     p = case_of_one_char_dlr(node->cmd.cmd, exec_s);
     if (p == NULL)
     {

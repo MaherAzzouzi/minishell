@@ -18,6 +18,9 @@ t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd)
 	t_lnode	*current;
 
 	node = ft_new_node_lex(token, cmd);
+	if (token == LEFT_PAR || token == RIGHT_PAR)
+		node->parenthesis_start = cmd;
+
 	current = *head;
 	if (*head == NULL)
 	{

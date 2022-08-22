@@ -57,10 +57,10 @@ void	ft_check_lists(t_lnode  *head)
 		exit(1);
 	while (current)
 	{
-		// if (get_token(current) == CMD)
-		// 	printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
-		// else
-		// 	printf("[token = %s]\n", enum_to_str(current->type.token));
+		if (get_token(current) == CMD)
+			printf("[token = %s] [cmd = %s]\n", enum_to_str(current->type.token), current->type.cmd);
+		else
+			printf("[token = %s]\n", enum_to_str(current->type.token));
 		current = current->next;
 	}
 }

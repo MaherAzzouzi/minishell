@@ -98,6 +98,7 @@ void handle_wildcard(t_lnode *head);
 char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s);
 void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s);
 void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s);
+void  replace(char *p, char a, char b);
 t_parsing_node *parse(t_lnode **head, t_exec_struct* s);
 
 

@@ -65,6 +65,7 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	t_exec_struct exec_struct;
 	rl_catch_signals = 0;
+	rl_outstream = stderr;
 	
 	// signal(SIGINT,  ctrl_c_handler);
 	signal(SIGQUIT, ctrl_b_ignore);

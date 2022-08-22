@@ -51,6 +51,9 @@ typedef struct s_lexer_node
 {
 	struct s_lexer_node	*next;
 	t_type				type;
+
+	// Parenthesis in the cmd string
+	char *parenthesis_start;
 } t_lnode;
 
 t_lnode	*ft_lexer(char *str);
