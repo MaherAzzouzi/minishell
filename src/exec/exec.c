@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+
+
+void	ctrl_child(int p)
+{
+	(void)p;
+	printf("HH\n");
+}
+
+
+
 char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 {
 	char *p;
@@ -49,9 +59,12 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		dup2(stdin_, 0);
 		return (0);
 	}
+	
+		signal(SIGINT,SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, ctrl_child);
 		if (in != 0)
 		{
 			dup2(in, 0);
@@ -102,6 +115,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	}
 	else
 	{
+		signal(SIGINT, ctrl_c_handler);
 		if (in != 0)
 			close(in);
 		if (out != 1)
@@ -184,6 +198,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, ctrl_c_handler);
 		if (it_has_herdoc(node))
 		{
 			dup2(node->fd[0], 0);
@@ -228,7 +243,9 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	}
 	else
 	{
+		signal(SIGINT, ctrl_c_handler);
 		waitpid(pid, &status, 0);
+		signal(SIGINT, enter);
 		if (WIFEXITED(status))
 		{
 			es = status;
@@ -238,10 +255,9 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		else if (WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) != 11)
-			{
-				printf("Quit: %d\n", WTERMSIG(status));
 				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
-			}
+			else if (WTERMSIG(status) == 2)
+				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
 		}
 	}
 	return 0;

@@ -19,12 +19,13 @@ char *read_command_line(t_exec_struct *exec_struct)
 
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 {
+	(void)envp;
 	t_lnode *head;
 	t_parsing_node *root;
 	head = lex(cmd);
 	root = parse(&head, exec_struct);
 	if (root)
-		execute(root, exec_struct, envp, env);
+		execute(root, exec_struct,env);
 	free_all(cmd, head, root);
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
@@ -32,20 +33,28 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 void ctrl_c_handler(int p)
 {
 	(void)p;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	write(1, "\n", 1);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// rl_redisplay();
+	//exit(1);
 	return;
 }
 
 void ctrl_b_handler(int p)
 {
 	printf("Quit: %d\n", p);
-	if (g_exec_struct->exit_status == 0)
-		printf("\n" GREEN "$PWNAI> " WHITE);
-	else
-		printf("\n" RED "$PWNAI> " WHITE);
+
+	return;
+}
+
+void enter(int p)
+{
+	(void)p;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 	return;
 }
 
@@ -71,7 +80,7 @@ int main(int argc, char *argv[], char *envp[])
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
 	
-	signal(SIGINT,  ctrl_c_handler);
+	signal(SIGINT,  enter);
 	signal(SIGQUIT, ctrl_b_handler);
 	g_exec_struct = &exec_struct;
 
