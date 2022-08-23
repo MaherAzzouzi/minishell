@@ -2,20 +2,17 @@
 
 char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 {
-	char *p;
+	char *p = NULL;
 
+	p = root->cmd.cmd;
 	if (root->cmd.cmd[0] == '.' && root->cmd.cmd[1] == '/')
 	{
 		p = getcwd(NULL, 0);
 		p = ft_strjoin(p, &root->cmd.cmd[1], 0);
 	}
-	else if (root->cmd.cmd[0] != '/' && root->cmd.cmd[0] != 0)
+	else if (root->cmd.cmd[0] != '/' && root->cmd.cmd[0] != '.')
 	{
 		p = check_if_bin_exist(root->cmd.cmd, exec_s->path);
-	}
-	else
-	{
-		p = root->cmd.cmd;
 	}
 	return p;
 }
@@ -117,6 +114,10 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			exit(-1);
 		if (it_has_herdoc(node->lchild))
 		{
+			if (it_has_redirections(node->lchild))
+			{
+				execute_all(node->lchild, g_exec_struct, env);
+			}
 			close(fd[0]);
 			fd[0] = node->lchild->fd[0];
 		}
@@ -191,6 +192,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		{
 			expand_one_node(node, exec_s);
 			p = return_cmd_full_path(node ,exec_s);
+			printf("HERE %s\n", p);
 			if (p == NULL)
 				show_errno(node->cmd.cmd);
 			if (stat(p, &sb) < 0)
@@ -214,6 +216,10 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	else
 	{
 		waitpid(pid, &status, 0);
+		if (it_has_herdoc(node))
+		{
+			close(node->fd[0]);
+		}
 		if (WIFEXITED(status))
 		{
 			es = status;
@@ -237,7 +243,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
     int i;
     char *p;
 
-    if (!it_has_herdoc(node))
+    if (!it_has_herdoc(node) || node->fd[0] != 0)
         return;
     // Open a pipe
     // Keep reading until the last herdoc which is interesting
@@ -281,13 +287,13 @@ void traverse_for_herdoc(t_parsing_node *root, t_envp **env)
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env)
 {
-	static int flag;
+	//static int flag;
 
-	if (flag == 0)
-	{
+	//if (flag == 0)
+	//{
 		traverse_for_herdoc(root, env);
-		flag = 1;
-	}
+	//	flag = 1;
+	//}
 	free(exec_s->path);
 	exec_s->path = get_env("PATH", exec_s, 0);
 	if (root->type == CMD)
@@ -306,6 +312,8 @@ void execute_all(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env)
 {
 	int pid;
 	int status;
+
+	print2D(root);
 	if (root && root->p.parenthesised == 1)
 	{
 		pid = fork();
@@ -325,5 +333,7 @@ void execute_all(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env)
 		}
 	}
 	else
+	{
 		execute(root, exec_s, env);
+	}
 }

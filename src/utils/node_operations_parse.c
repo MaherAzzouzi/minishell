@@ -19,6 +19,8 @@ t_parsing_node *alloc_node(e_token type)
 
     p->p.cmd = NULL;
     p->p.parenthesised = 0;
+    p->fd[0] = 0;
+    p->fd[1] = 0;
     return (p);
 }
 

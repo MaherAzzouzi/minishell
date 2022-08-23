@@ -118,12 +118,150 @@ t_parsing_node *lex_and_parse(char *cmd)
     return root;
 }
 
+char **strdup_arrayp(char **p)
+{
+    int i;
+
+    i = 0;
+    if (!p)
+        return NULL;
+    while (p[i])
+        i++;
+    
+    char **res = (char **)malloc(sizeof(char *) * (i + 1));
+    if (!res)
+        exit(-1);
+    i = 0;
+    while (p[i])
+    {
+        res[i] = ft_strdup(p[i]);
+        i++;
+    }
+    res[i] = NULL;
+    return res;
+}
+
+char **join_arrayp(char **a, char **b)
+{
+    char **res;
+    int i;
+    int size;
+
+    if (a == NULL)
+        return b;
+    else if (b == NULL)
+        return a;
+    else if (a == NULL && b == NULL)
+        return NULL;
+
+    size = 0;
+    i = 0;
+    while (a[i])
+    {
+        i++;
+        size++;
+    }
+    i = 0;
+    while (b[i])
+    {
+        i++;
+        size++;
+    }
+    res = (char **)malloc(sizeof(char *) * (size + 1));
+    i = 0;
+    while (a[i])
+    {
+        res[i] = ft_strdup(a[i]);
+        i++;
+    }
+    int j = 0;
+    while (b[j])
+    {
+        res[i] = ft_strdup(b[j]);
+        i++;
+        j++;
+    }
+    res[i] = NULL;
+    return res;
+}
+
+t_parsing_node* all_right(t_parsing_node* node)
+{
+    while (node->rchild != NULL)
+        node = node->rchild;
+    return (node);
+}
+
+void adjust_redirections(t_parsing_node* adjust, t_parsing_node* node)
+{
+
+    int flag;
+
+    flag = 0;
+
+    if (node->reds.append_array && adjust->reds.append_array &&
+    node->reds.append_array[0] && adjust->reds.append_array[0])
+    {
+        adjust->reds.append_array = 
+        join_arrayp(node->reds.append_array, adjust->reds.append_array);
+        flag = 1;
+    }
+    else if (node->reds.append_array && node->reds.append_array[0])
+    {
+        adjust->reds.append_array = strdup_arrayp(node->reds.append_array);
+        flag = 1;
+    }
+    
+    if (node->reds.i_r_params && adjust->reds.i_r_params &&
+    node->reds.i_r_params[0] && adjust->reds.i_r_params[0])
+    {
+        adjust->reds.i_r_params = 
+        join_arrayp(node->reds.i_r_params, adjust->reds.i_r_params);
+        flag = 1;
+    }
+    else if (node->reds.i_r_params && node->reds.i_r_params[0])
+    {
+        adjust->reds.i_r_params = strdup_arrayp(node->reds.i_r_params);
+        flag  =1;
+    }
+
+    if (node->reds.o_r_params && adjust->reds.o_r_params &&
+    node->reds.o_r_params[0] && adjust->reds.o_r_params[0])
+    {
+        adjust->reds.o_r_params = 
+        join_arrayp(node->reds.o_r_params, adjust->reds.o_r_params);
+        flag = 1;
+    }
+    else if (node->reds.o_r_params && node->reds.o_r_params[0])
+    {
+        adjust->reds.o_r_params = strdup_arrayp(node->reds.o_r_params);
+        flag = 1;
+    }
+    if (flag)
+    {
+        adjust->last_in_token = node->last_in_token;
+       adjust->last_out_token = node->last_out_token;
+    }
+}
+
+int it_has_redirections(t_parsing_node *p)
+{
+    if (p->reds.append_array && p->reds.append_array[0])
+        return 1;
+    if (p->reds.i_r_params && p->reds.i_r_params[0])
+        return 1;
+    if (p->reds.o_r_params && p->reds.o_r_params[0])
+        return 1;
+    return 0;
+}
+
 // expand parenthesis into subtrees.
 t_parsing_node *expand_node(t_parsing_node *node)
 {
     int l;
     int r;
     t_parsing_node *p;
+    t_parsing_node *adjust;
 
     l = 0;
     r = 0;
@@ -134,8 +272,13 @@ t_parsing_node *expand_node(t_parsing_node *node)
         p = node;
         node = lex_and_parse(node->p.cmd);
         node->p.parenthesised = 1;
+        if (it_has_redirections(p))
+        {
+            adjust = all_right(node);
+            // If it already have redirections do not bother changing it.
+            adjust_redirections(adjust, p);
+        }
         free_node(p);
-        return node;
     }
     if (node->lchild && node->lchild->p.parenthesised == 1)
     {
@@ -143,7 +286,13 @@ t_parsing_node *expand_node(t_parsing_node *node)
         // need to free before just overwrite.
         node->lchild = lex_and_parse(node->lchild->p.cmd);
         node->lchild->p.parenthesised = 1;
-        show_node(node->lchild);
+        if (it_has_redirections(p))
+        {
+            adjust = all_right(node->lchild);
+            // If it already have redirections do not bother changing it.
+            adjust_redirections(adjust, p);
+        }
+        //show_node(node->lchild);
         l = 1;
         free_node(p);
     }
@@ -152,15 +301,19 @@ t_parsing_node *expand_node(t_parsing_node *node)
         p = node->rchild;
         node->rchild = lex_and_parse(node->rchild->p.cmd);
         node->rchild->p.parenthesised = 1;
+        if (it_has_redirections(p))
+        {
+            adjust = all_right(node->rchild);
+            // If it already have redirections do not bother changing it.
+            adjust_redirections(adjust, p);
+        }
         r = 1;
         free_node(p);
     }
     if (l == 0)
         node->lchild = expand_node(node->lchild);
     if (r == 0)
-    {
         node->rchild = expand_node(node->rchild);
-    }
     return node;
 }
 
@@ -168,6 +321,8 @@ t_parsing_node *parse_tree(t_lnode *head)
 {
     t_parsing_node * root = recursive_tree_creation(head, get_end(head));
     if (g_expand_node == 1)
+    {
         root = expand_node(root);
+    }
     return root;
 }

@@ -59,7 +59,6 @@ struct s_parsing_node
     t_reds reds;
     struct s_parsing_node *lchild;
     struct s_parsing_node *rchild;
-
 };
 
 typedef struct s_parsing_node t_parsing_node;

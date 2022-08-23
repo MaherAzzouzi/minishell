@@ -46,5 +46,6 @@ void exit_status_fail(void);
 void show_errno_no_exit(char *file);
 void show_message(char *file, char *msg);
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env);
+int it_has_redirections(t_parsing_node *p);
 
 #endif

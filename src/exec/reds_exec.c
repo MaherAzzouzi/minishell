@@ -72,7 +72,7 @@ int handle_append(t_parsing_node *node)
     if (!it_has_append(node))
         return (-1);
     // We just set the output to the last file in our list.
-
+    printf("HNA %s\n", node->cmd.cmd);
     i = 0;
     while (node->reds.append_array[i] && node->reds.append_array[i + 1])
     {        
@@ -85,9 +85,11 @@ int handle_append(t_parsing_node *node)
         i++;
     }
     fd = open(node->reds.append_array[i], O_CREAT | O_WRONLY | O_APPEND, 0664);
+    printf("HERE %s %d\n", node->reds.append_array[i], fd);
     //printf("redirect to %s\n", node->reds.append_array[i]);
     if (fd < 0)
     {
+        printf("%s\n", strerror(errno));
         //printf("Error creating file %s\n", node->reds.append_array[i]);
         exit(-1);
     }
