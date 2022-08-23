@@ -27,7 +27,7 @@
 #include "builtins.h"
 
 t_exec_struct *g_exec_struct;
-int g_subshell_count;
+int g_expand_node;
 
 #define INFINIT 666
 #define RED "\033[0;31m"

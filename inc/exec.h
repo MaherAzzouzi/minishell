@@ -29,5 +29,6 @@ void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env);
 void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env);
 int it_has_herdoc(t_parsing_node *node);
 void convert(t_envp *env);
+void execute_all(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env);
 
 #endif

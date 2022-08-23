@@ -19,12 +19,15 @@ char *read_command_line(t_exec_struct *exec_struct)
 
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 {
+	(void)envp;
 	t_lnode *head;
 	t_parsing_node *root;
 	head = lex(cmd);
 	root = parse(&head, exec_struct);
 	if (root)
-		execute(root, exec_struct, envp, env);
+	{
+		execute_all(root, exec_struct, env);
+	}
 	free_all(cmd, head, root);
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
@@ -70,7 +73,8 @@ int main(int argc, char *argv[], char *envp[])
 	t_exec_struct exec_struct;
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
-	
+
+	g_expand_node = 0;
 	signal(SIGINT,  ctrl_c_handler);
 	signal(SIGQUIT, ctrl_b_handler);
 	g_exec_struct = &exec_struct;

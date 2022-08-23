@@ -64,11 +64,9 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		close(fd[0]);
 		close(fd[1]);
-		if (root->p.parenthesised == 0)
+		p = NULL;
+		if (root->cmd.cmd[0] != 0)
 		{
-			p = NULL;
-			if (root->cmd.cmd[0] != 0)
-			{
 			expand_one_node(root, exec_s);
 			p = return_cmd_full_path(root ,exec_s);
 			if (p == NULL)
@@ -80,25 +78,16 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 				printf("minishell: %s: is a directory\n", p);
 				exit(-2);
 			}
-			}
-			handle_herdoc_iredr(root, exec_s);
-			handle_append_oredr(root);
-			if (root->cmd.cmd[0] == 0)
-			{
-				p = "/";
-				root->cmd.argv[0] = "/";
-			}
-			execve(p, root->cmd.argv, exec_s->envp);
-			exit(0);
 		}
-		else
+		handle_herdoc_iredr(root, exec_s);
+		handle_append_oredr(root);
+		if (root->cmd.cmd[0] == 0)
 		{
-			// printf("HANDLE PARANTHESIS!\n");
-			handle_herdoc_iredr(root, exec_s);
-			handle_append_oredr(root);
-			int ret = core(ft_strdup(root->p.cmd), exec_s->envp, exec_s, env);
-			exit(ret);
+			p = "/";
+			root->cmd.argv[0] = "/";
 		}
+		execve(p, root->cmd.argv, exec_s->envp);
+		exit(0);
 	}
 	else
 	{
@@ -116,9 +105,10 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	static int fd[2];
 	int status;
 	int pid2;
-	int fd2;
+	int input;
+	int output;
 
-	fd2 = dup(0);
+	input = dup(0);
 	while (node->type == PIPE)
 	{
 		// printf("HERE1\n");
@@ -130,11 +120,19 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			close(fd[0]);
 			fd[0] = node->lchild->fd[0];
 		}
+		else if (node->lchild->p.parenthesised)
+		{
+			output = dup(1);
+			dup2(fd[1], 1);
+			close(fd[1]);
+			execute_all(node->lchild, exec_s, env);
+			dup2(output, 1);
+			close(output);
+		}
 		else
 			spawn_process(0, fd[1], node->lchild, exec_s, fd, env);
 		if (node->rchild->type == CMD)
 		{
-			// printf("HERE IM PIPE\n");
 			if (it_has_herdoc(node->rchild))
 			{
 				close(fd[0]);
@@ -145,7 +143,6 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			if (WIFEXITED(status))
 			{
 				exec_s->exit_status = status;
-				// printf("Exit status is %d\n", WEXITSTATUS(status));
 			}
 		}
 		else
@@ -155,8 +152,8 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		}
 		node = node->rchild;
 	}
-	dup2(fd2, 0);
-	close(fd2);
+	dup2(input, 0);
+	close(input);
 	while (waitpid(-1, &status, 0) != -1)
 		;
 }
@@ -189,42 +186,30 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			dup2(node->fd[0], 0);
 			close(node->fd[0]);
 		}
-		if (node->p.parenthesised == 0)
+		p = NULL;
+		if (node->cmd.cmd[0] != 0)
 		{
-			p = NULL;
-			if (node->cmd.cmd[0] != 0)
+			expand_one_node(node, exec_s);
+			p = return_cmd_full_path(node ,exec_s);
+			if (p == NULL)
+				show_errno(node->cmd.cmd);
+			if (stat(p, &sb) < 0)
+				show_errno(p);
+			if (S_ISDIR(sb.st_mode))
 			{
-				expand_one_node(node, exec_s);
-
-				p = return_cmd_full_path(node ,exec_s);
-				if (p == NULL)
-					show_errno(node->cmd.cmd);
-				if (stat(p, &sb) < 0)
-					show_errno(p);
-				if (S_ISDIR(sb.st_mode))
-				{
-					printf("minishell: %s: is a directory\n", p);
-					exit(-2);
-				}
+				printf("minishell: %s: is a directory\n", p);
+				exit(-2);
 			}
-			handle_herdoc_iredr(node, exec_s);
-			handle_append_oredr(node);
-			if (node->cmd.cmd[0] == 0)
-			{
-				p = "/";
-				node->cmd.argv[0] = "/";
-			}
-			execve(p, node->cmd.argv, exec_s->envp);
-			exit(0);
 		}
-		else
+		handle_herdoc_iredr(node, exec_s);
+		handle_append_oredr(node);
+		if (node->cmd.cmd[0] == 0)
 		{
-			// printf("HANDLE PARANTHESIS!\n");
-			handle_herdoc_iredr(node, exec_s);
-			handle_append_oredr(node);
-			int ret = core(ft_strdup(node->p.cmd), exec_s->envp, exec_s, env);
-			exit(ret);
+			p = "/";
+			node->cmd.argv[0] = "/";
 		}
+		execve(p, node->cmd.argv, exec_s->envp);
+		exit(0);
 	}
 	else
 	{
@@ -296,15 +281,49 @@ void traverse_for_herdoc(t_parsing_node *root, t_envp **env)
 
 void execute(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env)
 {
-	traverse_for_herdoc(root, env);
+	static int flag;
+
+	if (flag == 0)
+	{
+		traverse_for_herdoc(root, env);
+		flag = 1;
+	}
 	free(exec_s->path);
 	exec_s->path = get_env("PATH", exec_s, 0);
 	if (root->type == CMD)
+	{
 		exec_simple_cmd(root, exec_s, env);
+	}
 	else if (root->type == PIPE)
 		pipe_chain_exec(root, exec_s, env);
 	else if (root->type == OR)
 		or_chain_exec(root, exec_s, *env);
 	else if (root->type == AND)
 		and_chain_exec(root, exec_s, *env);
+}
+
+void execute_all(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env)
+{
+	int pid;
+	int status;
+	if (root && root->p.parenthesised == 1)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			execute(root, exec_s, env);
+			exit(WEXITSTATUS(g_exec_struct->exit_status));
+		}
+		else
+		{
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+			{
+				g_exec_struct->exit_status = status;
+				return;
+			}
+		}
+	}
+	else
+		execute(root, exec_s, env);
 }

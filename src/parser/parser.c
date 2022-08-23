@@ -73,7 +73,7 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 {
     t_parsing_node *root;
 	(void)exec_s;
-
+	g_expand_node++;
 	if ((order_quotes(head) == FAIL || check_all(*head) == FAIL))
 	{
 		printf("Syntax Error!\n");
@@ -88,5 +88,6 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	consolidate_commands(head);
 	handle_wildcard(*head);
 	root = parse_tree(*head);
+	g_expand_node--;
     return root;
 }
