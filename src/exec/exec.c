@@ -41,8 +41,8 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 			dup2(out, 1);
 			close(out);
 		}
-		handle_herdoc_iredr(root, exec_s);
 		handle_append_oredr(root);
+		handle_herdoc_iredr(root, exec_s);
 		expand_one_node(root, exec_s);
 		builtins(root, exec_s, env);
 		dup2(stdout_, 1);
@@ -81,8 +81,8 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 				exit(-2);
 			}
 			}
-			handle_herdoc_iredr(root, exec_s);
 			handle_append_oredr(root);
+			handle_herdoc_iredr(root, exec_s);
 			if (root->cmd.cmd[0] == 0)
 			{
 				p = "/";
@@ -94,8 +94,8 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		else
 		{
 			// printf("HANDLE PARANTHESIS!\n");
-			handle_herdoc_iredr(root, exec_s);
 			handle_append_oredr(root);
+			handle_herdoc_iredr(root, exec_s);
 			int ret = core(ft_strdup(root->p.cmd), exec_s->envp, exec_s, env);
 			exit(ret);
 		}
@@ -145,7 +145,6 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			if (WIFEXITED(status))
 			{
 				exec_s->exit_status = status;
-				// printf("Exit status is %d\n", WEXITSTATUS(status));
 			}
 		}
 		else
@@ -173,8 +172,8 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	{
 		int stdout_ = dup(1);
 		int stdin_ = dup(0);
-		handle_herdoc_iredr(node, exec_s);
 		handle_append_oredr(node);
+		handle_herdoc_iredr(node, exec_s);
 		expand_one_node(node, exec_s);
 		builtins(node, exec_s, env);
 		dup2(stdout_, 1);
@@ -207,8 +206,8 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 					exit(-2);
 				}
 			}
-			handle_herdoc_iredr(node, exec_s);
 			handle_append_oredr(node);
+			handle_herdoc_iredr(node, exec_s);
 			if (node->cmd.cmd[0] == 0)
 			{
 				p = "/";
@@ -220,8 +219,8 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		else
 		{
 			// printf("HANDLE PARANTHESIS!\n");
-			handle_herdoc_iredr(node, exec_s);
 			handle_append_oredr(node);
+			handle_herdoc_iredr(node, exec_s);
 			int ret = core(ft_strdup(node->p.cmd), exec_s->envp, exec_s, env);
 			exit(ret);
 		}

@@ -21,10 +21,11 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 {
 	t_lnode *head;
 	t_parsing_node *root;
+	(void)envp;
 	head = lex(cmd);
 	root = parse(&head, exec_struct);
 	if (root)
-		execute(root, exec_struct, envp, env);
+		execute(root, exec_struct, env);
 	free_all(cmd, head, root);
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
