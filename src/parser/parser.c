@@ -6,6 +6,7 @@ int is_quote(t_lnode *node)
 {
 	return ((get_token(node) == DBLQT) || (get_token(node) == SGLQT));
 }
+
 void consolidate_commands(t_lnode **head)
 {
 	t_lnode *current;
@@ -17,14 +18,17 @@ void consolidate_commands(t_lnode **head)
 	{
 		if (get_token(current) == CMD && is_quote(current->next) && get_token(current->next->next) == CMD)
 		{
-			set_cmd(current->next->next, ft_strjoin(get_cmd(current), get_cmd(current->next->next), 1));
-			tmp = current;
-			if (current == *head)
-				*head = current->next;
-			else
-				p->next = current->next;
-			current = current->next;
-			free_lexer_node(tmp);
+			if (!strchr(get_cmd(current), '$') || (strchr(get_cmd(current), '$') && strchr(get_cmd(current->next->next), '$')))
+			{
+				set_cmd(current->next->next, ft_strjoin(get_cmd(current), get_cmd(current->next->next), 1));
+				tmp = current;
+				if (current == *head)
+					*head = current->next;
+				else
+					p->next = current->next;
+				current = current->next;
+				free_lexer_node(tmp);
+			}
 		}
 		p = current;
 		current = current->next;
@@ -86,6 +90,8 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	clean_empty_quote(head, DBLQT);
 	consolidate_dlr_with_cmd(head, exec_s);
 	consolidate_commands(head);
+	log_(*head);
+	getchar();
 	handle_wildcard(*head);
 	root = parse_tree(*head);
 	g_expand_node--;
