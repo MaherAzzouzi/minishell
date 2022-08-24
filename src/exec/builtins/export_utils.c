@@ -65,11 +65,23 @@ int check_new_env(char *str, t_envp **env)
 	t = 0;
 	if (check_equal(str) == 2)
 		s = ft_strndup(str, ft_egale_len(str) - 1);
+	// else if (check_equal(str) == 1)
+	// {
+	// 	s = ft_strdup(str);
+	// 	puts("here");
+
+	// }
 	else
 		s = ft_strndup(str, ft_egale_len(str));
 	while (curr)
 	{
 		var = ft_strndup(curr->str, ft_egale_len(curr->str));
+		if (!ft_strcmp(s, curr->str) && check_equal(str) == 1)
+		{
+			t = 1;
+			free(curr->str);
+			curr->str = ft_strdup(str);
+		}
 		if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] =='=' && check_equal(str) == 2)
 		{
 			t = 1;

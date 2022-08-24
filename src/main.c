@@ -17,6 +17,14 @@ char *read_command_line(t_exec_struct *exec_struct)
 	// else
 
 	cmd = readline("$ ");
+	if (!cmd)
+	{
+		if (g_exec_struct->exit_status == 256)
+			exit(1);
+		else
+			exit(0);
+	}
+
 	add_history(cmd);
 	i = 0;
 	while (cmd[i] == ' ' || cmd[i] == '\t' || cmd[i] == '\r'
@@ -66,6 +74,7 @@ void enter(int p)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	exit_status_fail();
 	return;
 }
 
