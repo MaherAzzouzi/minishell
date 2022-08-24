@@ -85,7 +85,6 @@ int handle_append(t_parsing_node *node)
         i++;
     }
     fd = open(node->reds.append_array[i], O_CREAT | O_WRONLY | O_APPEND, 0664);
-    printf("HERE %s %d\n", node->reds.append_array[i], fd);
     //printf("redirect to %s\n", node->reds.append_array[i]);
     if (fd < 0)
     {

@@ -192,7 +192,6 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		{
 			expand_one_node(node, exec_s);
 			p = return_cmd_full_path(node ,exec_s);
-			printf("HERE %s\n", p);
 			if (p == NULL)
 				show_errno(node->cmd.cmd);
 			if (stat(p, &sb) < 0)
@@ -313,7 +312,7 @@ void execute_all(t_parsing_node *root, t_exec_struct *exec_s, t_envp **env)
 	int pid;
 	int status;
 
-	print2D(root);
+	//print2D(root);
 	if (root && root->p.parenthesised == 1)
 	{
 		pid = fork();

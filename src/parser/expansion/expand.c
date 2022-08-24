@@ -295,8 +295,7 @@ void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s)
                 }
                 is_current_changed = 1;
             }
-            // simple dolar sign should work too.
-            else //if (get_token(current->next) == EOL)
+            else
             {
                     current->type.token = CMD;
                     current->type.cmd = ft_strdup("$");
