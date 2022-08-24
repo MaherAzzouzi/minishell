@@ -97,6 +97,7 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 	flag_env_variables(*head);
 	if ((order_quotes(head) == FAIL || check_all(*head) == FAIL))
 	{
+		exit_status_fail();
 		printf("Syntax Error!\n");
 		return (NULL);
 	}

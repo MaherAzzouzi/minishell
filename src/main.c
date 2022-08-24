@@ -9,12 +9,22 @@ char *read_command_line(t_exec_struct *exec_struct)
 {
 	(void)exec_struct;
 	char *cmd;
+	char *cmd2;
+	int i;
+
 	// if (g_exec_struct->exit_status == 0)
 	// 	cmd = readline(":)$ ");
 	// else
+
 	cmd = readline("$ ");
 	add_history(cmd);
-	return (cmd);
+	i = 0;
+	while (cmd[i] == ' ' || cmd[i] == '\t' || cmd[i] == '\r'
+	|| cmd[i] == '\n' || cmd[i] == '\f' || cmd[i] == '\v' )
+		i++;
+	cmd2 = ft_strdup(&cmd[i]);
+	free(cmd);
+	return (cmd2);
 }
 
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)

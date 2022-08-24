@@ -272,7 +272,6 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
     // Open a pipe
     // Keep reading until the last herdoc which is interesting
     // Open a pipe to use it as input for our program
-	show_node(node);
     i = 0;
     while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
     {
