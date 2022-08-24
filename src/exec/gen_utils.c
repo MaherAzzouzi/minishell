@@ -100,6 +100,8 @@ char *get_env(char *var, void* exec_s, int flag)
     {
         return itoa(WEXITSTATUS(g_exec_struct->exit_status));
     }
+    else if (var[0] == '\xfe' && var[1] == 0)
+        return ft_strdup("\xff");
     i= 0;
     while (envp[i])
     {

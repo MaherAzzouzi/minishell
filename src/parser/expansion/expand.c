@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-// For Linxu the env variables can have an uppercase/lowercase or number + underscore
+// For Linux the env variables can have an uppercase/lowercase or number + underscore
 // May require some fixes for macOS
 
 // An idea that I got to fix that ' quote expansion is to add a \xff at the end
@@ -17,8 +17,15 @@ int get_env_variable_length(char *p)
         return FAIL;
     // bypass $
     p++;
+    
+    if (p[0] == '\xfe')
+    {
+        return 1;
+    }
 
     if (*p == '$' || *p == '?')
+        return 1;
+    if (ft_isdigit(*p))
         return 1;
     q = p;
     while (*p != 0)
@@ -28,6 +35,11 @@ int get_env_variable_length(char *p)
             p++;
         while (*p == '_')
             p++;
+        if (*p == '\xfe')
+        {
+            p++;
+            break;
+        }
         if (t == p)
             break;
     }
@@ -50,13 +62,41 @@ char*   return_env(char *p)
     return env;
 }
 
+char * remove_char(char *p, char c)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (p[i])
+    {
+        if (p[i] == c)
+        {
+            j = i + 1;
+            while (p[i] != 0)
+            {
+                p[i] = p[j];
+                i++;
+                j++;
+            }
+            p[i] = 0;
+            i = -1;
+        }
+        i++;
+    }
+    return p;
+}
+
 char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
 {
     char* result;
     char* q;
     char    *env;
+    int flag;
 
+    flag = 0;
     result = NULL;
+
     while (1)
     {
         q = strchr(p, '$');
@@ -74,9 +114,22 @@ char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
             exit(-1);
         ft_memcpy(result, p, q-p);
         result[q-p] = 0;
-
-        result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
-        result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        if (env[0] == '\xfe' && env[1] == 0)
+        {
+            result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+            result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        }
+        else if (strchr(env, '\xfe'))
+        {
+            env[ft_strlen(env) - 1] = 0;
+            result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+            result = ft_strjoin(result, q+ft_strlen(env)+2, 0);
+        }
+        else
+        {
+            result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+            result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        }
         free(env);
         free(p);
         p = result;
@@ -84,11 +137,13 @@ char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
     if (result)
     {
         replace(result, '\xff', '$');
+        remove_char(result, '\xfe');
         return result;
     }
     else
     {
         replace(p, '\xff', '$');
+        remove_char(p, '\xfe');
         return p;
     }
 }
@@ -295,8 +350,7 @@ void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s)
                 }
                 is_current_changed = 1;
             }
-            // simple dolar sign should work too.
-            else //if (get_token(current->next) == EOL)
+            else
             {
                     current->type.token = CMD;
                     current->type.cmd = ft_strdup("$");
