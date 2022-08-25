@@ -65,12 +65,8 @@ int check_new_env(char *str, t_envp **env)
 	t = 0;
 	if (check_equal(str) == 2)
 		s = ft_strndup(str, ft_egale_len(str) - 1);
-	// else if (check_equal(str) == 1)
-	// {
-	// 	s = ft_strdup(str);
-	// 	puts("here");
-
-	// }
+	else if (check_equal(str) == 3)
+		s = ft_strdup(str);
 	else
 		s = ft_strndup(str, ft_egale_len(str));
 	while (curr)
@@ -82,7 +78,9 @@ int check_new_env(char *str, t_envp **env)
 			free(curr->str);
 			curr->str = ft_strdup(str);
 		}
-		if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] =='=' && check_equal(str) == 2)
+		else if (!ft_strcmp(s, curr->str))
+			t = 1;
+		else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] =='=' && check_equal(str) == 2)
 		{
 			t = 1;
 			curr->str = ft_strjoin(curr->str, &ft_strchr(str, '=')[1], 0);
@@ -125,7 +123,7 @@ int check_equal(char *str)
 		else
 			return (-1);
 	}
-	return (1);
+	return (3);
 }
 
 int check_export_syntax(char *str)

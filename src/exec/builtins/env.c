@@ -31,7 +31,8 @@ int ft_env(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 				s = ft_strndup(node->cmd.argv[i], ft_egale_len(node->cmd.argv[i]));
 			else
 			{
-				fprintf(stderr, "no such file or directory\n");
+				fprintf(stderr, "No such file or directory\n");
+				exit_status_fail();
 				return(-1);
 			}
 			current = *env;
@@ -59,6 +60,6 @@ int ft_env(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 			head = head->next;
 		} 
 	}
-
+	exit_status_success();
 	return 0;
 }
