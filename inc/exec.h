@@ -29,7 +29,7 @@ void and_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env);
 void or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env);
 int it_has_herdoc(t_parsing_node *node);
 void convert(t_envp *env);
-void enter(int p);
-void ctrl_c_handler(int p);
+void enter();
+void ctrl_c_handler();
 
 #endif

@@ -28,6 +28,8 @@
 
 t_exec_struct *g_exec_struct;
 int g_subshell_count;
+struct sigaction new;
+struct sigaction old;
 
 #define INFINIT 666
 #define RED "\033[0;31m"
@@ -46,5 +48,6 @@ void exit_status_fail(void);
 void show_errno_no_exit(char *file);
 void show_message(char *file, char *msg);
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env);
+void loop_handler(char *envp[], t_exec_struct *exec_s);
 
 #endif

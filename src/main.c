@@ -4,6 +4,7 @@
 
 #include <termios.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
 
 char *read_command_line(t_exec_struct *exec_struct)
 {
@@ -16,7 +17,7 @@ char *read_command_line(t_exec_struct *exec_struct)
 	// 	cmd = readline(":)$ ");
 	// else
 
-	cmd = readline("$ ");
+	cmd = readline("o ");
 	if (!cmd)
 	{
 		if (g_exec_struct->exit_status == 256)
@@ -52,11 +53,7 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 void ctrl_c_handler(int p)
 {
 	(void)p;
-	write(1, "\n", 1);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
-	//exit(1);
+
 	return;
 }
 
@@ -99,8 +96,8 @@ int main(int argc, char *argv[], char *envp[])
 	t_exec_struct exec_struct;
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
-	
-	signal(SIGINT,  enter);
+	//printf("enter\n");
+	signal(SIGINT, enter);
 	signal(SIGQUIT, ctrl_b_handler);
 	g_exec_struct = &exec_struct;
 
