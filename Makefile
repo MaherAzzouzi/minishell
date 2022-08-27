@@ -6,7 +6,7 @@
 #    By: snagat <snagat@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 12:31:51 by snagat            #+#    #+#              #
-#    Updated: 2022/08/17 11:25:26 by snagat           ###   ########.fr        #
+#    Updated: 2022/08/27 17:04:00 by snagat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get
 LEXERC=$(addprefix lexer/, lexing.c)
 PARSERC=$(addprefix parser/, parser.c)
 PARSETREE=$(addprefix parser/main_tree/, main_tree.c analyze_cmd.c)
-PARSEPIPE=$(addprefix parser/pipe/, pipe.c)
 PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c handle_double_quotes.c handle_quotes.c)
 PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c check_paranthesis.c) 
 PARSRED= $(addprefix parser/redirections/, o_redr.c)
@@ -32,7 +31,7 @@ PARSENV= $(addprefix parser/expansion/, expand.c wildcard.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c)
 EXEC=$(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and_exec.c change_exit_status.c bridge.c)
 BUILTINS= $(addprefix exec/builtins/, check_builtins.c echo.c cd.c pwd.c env.c copy_env.c cd_utils.c exit.c ft_unset.c export.c export_utils.c)
-CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSEPIPE) $(PARSQUOTES) $(PARSRED) $(PARSENV) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
+CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSQUOTES) $(PARSRED) $(PARSENV) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
 PROGRAM= minishell
