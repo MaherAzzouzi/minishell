@@ -94,7 +94,6 @@ int change_dir_home(char *dir, t_exec_struct *exec_s, t_envp *env)
 	
 	(void)exec_s;
 	curr_path = get_cwd();
-
 	path = find_env(dir, env);;
 	new_path = NULL;
 	if (!path)
