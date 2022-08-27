@@ -340,6 +340,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 			p = get_next_line(0);
 			if (p[0] == 0)
 			{
+				free(p);
 				break;
 			}
 			if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
