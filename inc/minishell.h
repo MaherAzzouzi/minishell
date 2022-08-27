@@ -25,12 +25,16 @@
 #include "checks.h"
 #include "exec.h"
 #include "builtins.h"
+#include <sys/types.h>
+#include <dirent.h>
 
 t_exec_struct *g_exec_struct;
 int g_subshell_count;
 struct sigaction new;
 struct sigaction old;
 
+#define TRUE 1
+#define FALSE 0
 #define INFINIT 666
 #define RED "\033[0;31m"
 #define GREEN "\033[0;32m"
