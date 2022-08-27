@@ -1,4 +1,5 @@
 #include "minishell.h"
+int g_flag = 1;
 
 void ctrl_child(int p)
 {
@@ -267,7 +268,6 @@ void herdoc_handler(int p)
 	return;
 }
 
-int g_flag = 1;
 
 void exit_herdoc(int p)
 {
@@ -308,15 +308,17 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 	// Open a pipe
 	// Keep reading until the last herdoc which is interesting
 	// Open a pipe to use it as input for our program
-	pipe(&node->fd[0]);
+	signal(SIGINT, SIG_IGN);
+	pipe(node->fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, exit_herdoc);
+		signal(SIGINT, SIG_DFL);
 		i = 0;
 		while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
 		{
-			p = readline("> ");
+			printf("> ");
+			p = get_next_line(0);
 			if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
 				i++;
 			free(p);
@@ -326,11 +328,6 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 		{
 			printf("> ");
 			p = get_next_line(0);
-			if (g_flag == 0)
-			{
-				close(node->fd[1]);
-				exit(1);
-			}
 			if (p == NULL)
 			{
 				break;
@@ -350,11 +347,15 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 	{
 		wait(&status);
 		signal(SIGINT, enter);
-		if (WEXITSTATUS(status) == 1)
-		{
-			loop_handler(NULL, g_exec_struct);
-		}
 		close(node->fd[1]);
+		if (WIFSIGNALED(status))
+		{
+			char c;
+			write(1, "\n", 1);
+			while(read(node->fd[0], &c, 1) == 1)
+			;
+			//close(node->fd[0]);
+		}
 	}
 }
 

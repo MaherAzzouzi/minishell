@@ -17,7 +17,7 @@ char *read_command_line(t_exec_struct *exec_struct)
 	// 	cmd = readline(":)$ ");
 	// else
 
-	cmd = readline("o ");
+	cmd = readline("$ ");
 	if (!cmd)
 	{
 		if (g_exec_struct->exit_status == 256)
