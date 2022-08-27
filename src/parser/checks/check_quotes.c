@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_quotes.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 18:38:25 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/09 13:21:17 by snagat           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 #include "parser.h"
 
@@ -29,5 +17,5 @@ int    ft_check_quotes(t_lnode *head, e_token dlm)
                 return(FAIL);     
         current = current->next;
     }
-    return(SUCCESS); 
+    return(SUCCESS);
 }

@@ -70,27 +70,10 @@ static t_lnode *return_lp(t_lnode *head)
 
 
 
-// static int check_right(t_lnode *head, t_lnode *lp)
-// {
-// 	e_token t;
-
-// 	// it can be any valid one PIPE OR AND LEFT_P
-// 	t = PIPE;
-// 	while (head != lp)
-// 	{
-// 		if (get_token(head) != SPC)
-// 			t = get_token(head);
-// 		head = head->next;
-// 	}
-// 	if (t == PIPE || t == OR || t == AND || t == LEFT_PAR)
-// 		return (SUCCESS);
-// 	return (FAIL);
-// }
 static int check_left(t_lnode *head, t_lnode *lp)
 {
 	e_token t;
 
-	// it can be any valid one PIPE OR AND LEFT_P
 	t = PIPE;
 	while (head != lp)
 	{
