@@ -1,7 +1,5 @@
-
-#include "parser.h"
 #include "minishell.h"
-#include "lexer.h"
+
 
 void clean_empty_quote(t_lnode **head, e_token t)
 {
