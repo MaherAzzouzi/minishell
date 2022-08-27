@@ -338,7 +338,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 		{
 			printf("> ");
 			p = get_next_line(0);
-			if (p == NULL)
+			if (p[0] == 0)
 			{
 				break;
 			}
