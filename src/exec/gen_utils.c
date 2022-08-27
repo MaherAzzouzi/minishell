@@ -98,13 +98,15 @@ char *get_env(char *var, void* exec_s, int flag)
     }
     else if (ft_strcmp(var, "?") == 0)
     {
-        return itoa(WEXITSTATUS(((t_exec_struct*)exec_s)->exit_status));
+        return itoa(WEXITSTATUS(g_exec_struct->exit_status));
     }
+    else if (var[0] == '\xfe' && var[1] == 0)
+        return ft_strdup("\xff");
     i= 0;
     while (envp[i])
     {
         envpline = ft_split(envp[i], '=');
-        if (ft_strncmp(envpline[0], var, ft_strlen(var)) == 0)
+        if (ft_strcmp(envpline[0], var) == 0)
         {
             val = ft_strdup(envpline[1]);
             free_charpp(envpline);
@@ -122,6 +124,14 @@ char *check_if_bin_exist(char *bin_name, char *path_env)
     char *full_path;
     int i;
 
+    // if (fork() == 0)
+    // {
+    //     char *argv[] = {"/bin/stty", "icrnl", NULL};
+    //     execve("/bin/stty", argv, NULL);
+    //     exit(0);
+    // }
+    // else
+    //     wait(NULL);
     full_path = ft_strdup("");
     paths = ft_split(path_env, ':');
     i = 0;

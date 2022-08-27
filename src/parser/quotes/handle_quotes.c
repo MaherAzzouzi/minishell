@@ -22,7 +22,6 @@ int order_quotes(t_lnode **head)
 		} else
 			current = current->next;
 	}
-	join_quotes(*head);
 	return (SUCCESS);
 }
 

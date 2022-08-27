@@ -1,7 +1,11 @@
 #include "minishell.h"
 
-// For Linxu the env variables can have an uppercase/lowercase or number + underscore
+// For Linux the env variables can have an uppercase/lowercase or number + underscore
 // May require some fixes for macOS
+
+// An idea that I got to fix that ' quote expansion is to add a \xff at the end
+// Marking that it should not expand.
+
 
 // This function should get a pointer to the dollar sign and then something like this $HOME
 int get_env_variable_length(char *p)
@@ -13,8 +17,15 @@ int get_env_variable_length(char *p)
         return FAIL;
     // bypass $
     p++;
+    
+    if (p[0] == '\xfe')
+    {
+        return 1;
+    }
 
     if (*p == '$' || *p == '?')
+        return 1;
+    if (ft_isdigit(*p))
         return 1;
     q = p;
     while (*p != 0)
@@ -24,6 +35,11 @@ int get_env_variable_length(char *p)
             p++;
         while (*p == '_')
             p++;
+        if (*p == '\xfe')
+        {
+            p++;
+            break;
+        }
         if (t == p)
             break;
     }
@@ -46,13 +62,41 @@ char*   return_env(char *p)
     return env;
 }
 
+char * remove_char(char *p, char c)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (p[i])
+    {
+        if (p[i] == c)
+        {
+            j = i + 1;
+            while (p[i] != 0)
+            {
+                p[i] = p[j];
+                i++;
+                j++;
+            }
+            p[i] = 0;
+            i = -1;
+        }
+        i++;
+    }
+    return p;
+}
+
 char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
 {
     char* result;
     char* q;
     char    *env;
+    int flag;
 
+    flag = 0;
     result = NULL;
+
     while (1)
     {
         q = strchr(p, '$');
@@ -70,14 +114,38 @@ char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
             exit(-1);
         ft_memcpy(result, p, q-p);
         result[q-p] = 0;
-
-        result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
-        result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        if (env[0] == '\xfe' && env[1] == 0)
+        {
+            result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+            result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        }
+        else if (strchr(env, '\xfe'))
+        {
+            env[ft_strlen(env) - 1] = 0;
+            result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+            result = ft_strjoin(result, q+ft_strlen(env)+2, 0);
+        }
+        else
+        {
+            result = ft_strjoin(result, get_env(env, exec_s, 0), 2);
+            result = ft_strjoin(result, q+ft_strlen(env)+1, 0);
+        }
         free(env);
         free(p);
         p = result;
     }
-    return result;
+    if (result)
+    {
+        replace(result, '\xff', '$');
+        remove_char(result, '\xfe');
+        return result;
+    }
+    else
+    {
+        replace(p, '\xff', '$');
+        remove_char(p, '\xfe');
+        return p;
+    }
 }
 
 char* find_env_expand(t_lnode *node, t_exec_struct* exec_s)
@@ -136,7 +204,6 @@ t_lnode * case_of_one_char_dollar(t_lnode **head, t_lnode *current, t_exec_struc
     }
     else
         val = get_env(convert_token(get_token(current->next)), exec_s, 0);
-    printf("va lis %s\n", val);
     node = ft_new_node_lex(CMD, val);
     free(node->type.cmd);
     node->type.cmd = val;
@@ -184,6 +251,117 @@ void combine_successive_cmds(t_lnode *head)
     }
 }
 
+char * case_of_one_char_dlr(char *p, t_exec_struct* exec_s)
+{
+    if (ft_strcmp(p, "$?") == 0 || ft_strcmp(p, "$$") == 0)
+    {
+        p = get_env(p + 1, exec_s, 0);
+        return p;
+    }
+    else if (ft_strcmp(p, "\xff?") == 0 || ft_strcmp(p, "\xff\xff") == 0)
+    {
+        replace(p, '\xff', '$');
+        return ft_strdup(p);
+    }
+    return NULL;
+}
+
+void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s)
+{
+    char *p;
+    int i;
+    if (node->cmd.cmd == NULL || node->cmd.cmd[0] == 0)
+        return ;
+    
+    p = case_of_one_char_dlr(node->cmd.cmd, exec_s);
+    if (p == NULL)
+    {
+        p = expand_an_array_having_dlr(node->cmd.cmd, exec_s);
+        if (p != NULL)
+        {
+            node->cmd.cmd = p;
+        }
+    }
+    else
+    {
+        free(node->cmd.cmd);
+        node->cmd.cmd = p;
+    }
+    i = 0;
+    while (node->cmd.argv[i])
+    {
+        p = case_of_one_char_dlr(node->cmd.argv[i], exec_s);
+        if (p == NULL)
+        {
+            p = expand_an_array_having_dlr(node->cmd.argv[i], exec_s);
+            if (p != NULL)
+            {
+
+                node->cmd.argv[i] = p;
+            }
+        }
+        else
+        {
+            free(node->cmd.argv[i]);
+            node->cmd.argv[i] = p;
+        }
+        i++;
+    }
+}
+
+void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s)
+{
+    t_lnode *current;
+    t_lnode *p;
+    int is_current_changed;
+
+    current = *head;
+    while (current && get_token(current) != EOL)
+    {
+        is_current_changed = 0;
+        if (get_token(current) == DLR)
+        {
+            // If it is $$ or $?
+            // Should be handeled here.
+            if (get_token(current->next) == DLR)
+            {
+                current = case_of_one_char_dollar(head, current, exec_s, 0);
+                is_current_changed = 1;
+            }
+            // In this case we just append a dollar at the start
+            else if (get_token(current->next) == CMD)
+            {
+                current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
+                if (current == (*head))
+                {
+                    p = *head;
+                    *head = (*head)->next;
+                    current = current->next;
+                    free_lexer_node(p);
+                }
+                else
+                {
+                    p = *head;
+                    while (p->next != current)
+                        p = p->next;
+                    p->next = current->next;
+                    free_lexer_node(current);
+                    current = p->next;
+                }
+                is_current_changed = 1;
+            }
+            else
+            {
+                    current->type.token = CMD;
+                    current->type.cmd = ft_strdup("$");
+            }
+        }
+        if (!is_current_changed)
+            current = current->next;
+    }
+    combine_successive_cmds(*head);
+}
+
 void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
 {
     //char* value;
@@ -195,7 +373,6 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
     current = *head;
     while (current && get_token(current) != EOL)
     {
-        printf("%s\n", convert_token(get_token(current)));
         if (get_token(current) == DLMI)
         {
             should_expand = 0;
@@ -230,25 +407,24 @@ void expand_env_variables(t_lnode **head, t_exec_struct* exec_s)
             // In this case we just append a dollar at the start
             else if (get_token(current->next) == CMD)
             {
-                    current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
-                    if (should_expand)
-                        current->next->type.cmd = find_env_expand(current->next, exec_s);  
-                    should_expand = 1;
-
-                    if (current == (*head))
-                    {
-                        *head = (*head)->next;
-                        current = current->next;
-                    }
-                    else
-                    {
-                        p = *head;
-                        while (p->next != current)
-                            p = p->next;
-                        p->next = current->next;
-                        free_lexer_node(current);
-                        current = p->next;
-                    }
+                current->next->type.cmd = ft_strjoin("$", current->next->type.cmd, 1);
+                if (should_expand)
+                    current->next->type.cmd = find_env_expand(current->next, exec_s);  
+                should_expand = 1;
+                if (current == (*head))
+                {
+                    *head = (*head)->next;
+                    current = current->next;
+                }
+                else
+                {
+                    p = *head;
+                    while (p->next != current)
+                        p = p->next;
+                    p->next = current->next;
+                    free_lexer_node(current);
+                    current = p->next;
+                }
             }
             // simple dolar sign should work too.
             else //if (get_token(current->next) == EOL)

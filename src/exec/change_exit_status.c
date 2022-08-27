@@ -10,4 +10,3 @@ void exit_status_success(void)
 {
     g_exec_struct->exit_status ^= g_exec_struct->exit_status & 0x0000ff00;
 }
-

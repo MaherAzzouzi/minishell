@@ -46,6 +46,8 @@ typedef struct s_parat
 
 struct s_parsing_node
 {
+    // Those just in case of herdoc
+    int fd[2];
     // In some cases we need to know is << or < is at the end of the command.
     e_token last_in_token;
     // In some cases we need to know is > or >> is at the end of the command.
@@ -57,6 +59,7 @@ struct s_parsing_node
     t_reds reds;
     struct s_parsing_node *lchild;
     struct s_parsing_node *rchild;
+
 };
 
 typedef struct s_parsing_node t_parsing_node;
@@ -96,6 +99,9 @@ int check_left_par(t_lnode *head);
 void expand_env_variables(t_lnode **head, t_exec_struct* exec_s);
 void handle_wildcard(t_lnode *head);
 char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s);
+void expand_one_node(t_parsing_node *node, t_exec_struct* exec_s);
+void consolidate_dlr_with_cmd(t_lnode **head, t_exec_struct* exec_s);
+void  replace(char *p, char a, char b);
 t_parsing_node *parse(t_lnode **head, t_exec_struct* s);
 
 

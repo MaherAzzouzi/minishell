@@ -35,7 +35,7 @@ t_lnode *return_highest_priv(t_lnode *start, t_lnode *end)
     {
         if (get_token(current) == LEFT_PAR)
             count++;
-        if (get_token(current) == PIPE && flag == 0 && count == 0)
+        if (get_token(current) == PIPE && flag == 0 && count == 0 && get_token(p) != OR && get_token(p) != AND)
         {
             p = current;
             flag = 1;
@@ -109,7 +109,7 @@ t_parsing_node *recursive_tree_creation(t_lnode *start, t_lnode *end)
 t_parsing_node *parse_tree(t_lnode *head)
 {
     t_parsing_node * root = recursive_tree_creation(head, get_end(head));
-    inorder_show(root);
+    //inorder_show(root);
     //print2D(root);
     return root;
 }
