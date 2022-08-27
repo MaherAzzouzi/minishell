@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   o_redr.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 11:49:07 by snagat            #+#    #+#             */
-/*   Updated: 2022/06/15 14:20:00 by snagat           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -56,29 +45,25 @@ t_lnode *get_command(t_lnode *head, t_lnode *end)
 
 int count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end)
 {
-    int counter = 0;
+    int counter;
+
+    counter = 0;
     while (head != end)
     {
         if (head == cmd)
-        {
             ;
-        }
         else if (get_token(head) == REDRI || get_token(head) == REDRO
                 || get_token(head) == DLMI || get_token(head) == APPND
                 )
         {
-            // should check for errors here instead
             head = head->next;
             head = ignore_spaces_ret(head);
             if (get_token(head) == SGLQT || get_token(head) == DBLQT)
                 head = head->next;
             if (get_token(head) != CMD)
-            {
-                //printf("type %s\n", convert_token(get_token(head)));
-                //printf("[count_command_with_ore_args] Parse error!\n");
                 exit(0);
-            }
-        } else if (get_token(head) == CMD)
+        }
+        else if (get_token(head) == CMD)
             ++counter;
         head = head->next;
     }
@@ -87,13 +72,13 @@ int count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end)
 
 int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv, t_lnode *end)
 {
-    int counter = 0;
+    int counter;
+    
+    counter = 0;
     while (head != end)
     {
         if (head == cmd)
-        {
             ;
-        }
         else if (get_token(head) == REDRI || get_token(head) == REDRO
         || get_token(head) == DLMI || get_token(head) == APPND)
         {
@@ -102,12 +87,9 @@ int fill_command_with_ore_args(t_lnode *cmd, t_lnode *head, char **argv, t_lnode
             if (get_token(head) == SGLQT || get_token(head) == DBLQT)
                 head = head->next;
             if (get_token(head) != CMD)
-            {
-                //printf("type %s\n", convert_token(get_token(head)));
-                //printf("[count_command_with_ore_args] Parse error!\n");
                 exit(0);
-            }
-        } else if (get_token(head) == CMD)
+        }
+        else if (get_token(head) == CMD)
             argv[counter++] = ft_strdup(get_cmd(head));
         head = head->next;
     }
@@ -131,12 +113,36 @@ int count_redirections(t_lnode *head, e_token redr, t_lnode *end)
     return (count);
 }
 
+static void n_parse_herdoc(t_lnode *head, struct herdoc_exp   **redri_array,
+            e_token redr, int *i)
+{
+    struct herdoc_exp   *herdoc;
+
+    if (get_token(head) == redr)
+    {
+        herdoc = (struct herdoc_exp *)malloc(sizeof(struct herdoc_exp));
+        herdoc->is_quoted = 0;
+        head = head->next;
+        while (get_token(head) == SPC)
+            head = head->next;
+        if (get_token(head) == SGLQT || get_token(head) == DBLQT)
+        {
+            herdoc->is_quoted = 1;
+            head = head->next;
+        }
+        if (get_token(head) != EOL)
+        {
+            herdoc->herdoc_keyword = ft_strdup(get_cmd(head));
+            redri_array[(*i)++] = herdoc;
+        }
+    }
+}
+
 struct herdoc_exp **alloc_herdoc_array(t_lnode *head, e_token redr, t_lnode *end)
 {
     int count;
     int i;
     struct herdoc_exp   **redri_array;
-    struct herdoc_exp   *herdoc;
 
     count = count_redirections(head, redr, end);
     redri_array = (struct herdoc_exp **)malloc((count + 1) * sizeof(struct herdoc_exp *));
@@ -145,24 +151,7 @@ struct herdoc_exp **alloc_herdoc_array(t_lnode *head, e_token redr, t_lnode *end
         exit(0);
     while (head != end && head != NULL)
     {
-        if (get_token(head) == redr)
-        {
-            herdoc = (struct herdoc_exp *)malloc(sizeof(struct herdoc_exp));
-            herdoc->is_quoted = 0;
-            head = head->next;
-            while (get_token(head) == SPC)
-                head = head->next;
-            if (get_token(head) == SGLQT || get_token(head) == DBLQT)
-            {
-                herdoc->is_quoted = 1;
-                head = head->next;
-            }
-            if (get_token(head) != EOL)
-            {
-                herdoc->herdoc_keyword = ft_strdup(get_cmd(head));
-                redri_array[i++] = herdoc;
-            }
-        }
+        n_parse_herdoc(head, redri_array, redr, &i);
         head = head->next;
     }
     redri_array[i] = NULL;
@@ -225,7 +214,6 @@ e_token get_last_in_red(t_lnode *head)
             t = get_token(head);
         head = head->next;
     }
-
     return t;
 }
 
@@ -237,9 +225,7 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
     
     if (find_red(head, end, REDRI) == NULL && find_red(head, end, REDRO) == NULL
     && find_red(head, end, APPND) == NULL && find_red(head, end, DLMI) == NULL)
-    {
         return NULL;
-    }
     node = alloc_node(CMD);
     cmd = get_command(head, end);
     if (cmd)
@@ -249,8 +235,6 @@ t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
         count  = count_command_with_ore_args(cmd, head, end);
         node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 2));
         node->cmd.argv[0] = ft_strdup(get_cmd(cmd));
-        if (node->cmd.argv == NULL)
-            exit(-1);
         fill_command_with_ore_args(cmd, head, &node->cmd.argv[1], end);
     }
     node->reds.i_r_params = alloc_redr_array(head, REDRI, end);
