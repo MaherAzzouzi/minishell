@@ -76,6 +76,8 @@ int change_dir(char *dir, t_envp *en)
 	{
 		update_env(&en, ft_strdup("OLDPWD"), curr_path);
 		new_path = get_cwd();
+		if (!new_path)
+			new_path = find_env("OLDPWD", en);
 		update_env(&en, ft_strdup("PWD"), new_path);
 		free(new_path);
 	}

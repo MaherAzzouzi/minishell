@@ -69,6 +69,11 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		close(fd[0]);
 		close(fd[1]);
+		if (it_has_herdoc(root))
+		{
+			dup2(root->fd[0], 0);
+			close(root->fd[0]);
+		}
 		if (root->p.parenthesised == 0)
 		{
 			p = NULL;
@@ -112,6 +117,7 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		if (out != 1)
 			close(out);
 		return (pid);
+
 	}
 	return 0;
 }
@@ -211,8 +217,12 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 					show_errno(p);
 				if (S_ISDIR(sb.st_mode))
 				{
-					printf("minishell: %s: is a directory\n", p);
+					printf("minishell: %s: is a directory\n", node->cmd.cmd);
 					exit(-2);
+				}
+				if (access(p, X_OK) != 0)
+				{
+					show_errno(node->cmd.cmd);
 				}
 			}
 			handle_append_oredr(node);
@@ -354,6 +364,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 			write(1, "\n", 1);
 			while(read(node->fd[0], &c, 1) == 1)
 			;
+			loop_handler(NULL, g_exec_struct);
 			//close(node->fd[0]);
 		}
 	}
