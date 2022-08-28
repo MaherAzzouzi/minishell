@@ -49,17 +49,13 @@ void	ft_unset_node(t_envp **env, char *arg)
 
 void	ft_unset(t_parsing_node *root, t_envp **env)
 {
-	char	*name;
-	t_envp	*next;
 	int	i;
 
-	i = 1;
-	name = NULL;
-	next = NULL;
 	if (!root->cmd.argv[1])
 		perror("not enough arguments");
 	else
 	{
+		i = 1;
 		while(root->cmd.argv[i])
 		{
 			ft_unset_node(env, root->cmd.argv[i]);

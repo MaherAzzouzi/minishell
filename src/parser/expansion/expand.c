@@ -92,9 +92,9 @@ char *expand_an_array_having_dlr(char *p, t_exec_struct* exec_s)
     char* result;
     char* q;
     char    *env;
-    int flag;
+    //int flag;
 
-    flag = 0;
+    //flag = 0;
     result = NULL;
 
     while (1)

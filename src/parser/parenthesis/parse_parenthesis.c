@@ -30,9 +30,9 @@ t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end)
     current = head;
     cmd = ft_strdup("");
     node = alloc_node(CMD);
-    while (current != end)
+    while (current && current != end)
     {
-        if (get_token(current) == LEFT_PAR)
+        if (current && get_token(current) == LEFT_PAR)
         {
             open_p = current;
             current = current->next;
@@ -57,8 +57,16 @@ t_parsing_node *parse_parenthesis(t_lnode *head, t_lnode *end)
     }
     if (cmd[0] != 0)
     {
-        closing_p = current;
-        t_parsing_node *n = parse_redirections(current->next, find_next_right_par_or_eol(current->next));
+        t_parsing_node *n;
+        if (current)
+            closing_p = current;
+        else
+        {
+            closing_p = open_p;
+            while (get_token(closing_p) != RIGHT_PAR)
+                closing_p = closing_p->next;    
+        }
+        n = parse_redirections(closing_p->next, find_next_right_par_or_eol(closing_p->next));
         free(cmd);
         cmd = get_only_parenthesis_content(open_p, closing_p);
         if (n == NULL)
