@@ -99,9 +99,11 @@ void handle_wildcard(t_lnode *head)
     t = EOL;
     while (get_token(current) != EOL)
     {
+        // In case export H=* for example it will check for file starting with H= which is wrong.
+        // SHould check only after the '=' character
         if (t != SGLQT && t != DBLQT && get_token(current) == CMD && ft_strchr(get_cmd(current), '*'))
         {
-            tmp = get_cmd(current);
+            tmp = current->type.cmd;
             p = open_current_dir(get_cmd(current));
             if (p[0] != 0)
             {

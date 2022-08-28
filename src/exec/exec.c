@@ -31,32 +31,32 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	struct stat sb;
 
 	// printf("Executing %s\n", root->cmd.cmd);
-	if (is_builtin(root))
-	{
-		int stdout_ = dup(1);
-		int stdin_ = dup(0);
-		if (in != 0)
-		{
-			dup2(in, 0);
-			close(in);
-		}
-		if (out != 1)
-		{
-			dup2(out, 1);
-			close(out);
-		}
-		handle_append_oredr(root);
-		handle_herdoc_iredr(root, exec_s);
-		expand_one_node(root, exec_s);
-		builtins(root, exec_s, env);
-		dup2(stdout_, 1);
-		dup2(stdin_, 0);
-		return (0);
-	}
 
 	pid = fork();
 	if (pid == 0)
 	{
+		if (is_builtin(root))
+		{
+			int stdout_ = dup(1);
+			int stdin_ = dup(0);
+			if (in != 0)
+			{
+				dup2(in, 0);
+				close(in);
+			}
+			if (out != 1)
+			{
+				dup2(out, 1);
+				close(out);
+			}
+			handle_append_oredr(root);
+			handle_herdoc_iredr(root, exec_s);
+			expand_one_node(root, exec_s);
+			builtins(root, exec_s, env);
+			dup2(stdout_, 1);
+			dup2(stdin_, 0);
+			exit (0);
+		}
 		if (in != 0)
 		{
 			dup2(in, 0);

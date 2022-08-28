@@ -1,7 +1,7 @@
 #FIXME: We should add checks on the headers too.
 CC=gcc
 INC=inc/
-FLAGS=-Wall -Wextra -Werror
+FLAGS=-fcommon
 MAIN=main.c
 B_DIR= build
 # If a new directory is created inside src, we should have it in a variable
