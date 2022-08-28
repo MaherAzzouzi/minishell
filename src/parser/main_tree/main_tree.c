@@ -56,14 +56,19 @@ t_lnode *return_highest_priv(t_lnode *start, t_lnode *end)
 t_lnode *stop_at_higher_priv(t_lnode *highest)
 {
     t_lnode *current;
-
+    int count;
     current = highest;
 
+    count = 0;
     if (get_token(highest) == PIPE)
     {
         while (get_token(current) != EOL)
         {
-            if (get_token(current) == AND || get_token(current) == OR)
+            if (get_token(current) == LEFT_PAR)
+                count++;
+            else if (get_token(current) == RIGHT_PAR)
+                count--;
+            if ((get_token(current) == AND || get_token(current) == OR) && count == 0)
                 return current;
             current = current->next;
         }
@@ -74,7 +79,11 @@ t_lnode *stop_at_higher_priv(t_lnode *highest)
         current = current->next;
         while (get_token(current) != EOL)
         {
-            if (get_token(current) == AND || get_token(current) == OR)
+            if (get_token(current) == LEFT_PAR)
+                count++;
+            else if (get_token(current) == RIGHT_PAR)
+                count--;
+            if ((get_token(current) == AND || get_token(current) == OR) && count == 0)
                 return current;
             current = current->next;
         }
