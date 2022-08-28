@@ -27,6 +27,8 @@ What we should implement:
     --> double quotes;
     --> nzido nimplemtiw f pipe
 
+    --> need to fix cd | ls builtins in fork
+
 
 
 
