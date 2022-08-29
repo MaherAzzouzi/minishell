@@ -1,33 +1,32 @@
 #include "minishell.h"
 
-
-int check_equal(char *str);
-void    free_env(t_envp **head)
+void	free_env(t_envp **head)
 {
-    t_envp  *curr;
-    t_envp  *temp;
+	t_envp	*curr;
+	t_envp	*temp;
 
-    curr = *head;
-    while(curr)
-    {
-        temp = curr;
+	curr = *head;
+	while (curr)
+	{
+		temp = curr;
 		if (curr->str)
-        	free(curr->str);
-        curr = curr->next;
-        free(temp);
-    }
-    *head = 0;
+			free(curr->str);
+		curr = curr->next;
+		free(temp);
+	}
+	*head = 0;
 }
 
-int ft_isalnum2(int c)
+int	ft_isalnum2(int c)
 {
-	return ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || (c <= '9' && c >= '0'));
+	return ((c <= 'z' && c >= 'a')
+		|| (c <= 'Z' && c >= 'A') || (c <= '9' && c >= '0'));
 }
 
-char *ft_strndup(char *str, int j)
+char	*ft_strndup(char *str, int j)
 {
-	char *ret;
-	int i;
+	char	*ret;
+	int		i;
 
 	ret = malloc(sizeof(char) * j + 1);
 	i = 0;
@@ -40,9 +39,9 @@ char *ft_strndup(char *str, int j)
 	return (ret);
 }
 
-int ft_check_var_syntx(char *str)
+int	ft_check_var_syntx(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < ft_egale_len(str) - 1)
@@ -54,21 +53,26 @@ int ft_check_var_syntx(char *str)
 	return (1);
 }
 
-int check_new_env(char *str, t_envp **env)
+static void	set_ar_w_e_o_n(char *s, char *str)
 {
-	t_envp *curr;
-	char *s;
-	char	*var;
-	int t;
-
-	curr = *env;
-	t = 0;
 	if (check_equal(str) == 2)
 		s = ft_strndup(str, ft_egale_len(str) - 1);
 	else if (check_equal(str) == 3)
 		s = ft_strdup(str);
 	else
 		s = ft_strndup(str, ft_egale_len(str));
+}
+
+int	check_new_env(char *str, t_envp **env)
+{
+	t_envp	*curr;
+	char	*s;
+	char	*var;
+	int		t;
+
+	curr = *env;
+	t = 0;
+	set_ar_w_e_o_n(s, str);
 	while (curr)
 	{
 		var = ft_strndup(curr->str, ft_egale_len(curr->str));
@@ -80,12 +84,14 @@ int check_new_env(char *str, t_envp **env)
 		}
 		else if (!ft_strcmp(s, curr->str))
 			t = 1;
-		else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] =='=' && check_equal(str) == 2)
+		else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] == '='
+			&& check_equal(str) == 2)
 		{
 			t = 1;
 			curr->str = ft_strjoin(curr->str, &ft_strchr(str, '=')[1], 0);
 		}
-		else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] == '=')
+		else if (!ft_strcmp(s, var)
+			&& curr->str[ft_egale_len(curr->str)] == '=')
 		{
 			t = 1;
 			free(curr->str);
