@@ -104,7 +104,7 @@ t_lnode *handle_quote(t_lnode *head, e_token dlm)
 	return current->next;
 }
 
-static void check_sglqt_dblqt(t_lnode *current, t_lnode *node)
+static t_lnode *check_sglqt_dblqt(t_lnode *current, t_lnode *node)
 {
 	while ((get_token(current) == SGLQT || get_token(current) == DBLQT))
 	{
@@ -121,6 +121,7 @@ static void check_sglqt_dblqt(t_lnode *current, t_lnode *node)
 		else if ((get_token(current) == SGLQT || get_token(current) == DBLQT))
 			current = current->next;
 	}
+	return (current);
 }
 
 static void free_quotes_leaks(t_lnode *temp, t_lnode *current)
@@ -150,7 +151,7 @@ void join_quotes(t_lnode *head)
 		{
 			node = ft_new_node_lex(CMD, "");
 			p = current;
-			check_sglqt_dblqt(current, node);
+			current = check_sglqt_dblqt(current, node);
 			temp = p->next;
 			free_quotes_leaks(temp, current);
 			p->next = node;
