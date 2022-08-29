@@ -327,7 +327,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 		i = 0;
 		while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
 		{
-			printf("> ");
+			ft_putstr_fd("> ", 2);
 			p = get_next_line(0);
 			if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
 				i++;
@@ -336,7 +336,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 
 		while (1)
 		{
-			printf("> ");
+			ft_putstr_fd("> ", 2);
 			p = get_next_line(0);
 			if (p[0] == 0)
 			{
