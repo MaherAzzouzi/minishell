@@ -198,7 +198,6 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGQUIT, ctrl_b_handler);
 		if (it_has_herdoc(node))
 		{
 			dup2(node->fd[0], 0);
