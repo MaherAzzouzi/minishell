@@ -29,9 +29,6 @@
 #include <dirent.h>
 
 t_exec_struct *g_exec_struct;
-int g_subshell_count;
-struct sigaction new;
-struct sigaction old;
 
 #define TRUE 1
 #define FALSE 0

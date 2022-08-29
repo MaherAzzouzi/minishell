@@ -72,6 +72,7 @@ int	check_new_env(char *str, t_envp **env)
 
 	curr = *env;
 	t = 0;
+	s = NULL;
 	set_ar_w_e_o_n(s, str);
 	while (curr)
 	{

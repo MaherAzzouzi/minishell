@@ -56,14 +56,6 @@ void ctrl_c_handler(int p)
 
 	return;
 }
-
-void ctrl_b_handler(int p)
-{
-	printf("Quit: %d\n", p);
-
-	return;
-}
-
 void enter(int p)
 {
 	(void)p;
@@ -98,7 +90,7 @@ int main(int argc, char *argv[], char *envp[])
 	rl_outstream = stderr;
 	//printf("enter\n");
 	signal(SIGINT, enter);
-	signal(SIGQUIT, ctrl_b_handler);
+	signal(SIGQUIT, SIG_IGN);
 	g_exec_struct = &exec_struct;
 
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));

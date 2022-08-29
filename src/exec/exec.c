@@ -31,32 +31,32 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	struct stat sb;
 
 	// printf("Executing %s\n", root->cmd.cmd);
-	if (is_builtin(root))
-	{
-		int stdout_ = dup(1);
-		int stdin_ = dup(0);
-		if (in != 0)
-		{
-			dup2(in, 0);
-			close(in);
-		}
-		if (out != 1)
-		{
-			dup2(out, 1);
-			close(out);
-		}
-		handle_append_oredr(root);
-		handle_herdoc_iredr(root, exec_s);
-		expand_one_node(root, exec_s);
-		builtins(root, exec_s, env);
-		dup2(stdout_, 1);
-		dup2(stdin_, 0);
-		return (0);
-	}
 
 	pid = fork();
 	if (pid == 0)
 	{
+		if (is_builtin(root))
+		{
+			int stdout_ = dup(1);
+			int stdin_ = dup(0);
+			if (in != 0)
+			{
+				dup2(in, 0);
+				close(in);
+			}
+			if (out != 1)
+			{
+				dup2(out, 1);
+				close(out);
+			}
+			handle_append_oredr(root);
+			handle_herdoc_iredr(root, exec_s);
+			expand_one_node(root, exec_s);
+			builtins(root, exec_s, env);
+			dup2(stdout_, 1);
+			dup2(stdin_, 0);
+			exit (0);
+		}
 		if (in != 0)
 		{
 			dup2(in, 0);
@@ -259,9 +259,11 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		}
 		else if (WIFSIGNALED(status))
 		{
-			if (WTERMSIG(status) != 11)
+			if (WTERMSIG(status) == 2)
 				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
-			else if (WTERMSIG(status) == 2)
+			else if (WTERMSIG(status) == 3)
+				printf("Quit: %d\n", WTERMSIG(status));
+			else if (WTERMSIG(status) != 11)
 				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
 		}
 	}
@@ -327,7 +329,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 		i = 0;
 		while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
 		{
-			printf("> ");
+			ft_putstr_fd("> ", 2);
 			p = get_next_line(0);
 			if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
 				i++;
@@ -336,7 +338,7 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 
 		while (1)
 		{
-			printf("> ");
+			ft_putstr_fd("> ", 2);
 			p = get_next_line(0);
 			if (p[0] == 0)
 			{

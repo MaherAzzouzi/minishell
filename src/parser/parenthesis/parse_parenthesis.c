@@ -48,7 +48,7 @@ static void	left_parent(t_p_p *p, t_lnode	*end)
 {
 	p->open_p = p->current;
 	p->current = p->current->next;
-	while (p->current != end)
+	while (p->current && p->current != end)
 	{
 		if (get_token(p->current) == LEFT_PAR)
 			p->count++;
@@ -67,9 +67,16 @@ static void	left_parent(t_p_p *p, t_lnode	*end)
 
 static t_parsing_node	*norm_shit(t_p_p *p)
 {
-	p->closing_p = p->current;
-	p->n = parse_redirections(p->current->next,
-			find_next_right_par_or_eol(p->current->next));
+	if (p->current)
+		p->closing_p = p->current;
+	else
+	{
+		p->closing_p = p->open_p;
+        while (get_token(p->closing_p) != RIGHT_PAR)
+            p->closing_p = p->closing_p->next;    
+	}
+	p->n = parse_redirections(p->closing_p->next,
+			find_next_right_par_or_eol(p->closing_p->next));
 	free(p->cmd);
 	p->cmd = get_only_parenthesis_content(p->open_p, p->closing_p);
 	if (p->n == NULL)
@@ -92,7 +99,7 @@ t_parsing_node	*parse_parenthesis(t_lnode *head, t_lnode *end)
 	t_p_p	p;
 
 	init_part(&p, head);
-	while (p.current != end)
+	while (p.current && p.current != end)
 	{
 		if (get_token(p.current) == LEFT_PAR)
 		{
