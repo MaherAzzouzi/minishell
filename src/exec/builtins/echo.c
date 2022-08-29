@@ -30,33 +30,33 @@ static void	writing_args(t_parsing_node *root)
 	write(1, "\n", 2);
 }
 
-static void	check_n_arg(t_parsing_node *root, int *i)
+static void	check_n_arg(t_parsing_node *root, int *i, int *flag)
 {
-	int	flag;
-
-	flag = 1;
-	while (flag)
+	while (*flag)
 	{
 		if (root->cmd.argv[(*i)] && root->cmd.argv[(*i)][0]
 				== '-' && it_contain_only(&root->cmd.argv[(*i)][1], 'n'))
 			(*i)++;
 		else
-			flag = 0;
+			*flag = 0;
 	}
 }
 
 void	ft_echo(t_parsing_node *root)
 {
 	int	i;
+	int	flag;
 
+	flag = 1;
 	i = 2;
 	if (root->cmd.argv[1] == NULL)
 		write(1, "\n", 2);
-	else if (!(ft_strcmp(root->cmd.argv[1], "-n")))
+	    else if (!(ft_strncmp(root->cmd.argv[1], "-n", 2))
+		&& it_contain_only(root->cmd.argv[1] + 2, 'n'))
 	{
 		while (root->cmd.argv[i])
 		{
-			check_n_arg(root, &i);
+			check_n_arg(root, &i, &flag);
 			if (root->cmd.argv[i] != NULL)
 			{
 				if (root->cmd.argv[i + 1] == NULL)

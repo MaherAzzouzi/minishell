@@ -53,56 +53,87 @@ int	ft_check_var_syntx(char *str)
 	return (1);
 }
 
-static void	set_ar_w_e_o_n(char *s, char *str)
+static void	set_ar_w_e_o_n(char **s, char *str)
 {
 	if (check_equal(str) == 2)
-		s = ft_strndup(str, ft_egale_len(str) - 1);
+		*s = ft_strndup(str, ft_egale_len(str) - 1);
 	else if (check_equal(str) == 3)
-		s = ft_strdup(str);
+		*s = ft_strdup(str);
 	else
-		s = ft_strndup(str, ft_egale_len(str));
+		*s = ft_strndup(str, ft_egale_len(str));
 }
 
-int	check_new_env(char *str, t_envp **env)
+void check_new_env_core(	t_envp	*curr, char *s, char *var, int t)
+{
+	if (!ft_strcmp(s, curr->str) && check_equal(str) == 1)
+	{
+		t = 1;
+		free(curr->str);
+		curr->str = ft_strdup(str);
+	}
+	else if (!ft_strcmp(s, curr->str))
+		t = 1;
+	else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] == '='
+		&& check_equal(str) == 2)
+	{
+		t = 1;
+		curr->str = ft_strjoin(curr->str, &ft_strchr(str, '=')[1], 0);
+	}
+	else if (!ft_strcmp(s, var)
+		&& curr->str[ft_egale_len(curr->str)] == '=')
+	{
+		t = 1;
+		free(curr->str);
+		curr->str = ft_strdup(str);
+	}
+}
+
+typedef struct s_new_env
 {
 	t_envp	*curr;
 	char	*s;
 	char	*var;
 	int		t;
-
-	curr = *env;
-	t = 0;
-	s = NULL;
-	set_ar_w_e_o_n(s, str);
-	while (curr)
-	{
-		var = ft_strndup(curr->str, ft_egale_len(curr->str));
-		if (!ft_strcmp(s, curr->str) && check_equal(str) == 1)
+} t_new_env;
+static void	cor_()
+		new.var = ft_strndup(new.curr->str, ft_egale_len(new.curr->str));
+		if (!ft_strcmp(new.s, new.curr->str) && check_equal(str) == 1)
 		{
-			t = 1;
-			free(curr->str);
-			curr->str = ft_strdup(str);
+			new.t = 1;
+			free(new.curr->str);
+			new.curr->str = ft_strdup(str);
 		}
-		else if (!ft_strcmp(s, curr->str))
-			t = 1;
-		else if (!ft_strcmp(s, var) && curr->str[ft_egale_len(curr->str)] == '='
+		else if (!ft_strcmp(new.s, new.curr->str))
+			new.t = 1;
+		else if (!ft_strcmp(new.s, new.var) && new.curr->str[ft_egale_len(new.curr->str)] == '='
 			&& check_equal(str) == 2)
 		{
-			t = 1;
-			curr->str = ft_strjoin(curr->str, &ft_strchr(str, '=')[1], 0);
+			new.t = 1;
+			new.curr->str = ft_strjoin(new.curr->str, &ft_strchr(str, '=')[1], 0);
 		}
-		else if (!ft_strcmp(s, var)
-			&& curr->str[ft_egale_len(curr->str)] == '=')
+		else if (!ft_strcmp(new.s, new.var)
+			&& new.curr->str[ft_egale_len(new.curr->str)] == '=')
 		{
-			t = 1;
-			free(curr->str);
-			curr->str = ft_strdup(str);
+			new.t = 1;
+			free(new.curr->str);
+			new.curr->str = ft_strdup(str);
 		}
-		free(var);
-		curr = curr->next;
+		free(new.var);
+
+int	check_new_env(char *str, t_envp **env)
+{
+	t_new_env	new;
+
+	new.curr = *env;
+	new.t = 0;
+	set_ar_w_e_o_n(&new.s, str);
+
+	while (new.curr)
+	{
+		new.curr = new.curr->next;
 	}
-	free(s);
-	return (t);
+	free(new.s);
+	return (new.t);
 }
 
 int check_equal(char *str)
