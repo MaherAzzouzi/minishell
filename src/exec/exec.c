@@ -198,6 +198,7 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGQUIT, ctrl_b_handler);
 		if (it_has_herdoc(node))
 		{
 			dup2(node->fd[0], 0);
@@ -259,9 +260,11 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		}
 		else if (WIFSIGNALED(status))
 		{
-			if (WTERMSIG(status) != 11)
+			if (WTERMSIG(status) == 2)
 				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
-			else if (WTERMSIG(status) == 2)
+			else if (WTERMSIG(status) == 3)
+				printf("Quit: %d\n", WTERMSIG(status));
+			else if (WTERMSIG(status) != 11)
 				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
 		}
 	}
