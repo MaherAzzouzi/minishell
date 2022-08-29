@@ -30,7 +30,7 @@ void    ft_echo(t_parsing_node *root)
         if (ret < 0)
             exit(-1);
     }
-    else if (!(ft_strcmp(root->cmd.argv[1], "-n")))
+    else if (!(ft_strncmp(root->cmd.argv[1], "-n", 2)) && it_contain_only(root->cmd.argv[1] + 2, 'n'))
     {
         while(root->cmd.argv[i])
         {
