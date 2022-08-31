@@ -1,14 +1,12 @@
 #include "minishell.h"
 
-int	is_matching(char *str, char *pattern, int n, int m)
+//////////////
+static int **n_is_matching(char *pattern, int n, int m)
 {
-	int	i;
-	int	j;
-	int	**lookup;
-	int	ret;
+	int **lookup;
+	int i;
+	int j;
 
-	if (n == 0 && m == 0)
-		return (TRUE);
 	lookup = (int **)malloc((n + 1) * sizeof(int *));
 	memset(lookup, 0, (n + 1) * sizeof(int *));
 	i = 0;
@@ -26,6 +24,31 @@ int	is_matching(char *str, char *pattern, int n, int m)
 			lookup[0][j] = lookup[0][j - 1];
 		j++;
 	}
+	return lookup;
+}
+
+static int is_matching_free(int **lookup, int n, int m)
+{
+	int ret;
+	int i;
+
+	ret = lookup[n][m];
+	i = 0;
+	while (i <= n)
+		free(lookup[i++]);
+	free(lookup);
+	return (ret);
+}
+
+int	is_matching(char *str, char *pattern, int n, int m)
+{
+	int	i;
+	int	j;
+	int	**lookup;
+
+	if (n == 0 && m == 0)
+		return (TRUE);
+	lookup = n_is_matching(pattern, n, m);
 	i = 1;
 	while (i <= n)
 	{
@@ -42,15 +65,7 @@ int	is_matching(char *str, char *pattern, int n, int m)
 		}
 		i++;
 	}
-	ret = lookup[n][m];
-	i = 0;
-	while (i <= n)
-	{
-		free(lookup[i]);
-		i++;
-	}
-	free(lookup);
-	return (ret);
+	return (is_matching_free(lookup, n, m));
 }
 
 char	*open_current_dir(char *pattern)

@@ -94,13 +94,10 @@ int	change_dir_home(char *dir, t_envp *env)
 {
 	char	*path;
 	char	*curr_path;
-	char	*new_path;
 	char	*pwd;
 
 	curr_path = get_cwd();
 	path = find_env(dir, env);
-	new_path = NULL;
-	(void)new_path;
 	if (!path)
 	{
 		ft_putstr_fd("couldnt find path", 2);

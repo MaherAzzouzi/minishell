@@ -1,15 +1,46 @@
 #include "minishell.h"
 
+static void	replacing(t_envp *current, t_envp *next, char *arg)
+{
+	while (current->next)
+	{
+		if (current->next->next)
+			next = current->next->next;
+		else
+			next = NULL;
+		if (!ft_strncmp(arg, current->next->str, ft_strlen(arg))
+			&& current->next->str[ft_strlen(arg)] == '=')
+		{
+			free(current->next->str);
+			free(current->next);
+			current->next = next;
+			break ;
+		}
+		else if (!ft_strncmp(arg, current->next->str, ft_strlen(arg))
+			&& current->next->str[ft_strlen(arg)] == '\0')
+		{
+			free(current->next->str);
+			free(current->next);
+			current->next = next;
+			break ;
+		}
+		if (current->next != NULL)
+			current = current->next;
+	}
+}
+
 void	ft_unset_node(t_envp **env, char *arg)
 {
 	t_envp	*current;
 	t_envp	*temp;
 	t_envp	*next;
-	int	i;
+	int		i;
 
 	i = 0;
+	next = NULL;
 	current = *env;
-	if (!ft_strncmp(arg, (*env)->str, ft_strlen(arg)) && (*env)->str[ft_strlen(arg)] == '=')
+	if (!ft_strncmp(arg, (*env)->str, ft_strlen(arg))
+		&& (*env)->str[ft_strlen(arg)] == '=')
 	{
 		temp = (*env)->next;
 		free((*env)->str);
@@ -19,31 +50,7 @@ void	ft_unset_node(t_envp **env, char *arg)
 	else
 	{
 		current = *env;
-		while(current->next)
-		{
-			if (current->next->next)
-				next = current->next->next;
-			else
-				next = NULL;
-			if (!ft_strncmp(arg, current->next->str, ft_strlen(arg))
-				 && current->next->str[ft_strlen(arg)] == '=')
-			{
-				free(current->next->str);
-				free(current->next);
-				current->next = next;
-				break ;
-			}
-			else if (!ft_strncmp(arg, current->next->str, ft_strlen(arg))
-				&& current->next->str[ft_strlen(arg)] == '\0')
-				{
-					free(current->next->str);
-					free(current->next);
-					current->next = next;
-					break ;
-				}
-			if (current->next != NULL)
-			 	current = current->next;	
-		}
+		replacing(current, next, arg);
 	}
 }
 
@@ -56,14 +63,12 @@ void	ft_unset(t_parsing_node *root, t_envp **env)
 	else
 	{
 		i = 1;
-		while(root->cmd.argv[i])
+		while (root->cmd.argv[i])
 		{
 			ft_unset_node(env, root->cmd.argv[i]);
 			i++;
 		}
-
 	}
 	exit_status_success();
 	convert(*env);
 }
-	
