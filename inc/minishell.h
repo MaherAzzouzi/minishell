@@ -53,5 +53,8 @@ void show_errno_no_exit(char *file);
 void show_message(char *file, char *msg);
 int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env);
 void loop_handler(char *envp[], t_exec_struct *exec_s);
+char *read_command_line(t_exec_struct *exec_struct);
+void ctrl_c_handler(int p);
+void enter(int p);
 
 #endif

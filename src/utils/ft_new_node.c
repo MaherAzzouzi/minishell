@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_new_node.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 20:44:52 by Mriskyin          #+#    #+#             */
+/*   Updated: 2022/08/31 20:45:36 by Mriskyin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lexer.h"
 
@@ -9,7 +20,6 @@ t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd)
 	node = ft_new_node_lex(token, cmd);
 	if (token == LEFT_PAR || token == RIGHT_PAR)
 		node->parenthesis_start = cmd;
-
 	current = *head;
 	if (*head == NULL)
 	{
@@ -26,7 +36,7 @@ t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd)
 t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 {
 	t_lnode	*node;
-	size_t size;
+	size_t	size;
 
 	node = malloc(sizeof(t_lnode));
 	if (!node)
@@ -46,5 +56,3 @@ t_lnode	*ft_new_node_lex(e_token token, char *cmd)
 	node->next = NULL;
 	return (node);
 }
-
-

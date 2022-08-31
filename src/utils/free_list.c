@@ -3,48 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snagat <snagat@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 13:16:36 by snagat            #+#    #+#             */
-/*   Updated: 2022/08/15 22:39:41 by snagat           ###   ########.fr       */
+/*   Created: 2022/08/31 20:42:06 by Mriskyin          #+#    #+#             */
+/*   Updated: 2022/08/31 20:43:27 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
-#include "lexer.h"
 
-
-void free_lexer_node(t_lnode *node)
+void	free_lexer_node(t_lnode *node)
 {
-    if (get_cmd(node))
-        free(get_cmd(node));
-    free(node);
+	if (get_cmd(node))
+		free(get_cmd(node));
+	free(node);
 }
 
-void    free_list(t_lnode **head)
+void	free_list(t_lnode **head)
 {
-    t_lnode *current;
-    t_lnode *tmp;
+	t_lnode	*current;
+	t_lnode	*tmp;
 
-    current = *head;
-    if (head == 0 || *head == 0)
-        return ;
-    while(current)
-    {
-        tmp = current;
-        if (tmp->type.cmd)
-            free(tmp->type.cmd);
-        current = current->next;
-        free(tmp);
-    }
-    *head = 0;
+	current = *head;
+	if (head == 0 || *head == 0)
+		return ;
+	while (current)
+	{
+		tmp = current;
+		if (tmp->type.cmd)
+			free(tmp->type.cmd);
+		current = current->next;
+		free(tmp);
+	}
+	*head = 0;
 }
 
-void free_all(char *cmd, t_lnode *head, t_parsing_node *root)
+void	free_all(char *cmd, t_lnode *head, t_parsing_node *root)
 {
-    (void)head;
-    free_list(&head);
+	(void)head;
+	free_list(&head);
 	free_tree(root);
 	free(cmd);
 }

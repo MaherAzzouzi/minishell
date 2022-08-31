@@ -26,6 +26,20 @@ void    free_env(t_envp **head);
 int is_builtin(t_parsing_node *root);
 char *ft_strndup(char *str, int j);
 int check_equal(char *str);
-
+char	*find_env(char *str, t_envp *env);
+int	change_dir_old(char *str, t_envp *env);
+char	*get_cwd(void);
+void	updating_envs(char *curr_path, t_envp *en, char *new_path);
+int	change_dir(char *dir, t_envp *en);
+void	free_env(t_envp **head);
+int	ft_isalnum2(int c);
+char	*ft_strndup(char *str, int j);
+int	ft_check_var_syntx(char *str);
+void	set_ar_w_e_o_n(char **s, char *str);
+int	ft_egale_len(char *str);
+void	ft_sort_export(t_envp *head);
+void	print_exp(int len, char *str, int *i);
+void	p_(char *str, int len);
+int	checking_new_env(t_parsing_node *node, t_envp **env, t_envp *export);
 
 #endif

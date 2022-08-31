@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 20:18:46 by Mriskyin          #+#    #+#             */
+/*   Updated: 2022/08/31 20:23:29 by Mriskyin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	it_contain_only(char *p, char c)
@@ -42,7 +54,7 @@ static void	check_n_arg(t_parsing_node *root, int *i, int *flag)
 	}
 }
 
-static void ft_echo_p(t_parsing_node *root, int i)
+void	ft_echo_p(t_parsing_node *root, int i)
 {
 	if (root->cmd.argv[i + 1] == NULL)
 		printf("%s", root->cmd.argv[i]);

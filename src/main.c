@@ -1,42 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 20:50:39 by Mriskyin          #+#    #+#             */
+/*   Updated: 2022/08/31 20:55:51 by Mriskyin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-#include "lexer.h"
-#include "parser.h"
 
-#include <termios.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-
-char *read_command_line(t_exec_struct *exec_struct)
+int	core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 {
-	(void)exec_struct;
-	char *cmd;
-	char *cmd2;
-	int i;
+	t_lnode			*head;
+	t_parsing_node	*root;
 
-	cmd = readline("$ ");
-	if (!cmd)
-	{
-		if (g_exec_struct->exit_status == 256)
-			exit(1);
-		else
-			exit(0);
-	}
-
-	add_history(cmd);
-	i = 0;
-	while (cmd[i] == ' ' || cmd[i] == '\t' || cmd[i] == '\r'
-	|| cmd[i] == '\n' || cmd[i] == '\f' || cmd[i] == '\v' )
-		i++;
-	cmd2 = ft_strdup(&cmd[i]);
-	free(cmd);
-	return (cmd2);
-}
-
-int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
-{
-	(void)envp;
-	t_lnode *head;
-	t_parsing_node *root;
 	(void)envp;
 	head = lex(cmd);
 	root = parse(&head, exec_struct);
@@ -46,48 +26,16 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 	return (WEXITSTATUS(exec_struct->exit_status));
 }
 
-void ctrl_c_handler(int p)
+int	main(int argc, char *argv[], char *envp[])
 {
-	(void)p;
-	return;
-}
-void enter(int p)
-{
-	(void)p;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	exit_status_fail();
-	return;
-}
+	t_exec_struct	exec_struct;
 
-void loop_handler(char *envp[], t_exec_struct *exec_s)
-{
-	t_envp *env;
-
-	env = ennv(exec_s);
-	while (INFINIT)
-	{
-		char *cmd = read_command_line(exec_s);
-		if (!cmd)
-			exit(1);
-		core(cmd, envp, exec_s, &env);
-	}
-}
-
-int main(int argc, char *argv[], char *envp[])
-{
-	(void)argc;
-	(void)argv;
-	t_exec_struct exec_struct;
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
 	signal(SIGINT, enter);
 	signal(SIGQUIT, SIG_IGN);
 	g_exec_struct = &exec_struct;
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
-	setbuf(stdout, NULL);
 	init(&exec_struct, envp);
 	loop_handler(envp, &exec_struct);
 }

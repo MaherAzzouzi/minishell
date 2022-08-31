@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   or_and_exec.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 20:24:42 by Mriskyin          #+#    #+#             */
+/*   Updated: 2022/08/31 20:24:44 by Mriskyin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-#include "exec.h"
 
 void	or_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp *env)
 {
