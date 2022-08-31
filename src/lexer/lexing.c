@@ -6,13 +6,13 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:39:49 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:41:07 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static e_token	lexer_get_type2(char a, char b)
+static t_token	lexer_get_type2(char a, char b)
 {
 	if (a == '&' && b == '&')
 		return (AND);
@@ -37,7 +37,7 @@ static e_token	lexer_get_type2(char a, char b)
 		return (CMD);
 }
 
-e_token	lexer_get_type(char a, char b)
+t_token	lexer_get_type(char a, char b)
 {
 	if (a == '\'')
 		return (SGLQT);
@@ -63,7 +63,7 @@ e_token	lexer_get_type(char a, char b)
 t_lnode	*ft_lexer(char *str)
 {
 	t_lnode	*head;
-	e_token	token;
+	t_token	token;
 	size_t	i;
 	int		flag;
 

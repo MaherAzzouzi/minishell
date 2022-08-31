@@ -6,20 +6,20 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:08:44 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:12:22 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:55:49 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	n_parse_herdoc(t_lnode *head, struct herdoc_exp **redri_array,
-			e_token redr, int *i)
+void	n_parse_herdoc(t_lnode *head, struct s_herdoc_exp **redri_array,
+			t_token redr, int *i)
 {
-	struct herdoc_exp	*herdoc;
+	struct s_herdoc_exp	*herdoc;
 
 	if (get_token(head) == redr)
 	{
-		herdoc = (struct herdoc_exp *)malloc(sizeof(struct herdoc_exp));
+		herdoc = (struct s_herdoc_exp *)malloc(sizeof(struct s_herdoc_exp));
 		herdoc->is_quoted = 0;
 		head = head->next;
 		while (get_token(head) == SPC)
@@ -37,16 +37,16 @@ void	n_parse_herdoc(t_lnode *head, struct herdoc_exp **redri_array,
 	}
 }
 
-struct herdoc_exp	**alloc_herdoc_array(t_lnode *head,
-		e_token redr, t_lnode *end)
+struct s_herdoc_exp	**alloc_herdoc_array(t_lnode *head,
+		t_token redr, t_lnode *end)
 {
 	int					count;
 	int					i;
-	struct herdoc_exp	**redri_array;
+	struct s_herdoc_exp	**redri_array;
 
 	count = count_redirections(head, redr, end);
-	redri_array = (struct herdoc_exp **)malloc((count + 1)
-			* sizeof(struct herdoc_exp *));
+	redri_array = (struct s_herdoc_exp **)malloc((count + 1)
+			* sizeof(struct s_herdoc_exp *));
 	i = 0;
 	if (!redri_array)
 		exit(0);
@@ -59,7 +59,7 @@ struct herdoc_exp	**alloc_herdoc_array(t_lnode *head,
 	return (redri_array);
 }
 
-char	**alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
+char	**alloc_redr_array(t_lnode *head, t_token redr, t_lnode *end)
 {
 	int		count;
 	int		i;
@@ -88,9 +88,9 @@ char	**alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
 	return (redri_array);
 }
 
-e_token	get_last_output_red(t_lnode *head)
+t_token	get_last_output_red(t_lnode *head)
 {
-	e_token	t;
+	t_token	t;
 
 	t = EOL;
 	while (get_token(head) != EOL)
@@ -102,9 +102,9 @@ e_token	get_last_output_red(t_lnode *head)
 	return (t);
 }
 
-e_token	get_last_in_red(t_lnode *head)
+t_token	get_last_in_red(t_lnode *head)
 {
-	e_token	t;
+	t_token	t;
 
 	t = EOL;
 	while (get_token(head) != EOL)

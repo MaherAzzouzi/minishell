@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:51:56 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:59:25 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 23:21:37 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_env_variable_length(char *p)
 
 	if (p[0] != '$')
 		return (FAIL);
-	p++;
+	*p++ = '\xff';
 	if (p[0] == '\xfe' || (*p == '$' || *p == '?') || (ft_isdigit(*p)))
 		return (1);
 	q = p;

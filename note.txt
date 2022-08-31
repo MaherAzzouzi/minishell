@@ -1,5 +1,0 @@
-- fork in builtins
-- set PWD and OLDPWD if they don't exist
-- don't skip $0 $1 .. (either expand or don't)
-- expand wildcards inside env vars
-- segfault: ls && ((cd && ls) | cat)

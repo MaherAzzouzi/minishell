@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:13:07 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 19:13:38 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_lnode *p)
 	return (current);
 }
 
-void	clean_empty_quote(t_lnode **head, e_token t)
+void	clean_empty_quote(t_lnode **head, t_token t)
 {
 	t_lnode	*current;
 	t_lnode	*p;

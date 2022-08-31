@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:39:44 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:39:46 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:02:38 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_env(char *var, void *exec_s, int flag)
 		return (itoa(getpid()));
 	else if (ft_strcmp(var, "?") == 0)
 		return (itoa(WEXITSTATUS(g_exec_struct->exit_status)));
-	else if (var[0] == '\xfe' && var[1] == 0)
+	else if ((var[0] == '\xfe' && var[1] == 0) || var[0] == 0)
 		return (ft_strdup("\xff"));
 	i = 0;
 	while (envp[i])

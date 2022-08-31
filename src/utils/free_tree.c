@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:43:41 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:44:32 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:55:49 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_array_of_pointers(char **p)
 	}
 }
 
-void	free_herdocs(struct herdoc_exp **p)
+void	free_herdocs(struct s_herdoc_exp **p)
 {
 	int	i;
 

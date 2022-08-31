@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:51:01 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:51:03 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*open_current_dir(char *pattern)
 
 void	handle_wildcard(t_lnode *head)
 {
-	e_token	t;
+	t_token	t;
 	t_lnode	*current;
 	char	*tmp;
 	char	*p;

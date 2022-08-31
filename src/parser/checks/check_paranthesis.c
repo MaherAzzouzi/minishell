@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:44:35 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:47:03 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_left_of_left_p(t_lnode *head)
 
 int	is_red(t_lnode *node)
 {
-	e_token	t;
+	t_token	t;
 
 	t = node->type.token;
 	return (t == DLMI || t == APPND || t == REDRI || t == REDRO);

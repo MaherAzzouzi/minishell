@@ -6,13 +6,13 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:48:32 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:49:13 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parsing_node	*alloc_node(e_token type)
+t_parsing_node	*alloc_node(t_token type)
 {
 	t_parsing_node	*p;
 

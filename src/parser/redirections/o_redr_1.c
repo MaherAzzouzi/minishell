@@ -6,13 +6,13 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:06:39 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:07:36 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lnode	*find_red(t_lnode *head, t_lnode *end, e_token redr)
+t_lnode	*find_red(t_lnode *head, t_lnode *end, t_token redr)
 {
 	t_lnode	*current;
 
@@ -29,7 +29,7 @@ t_lnode	*find_red(t_lnode *head, t_lnode *end, e_token redr)
 t_lnode	*get_command(t_lnode *head, t_lnode *end)
 {
 	t_lnode	*p;
-	e_token	last_token;
+	t_token	last_token;
 
 	p = head;
 	last_token = EOL;
@@ -107,7 +107,7 @@ int	fill_command_with_ore_args(t_lnode *cmd,
 	return (counter);
 }
 
-int	count_redirections(t_lnode *head, e_token redr, t_lnode *end)
+int	count_redirections(t_lnode *head, t_token redr, t_lnode *end)
 {
 	t_lnode	*current;
 	int		count;

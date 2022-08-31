@@ -6,13 +6,13 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:08:41 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lnode	*handle_quote(t_lnode *head, e_token dlm)
+t_lnode	*handle_quote(t_lnode *head, t_token dlm)
 {
 	t_lnode	*current;
 	t_lnode	*sg;

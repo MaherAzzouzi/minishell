@@ -1,12 +1,8 @@
-#FIXME: We should add checks on the headers too.
 CC=gcc
 INC=inc/
 FLAGS=-Wall -Wextra -Werror
 MAIN= main_utils.c main.c
 B_DIR= build
-# If a new directory is created inside src, we should have it in a variable
-# containing all files inside, and add it to CFILES too.
-# DBGUTILS= $(addprefix dbg_utils/, token_str.c check_lists.c tree_debug.c visual_tree.c)
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\
 		general_utils.c free_tree.c)
 LEXERC=$(addprefix lexer/, lexing.c)
@@ -21,6 +17,7 @@ EXEC=$(addprefix exec/, exec.c exec_1.c exec_2.c exec_3.c gen_utils.c gen_utils_
 BUILTINS= $(addprefix exec/builtins/, check_builtins.c echo.c cd.c cd_1.c pwd.c env.c copy_env.c cd_utils.c exit.c ft_unset.c export.c export_1.c export_utils.c export_utils_1.c)
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSQUOTES) $(PARSRED) $(PARSENV) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
+HEADERS=$(addprefix inc/, builtins.h checks.h exec.h ft_printf.h lexer.h libft.h minishell.h parser.h redirections.h utils.h)
 LIBFT=libft/libft.a
 PRINTF=ft_printf/libftprintf.a
 PROGRAM= minishell
@@ -32,7 +29,7 @@ $(PROGRAM) : $(OFILES)
 	cd ft_printf && make
 	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g   $(OFILES) $(LIBFT) $(PRINTF) -I $(INC) -o $(PROGRAM) -lreadline
 	
-$(B_DIR)/%.o: %.c
+$(B_DIR)/%.o: %.c  $(HEADERS)
 	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(CPPFLAGS) -I $(INC) -g  -c $< -o $@
 

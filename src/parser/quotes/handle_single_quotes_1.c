@@ -6,13 +6,13 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:06:55 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 19:12:53 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*cnvrt_tknv2(e_token token)
+char	*cnvrt_tknv2(t_token token)
 {
 	if (token == PIPE)
 		return ("|");
@@ -35,7 +35,7 @@ char	*cnvrt_tknv2(e_token token)
 	return (NULL);
 }
 
-char	*convert_token(e_token token)
+char	*convert_token(t_token token)
 {
 	if (token == SGLQT)
 		return ("'");
@@ -52,7 +52,7 @@ char	*convert_token(e_token token)
 	return (cnvrt_tknv2(token));
 }
 
-int	count_token(t_lnode *head, t_lnode *current, e_token t)
+int	count_token(t_lnode *head, t_lnode *current, t_token t)
 {
 	int	count;
 

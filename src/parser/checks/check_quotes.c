@@ -6,14 +6,14 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:43:58 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:44:00 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-int	ft_check_quotes(t_lnode *head, e_token dlm)
+int	ft_check_quotes(t_lnode *head, t_token dlm)
 {
 	t_lnode	*current;
 

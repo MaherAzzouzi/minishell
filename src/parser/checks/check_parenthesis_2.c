@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:47:13 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:49:04 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_lnode	*return_lp(t_lnode *head)
 
 int	check_left(t_lnode *head, t_lnode *lp)
 {
-	e_token	t;
+	t_token	t;
 
 	t = PIPE;
 	while (head != lp)

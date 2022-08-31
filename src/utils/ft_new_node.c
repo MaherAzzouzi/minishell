@@ -6,13 +6,13 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:44:52 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:45:36 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 22:48:12 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd)
+t_lnode	*ft_add_back_lex(t_lnode **head, t_token token, char *cmd)
 {
 	t_lnode	*node;
 	t_lnode	*current;
@@ -33,7 +33,7 @@ t_lnode	*ft_add_back_lex(t_lnode **head, e_token token, char *cmd)
 	return (*head);
 }
 
-t_lnode	*ft_new_node_lex(e_token token, char *cmd)
+t_lnode	*ft_new_node_lex(t_token token, char *cmd)
 {
 	t_lnode	*node;
 	size_t	size;
