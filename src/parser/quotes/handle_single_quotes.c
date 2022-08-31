@@ -3,21 +3,9 @@
 #include "minishell.h"
 #include "lexer.h"
 
-char *convert_token(e_token token)
+static char	*cnvrt_tknv2(e_token token)
 {
-	if (token == SGLQT)
-		return ("'");
-	else if (token == DBLQT)
-		return ("\"");
-	else if (token == REDRO)
-		return (">");
-	else if (token == REDRI)
-		return ("<");
-	else if (token == DLMI)
-		return ("<<");
-	else if (token == APPND)
-		return (">>");
-	else if (token == PIPE)
+	if (token == PIPE)
 		return ("|");
 	else if (token == SPC)
 		return (" ");
@@ -36,6 +24,23 @@ char *convert_token(e_token token)
 	else if (token == RIGHT_PAR)
 		return (")");
 	return (NULL);
+}
+
+char *convert_token(e_token token)
+{
+	if (token == SGLQT)
+		return ("'");
+	else if (token == DBLQT)
+		return ("\"");
+	else if (token == REDRO)
+		return (">");
+	else if (token == REDRI)
+		return ("<");
+	else if (token == DLMI)
+		return ("<<");
+	else if (token == APPND)
+		return (">>");
+	return(cnvrt_tknv2(token));
 }
 
 int count_token(t_lnode *head, t_lnode *current, e_token t)
@@ -114,9 +119,12 @@ static t_lnode *check_sglqt_dblqt(t_lnode *current, t_lnode *node)
 									 get_cmd(current->next), 2));
 			current = current->next->next;
 		}
-		else if ((get_token(current) == SGLQT || get_token(current) == DBLQT) && (get_token(current->next) == DBLQT || get_token(current->next) == SGLQT))
+		else if ((get_token(current) == SGLQT
+			|| get_token(current) == DBLQT)&& (get_token(current->next) == DBLQT
+				|| get_token(current->next) == SGLQT))
 			current = current->next;
-		else if ((get_token(current) == SGLQT || get_token(current) == DBLQT) && get_token(current->next) != CMD)
+		else if ((get_token(current) == SGLQT || get_token(current) == DBLQT) &&
+		 get_token(current->next) != CMD)
 			break;
 		else if ((get_token(current) == SGLQT || get_token(current) == DBLQT))
 			current = current->next;

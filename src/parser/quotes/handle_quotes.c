@@ -12,7 +12,6 @@ int order_quotes(t_lnode **head)
 			current = handle_single_quote(current);
 			if (current == (t_lnode *)-1)
 				return FAIL;
-
 		}
 		else if (get_token(current) == DBLQT)
 		{
@@ -40,7 +39,6 @@ void fix_after_expansion(t_lnode *head)
 			return;
 		if (get_token(current) == DBLQT && dblqt_flag)
 		{
-			// head and not current
 			handle_double_quote(head);
 			current = head;
 			dblqt_flag = 0;

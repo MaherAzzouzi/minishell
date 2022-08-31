@@ -199,7 +199,6 @@ e_token	get_last_output_red(t_lnode *head)
 			t = get_token(head);
 		head = head->next;
 	}
-
 	return (t);
 }
 

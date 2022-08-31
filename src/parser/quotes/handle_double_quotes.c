@@ -1,6 +1,18 @@
 #include "minishell.h"
 
 
+static t_lnode* n_free_nodes(t_lnode **head, t_lnode *current, int *hc, t_lnode *p)
+{
+    free_lexer_node(current->next->next);
+    free_lexer_node(current->next);
+    free_lexer_node(current);
+    if (*hc)
+        current = (*head);
+    else
+        current = p->next;
+    *hc = 0;
+    return (current);
+}
 void clean_empty_quote(t_lnode **head, e_token t)
 {
     t_lnode *current;
@@ -23,21 +35,13 @@ void clean_empty_quote(t_lnode **head, e_token t)
             }
             else
                 p->next = current->next->next->next;
-            free_lexer_node(current->next->next);
-            free_lexer_node(current->next);
-            free_lexer_node(current);
-            if (head_changed)
-                current = (*head);
-            else
-                current = p->next;
-            head_changed = 0;
+            current = n_free_nodes(head, current, &head_changed, p);
         }
         p = current;
         current = current->next;
     }
 }
 
-// We will get aa string like this ccc$HOME and expand it in the execution
 t_lnode* handle_double_quote(t_lnode	*head)
 {
     return handle_quote(head, DBLQT);

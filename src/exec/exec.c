@@ -1,11 +1,4 @@
 #include "minishell.h"
-int g_flag = 1;
-
-void ctrl_child(int p)
-{
-	(void)p;
-	return;
-}
 
 char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 {
@@ -18,9 +11,7 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 		p = ft_strjoin(p, &root->cmd.cmd[1], 0);
 	}
 	else if (root->cmd.cmd[0] != '/' && root->cmd.cmd[0] != '.')
-	{
 		p = check_if_bin_exist(root->cmd.cmd, exec_s->path);
-	}
 	return p;
 }
 
@@ -29,8 +20,6 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 	pid_t pid;
 	char *p;
 	struct stat sb;
-
-	// printf("Executing %s\n", root->cmd.cmd);
 
 	pid = fork();
 	if (pid == 0)
@@ -103,7 +92,6 @@ pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s
 		}
 		else
 		{
-			// printf("HANDLE PARANTHESIS!\n");
 			handle_append_oredr(root);
 			handle_herdoc_iredr(root, exec_s);
 			int ret = core(ft_strdup(root->p.cmd), exec_s->envp, exec_s, env);
@@ -237,7 +225,6 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 		}
 		else
 		{
-			// printf("HANDLE PARANTHESIS!\n");
 			handle_append_oredr(node);
 			handle_herdoc_iredr(node, exec_s);
 			int ret = core(ft_strdup(node->p.cmd), exec_s->envp, exec_s, env);
@@ -246,11 +233,8 @@ int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	}
 	else
 	{
-		// printf("registring ctrl_c_handler PARENT\n");
 		waitpid(pid, &status, 0);
 		signal(SIGINT, enter);
-		// signal(SIGINT, enter);
-		// printf("enter1\n");
 		if (WIFEXITED(status))
 		{
 			es = status;
@@ -280,17 +264,6 @@ void herdoc_handler(int p)
 	return;
 }
 
-
-void exit_herdoc(int p)
-{
-	(void)p;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	exit_status_fail();
-	g_flag = 0;
-}
-
 char *get_next_line(int fd)
 {
 	char p[10000];
@@ -313,13 +286,8 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 	int pid;
 	int status = 0;
 
-	g_flag = 1;
-	//signal(SIGINT, exit_herdoc);
 	if (!it_has_herdoc(node))
 		return;
-	// Open a pipe
-	// Keep reading until the last herdoc which is interesting
-	// Open a pipe to use it as input for our program
 	signal(SIGINT, SIG_IGN);
 	pipe(node->fd);
 	pid = fork();
@@ -368,7 +336,6 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 			while(read(node->fd[0], &c, 1) == 1)
 			;
 			loop_handler(NULL, g_exec_struct);
-			//close(node->fd[0]);
 		}
 	}
 }

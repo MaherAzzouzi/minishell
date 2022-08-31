@@ -2,6 +2,20 @@
 
 #include "minishell.h"
 
+static void n_convert_p(char **updated_envp, int count)
+{
+    if (count == 0)
+    {
+        g_exec_struct->envp = updated_envp;
+        count++;
+    }
+    else
+    {
+        free_charpp(g_exec_struct->envp);
+        g_exec_struct->envp = updated_envp;
+    }
+}
+
 void convert(t_envp *env)
 {
     int len;
@@ -17,11 +31,7 @@ void convert(t_envp *env)
         len++;
         current = current->next;
     }
-
     updated_envp = (char **)malloc(sizeof(char *) * (len + 1));
-    if (!updated_envp)
-        exit(-1);
-    
     i = 0;
     current = env;
     while (i < len)
@@ -31,14 +41,5 @@ void convert(t_envp *env)
         i++;
     }
     updated_envp[i] = NULL;
-    if (count == 0)
-    {
-        g_exec_struct->envp = updated_envp;
-        count++;
-    }
-    else
-    {
-        free_charpp(g_exec_struct->envp);
-        g_exec_struct->envp = updated_envp;
-    }
+    n_convert_p(updated_envp, count);
 }

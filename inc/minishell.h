@@ -27,6 +27,9 @@
 #include "builtins.h"
 #include <sys/types.h>
 #include <dirent.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 
 t_exec_struct *g_exec_struct;
 

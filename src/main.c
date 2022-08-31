@@ -88,13 +88,10 @@ int main(int argc, char *argv[], char *envp[])
 	t_exec_struct exec_struct;
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
-	//printf("enter\n");
 	signal(SIGINT, enter);
 	signal(SIGQUIT, SIG_IGN);
 	g_exec_struct = &exec_struct;
-
 	ft_memset(&exec_struct, 0, sizeof(exec_struct));
-
 	setbuf(stdout, NULL);
 	init(&exec_struct, envp);
 	loop_handler(envp, &exec_struct);

@@ -123,15 +123,6 @@ char *check_if_bin_exist(char *bin_name, char *path_env)
     char **paths;
     char *full_path;
     int i;
-
-    // if (fork() == 0)
-    // {
-    //     char *argv[] = {"/bin/stty", "icrnl", NULL};
-    //     execve("/bin/stty", argv, NULL);
-    //     exit(0);
-    // }
-    // else
-    //     wait(NULL);
     full_path = ft_strdup("");
     paths = ft_split(path_env, ':');
     i = 0;
