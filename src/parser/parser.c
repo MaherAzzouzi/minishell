@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:14:50 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:14:51 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_parsing_node	*parse(t_lnode **head, t_exec_struct *exec_s)
 	if ((order_quotes(head) == FAIL || check_all(*head) == FAIL))
 	{
 		exit_status_fail();
-		printf("Syntax Error!\n");
+		ft_printf("Syntax Error!\n");
 		return (NULL);
 	}
 	replace_dlr_with_flag(*head);

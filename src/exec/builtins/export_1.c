@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:21:37 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:23:41 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ void	ft_sort_export(t_envp *head)
 
 void	print_exp(int len, char *str, int *i)
 {
-	printf("declare -x ");
+	ft_printf("declare -x ");
 	while ((*i) <= len)
 	{
-		printf("%c", str[(*i)]);
+		ft_printf("%c", str[(*i)]);
 		(*i)++;
 	}
-	printf("\"");
+	ft_printf("\"");
 	while (str[(*i)])
 	{
-		printf("%c", str[(*i)]);
+		ft_printf("%c", str[(*i)]);
 		(*i)++;
 	}
-	printf("\"");
-	printf("\n");
+	ft_printf("\"");
+	ft_printf("\n");
 }
 
 void	p_(char *str, int len)
@@ -79,13 +79,13 @@ void	p_(char *str, int len)
 		print_exp(len, str, &i);
 	else
 	{
-		printf("declare -x ");
+		ft_printf("declare -x ");
 		while (str[i])
 		{
-			printf("%c", str[i]);
+			ft_printf("%c", str[i]);
 			i++;
 		}
-		printf("\n");
+		ft_printf("\n");
 	}
 }
 

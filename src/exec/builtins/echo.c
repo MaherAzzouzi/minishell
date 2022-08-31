@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:18:46 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:23:29 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	writing_args(t_parsing_node *root)
 	while (root->cmd.argv[j])
 	{
 		if (root->cmd.argv[j + 1] == NULL)
-			printf("%s", root->cmd.argv[j]);
+			ft_printf("%s", root->cmd.argv[j]);
 		else
-			printf("%s ", root->cmd.argv[j]);
+			ft_printf("%s ", root->cmd.argv[j]);
 		j++;
 	}
 	write(1, "\n", 2);
@@ -57,9 +57,9 @@ static void	check_n_arg(t_parsing_node *root, int *i, int *flag)
 void	ft_echo_p(t_parsing_node *root, int i)
 {
 	if (root->cmd.argv[i + 1] == NULL)
-		printf("%s", root->cmd.argv[i]);
+		ft_printf("%s", root->cmd.argv[i]);
 	else
-		printf("%s ", root->cmd.argv[i]);
+		ft_printf("%s ", root->cmd.argv[i]);
 }
 
 void	ft_echo(t_parsing_node *root)

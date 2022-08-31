@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:53:40 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:58:07 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*read_command_line(t_exec_struct *exec_struct)
 	char	*cmd2;
 	int		i;
 
+	(void)exec_struct;
 	cmd = readline("$ ");
 	if (!cmd)
 	{
@@ -45,7 +46,7 @@ void	ctrl_c_handler(int p)
 void	enter(int p)
 {
 	(void)p;
-	printf("\n");
+	ft_printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

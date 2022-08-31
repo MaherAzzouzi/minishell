@@ -21,6 +21,7 @@
 #include "parser.h"
 #include "utils.h"
 #include "libft.h"
+#include "ft_printf.h"
 #include "redirections.h"
 #include "checks.h"
 #include "exec.h"

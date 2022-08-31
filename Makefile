@@ -22,13 +22,15 @@ BUILTINS= $(addprefix exec/builtins/, check_builtins.c echo.c cd.c cd_1.c pwd.c 
 CFILES= $(addprefix src/, $(LEXERC) $(MAIN) $(UTILS) $(DBGUTILS) $(PARSCHECK) $(PARSQUOTES) $(PARSRED) $(PARSENV) $(PARSETREE) $(PARSEP) $(PARSERC) $(EXEC) $(BUILTINS))
 OFILES=$(addprefix build/, $(CFILES:.c=.o))
 LIBFT=libft/libft.a
+PRINTF=ft_printf/libftprintf.a
 PROGRAM= minishell
 
 all: $(PROGRAM)
 
 $(PROGRAM) : $(OFILES)
-	@cd libft && make
-	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g   $(OFILES) $(LIBFT) -I $(INC) -o $(PROGRAM) -lreadline
+	cd libft && make
+	cd ft_printf && make
+	$(CC) $(FLAGS) $(LDFLAGS) $(CPPFLAGS) -g   $(OFILES) $(LIBFT) $(PRINTF) -I $(INC) -o $(PROGRAM) -lreadline
 	
 $(B_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -36,7 +38,8 @@ $(B_DIR)/%.o: %.c
 
 clean:
 	rm -rf $(B_DIR)
-	@cd libft && make fclean
+	cd libft && make fclean
+	cd ft_printf && make fclean
 
 fclean: clean
 	rm  -f $(PROGRAM)

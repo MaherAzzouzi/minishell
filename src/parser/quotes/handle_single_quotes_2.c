@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:08:41 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 19:12:57 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_lnode	*handle_quote(t_lnode *head, e_token dlm)
 	}
 	if (get_token(current) == EOL)
 	{
-		printf("Can not find a %s ender!\n", convert_token(dlm));
+		ft_printf("Can not find a %s ender!\n", convert_token(dlm));
 		free_lexer_node(node);
 		return ((t_lnode *)(-1));
 	}

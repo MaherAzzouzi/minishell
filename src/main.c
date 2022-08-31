@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:50:39 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:55:51 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:06:13 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_exec_struct	exec_struct;
 
+	(void)argv;
+	(void)argc;
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
 	signal(SIGINT, enter);

@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:33:49 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:52:08 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:09:00 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init(t_exec_struct *exec_s, char *envp[])
 {
-	setbuf(stdout, NULL);
 	if (exec_s->path == NULL)
 		exec_s->path = get_env("PATH", envp, 1);
 	if (exec_s->envp == NULL)

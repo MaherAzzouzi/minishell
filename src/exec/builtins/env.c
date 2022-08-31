@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:18:58 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:19:00 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	print_env(t_var_env *var, t_envp **env)
 	while (var->head)
 	{
 		if (ft_egale_len(var->head->str) != -1)
-			printf("%s\n", var->head->str);
+			ft_printf("%s\n", var->head->str);
 		var->head = var->head->next;
 	}
 }

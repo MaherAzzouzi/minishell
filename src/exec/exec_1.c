@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:26:32 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:39:28 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	spawn_process_sc(t_spp *s, char *p, struct stat *sb)
 			show_errno(p);
 		if (S_ISDIR(sb->st_mode))
 		{
-			printf("minishell: %s: is a directory\n", p);
+			ft_printf("minishell: %s: is a directory\n", p);
 			exit(-2);
 		}
 	}

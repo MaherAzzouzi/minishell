@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:31:40 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:39:32 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exec_simple_cmd_core(char *p, struct stat *sb, t_parsing_node *node)
 			show_errno(p);
 		if (S_ISDIR(sb->st_mode))
 		{
-			printf("minishell: %s: is a directory\n", node->cmd.cmd);
+			ft_printf("minishell: %s: is a directory\n", node->cmd.cmd);
 			exit(-2);
 		}
 		if (access(p, X_OK) != 0)
@@ -58,7 +58,7 @@ int	exec_simple_cmd_prt(pid_t pid)
 			g_exec_struct->exit_status |= ((128 + WTERMSIG(status)) << 8)
 				& 0xff00;
 		else if (WTERMSIG(status) == 3)
-			printf("Quit: %d\n", WTERMSIG(status));
+			ft_printf("Quit: %d\n", WTERMSIG(status));
 		else if (WTERMSIG(status) != 11)
 			g_exec_struct->exit_status |= ((128 + WTERMSIG(status)) << 8)
 				& 0xff00;

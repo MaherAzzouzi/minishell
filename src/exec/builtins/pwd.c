@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:22:57 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 20:22:59 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ int	ft_pwd(t_parsing_node *node, t_envp *env)
 		if (str == NULL)
 		{
 			str = find_env("PWD", env);
-			printf("%s\n", str);
+			ft_printf("%s\n", str);
 		}
 		else
-			printf("%s\n", str);
+			ft_printf("%s\n", str);
 		if (!str)
 			free(str);
 		return (SUCCESS);
 	}
 	else
 	{
-		printf("invalid arguments\n");
+		ft_printf("invalid arguments\n");
 		return (FAIL);
 	}
 }

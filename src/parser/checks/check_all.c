@@ -6,7 +6,7 @@
 /*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:43:38 by Mriskyin          #+#    #+#             */
-/*   Updated: 2022/08/31 18:43:41 by Mriskyin         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:10:06 by Mriskyin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	show_error(int ret, char *message)
 {
 	if (ret == FAIL)
 	{
-		printf("%s\n", message);
+		ft_printf("%s\n", message);
 	}
 }
 
