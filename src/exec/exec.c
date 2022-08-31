@@ -15,137 +15,195 @@ char *return_cmd_full_path(t_parsing_node *root, t_exec_struct *exec_s)
 	return p;
 }
 
-pid_t spawn_process(int in, int out, t_parsing_node *root, t_exec_struct *exec_s, int *fd, t_envp **env)
+
+/////// spawn_process
+typedef struct s_sp_params
 {
-	pid_t pid;
+	int in;
+	int out;
+	t_parsing_node *root;
+	t_exec_struct *exec_s;
+	int *fd;
+	t_envp **env;
+}  t_spp;
+
+static void spawn_process_builtins(t_spp *s)
+{
+	if (is_builtin(s->root))
+	{
+		int stdout_ = dup(1);
+		int stdin_ = dup(0);
+		if (s->in != 0)
+		{
+			dup2(s->in, 0);
+			close(s->in);
+		}
+		if (s->out != 1)
+		{
+			dup2(s->out, 1);
+			close(s->out);
+		}
+		handle_append_oredr(s->root);
+		handle_herdoc_iredr(s->root, s->exec_s);
+		expand_one_node(s->root, s->exec_s);
+		builtins(s->root, s->exec_s, s->env);
+		dup2(stdout_, 1);
+		dup2(stdin_, 0);
+		exit (0);
+	}
+}
+
+static void spawn_process_sc(t_spp *s, char *p, struct stat *sb)
+{
+	if (s->root->cmd.cmd[0] != 0)
+	{
+		expand_one_node(s->root, s->exec_s);
+		p = return_cmd_full_path(s->root, s->exec_s);
+		if (p == NULL)
+			show_errno(s->root->cmd.cmd);
+		if (stat(p, sb) < 0)
+			show_errno(p);
+		if (S_ISDIR(sb->st_mode))
+		{
+			printf("minishell: %s: is a directory\n", p);
+			exit(-2);
+		}
+	}
+	handle_append_oredr(s->root);
+	handle_herdoc_iredr(s->root, s->exec_s);
+	if (s->root->cmd.cmd[0] == 0)
+	{
+		p = "/";
+		s->root->cmd.argv[0] = "/";
+	}
+	execve(p, s->root->cmd.argv, s->exec_s->envp);
+	exit(0);
+}
+
+static void spawn_process_handle_io(t_spp *s)
+{
+	if (s->in != 0)
+	{
+		dup2(s->in, 0);
+		close(s->in);
+	}
+	if (s->out != 1)
+	{
+		dup2(s->out, 1);
+		close(s->out);
+	}
+	close(s->fd[0]);
+	close(s->fd[1]);
+}
+
+static void spawn_process_child(t_spp *s)
+{
 	char *p;
 	struct stat sb;
 
-	pid = fork();
-	if (pid == 0)
+	spawn_process_builtins(s);
+	spawn_process_handle_io(s);
+	if (it_has_herdoc(s->root))
 	{
-		if (is_builtin(root))
-		{
-			int stdout_ = dup(1);
-			int stdin_ = dup(0);
-			if (in != 0)
-			{
-				dup2(in, 0);
-				close(in);
-			}
-			if (out != 1)
-			{
-				dup2(out, 1);
-				close(out);
-			}
-			handle_append_oredr(root);
-			handle_herdoc_iredr(root, exec_s);
-			expand_one_node(root, exec_s);
-			builtins(root, exec_s, env);
-			dup2(stdout_, 1);
-			dup2(stdin_, 0);
-			exit (0);
-		}
-		if (in != 0)
-		{
-			dup2(in, 0);
-			close(in);
-		}
-		if (out != 1)
-		{
-			dup2(out, 1);
-			close(out);
-		}
-		close(fd[0]);
-		close(fd[1]);
-		if (it_has_herdoc(root))
-		{
-			dup2(root->fd[0], 0);
-			close(root->fd[0]);
-		}
-		if (root->p.parenthesised == 0)
-		{
-			p = NULL;
-			if (root->cmd.cmd[0] != 0)
-			{
-				expand_one_node(root, exec_s);
-				p = return_cmd_full_path(root, exec_s);
-				if (p == NULL)
-					show_errno(root->cmd.cmd);
-				if (stat(p, &sb) < 0)
-					show_errno(p);
-				if (S_ISDIR(sb.st_mode))
-				{
-					printf("minishell: %s: is a directory\n", p);
-					exit(-2);
-				}
-			}
-			handle_append_oredr(root);
-			handle_herdoc_iredr(root, exec_s);
-			if (root->cmd.cmd[0] == 0)
-			{
-				p = "/";
-				root->cmd.argv[0] = "/";
-			}
-			execve(p, root->cmd.argv, exec_s->envp);
-			exit(0);
-		}
-		else
-		{
-			handle_append_oredr(root);
-			handle_herdoc_iredr(root, exec_s);
-			int ret = core(ft_strdup(root->p.cmd), exec_s->envp, exec_s, env);
-			exit(ret);
-		}
+		dup2(s->root->fd[0], 0);
+		close(s->root->fd[0]);
+	}
+	if (s->root->p.parenthesised == 0)
+	{
+		p = NULL;
+		spawn_process_sc(s, p, &sb);
 	}
 	else
 	{
-		if (in != 0)
-			close(in);
-		if (out != 1)
-			close(out);
+		handle_append_oredr(s->root);
+		handle_herdoc_iredr(s->root, s->exec_s);
+		int ret = core(ft_strdup(s->root->p.cmd), s->exec_s->envp, s->exec_s, s->env);
+		exit(ret);
+	}
+}
+
+pid_t spawn_process(t_spp *s)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == 0)
+		spawn_process_child(s);
+	else
+	{
+		if (s->in != 0)
+			close(s->in);
+		if (s->out != 1)
+			close(s->out);
 		return (pid);
 
 	}
 	return 0;
 }
 
+
+/////// pipe chain exec
+
+static void pipe_chain_exec_hoc(t_parsing_node *node, int *fd,
+		t_exec_struct *exec_s, t_envp **env)
+{
+	t_spp s;
+	if (it_has_herdoc(node->lchild))
+	{
+		close(fd[0]);
+		fd[0] = node->lchild->fd[0];
+	}
+	else
+	{
+		s.env = env;
+		s.exec_s = exec_s;
+		s.fd = fd;
+		s.in = 0;
+		s.out = fd[1];
+		s.root = node->lchild;
+		spawn_process(&s);
+	}
+}
+
+static void pipe_chain_exec_rc(t_parsing_node *node, int *fd,
+		t_exec_struct *exec_s, t_envp **env)
+{
+	t_spp s;
+	int status;
+	int pid2;
+
+	if (it_has_herdoc(node->rchild))
+	{
+		close(fd[0]);
+		fd[0] = node->rchild->fd[0];
+	}
+	s.env = env;
+	s.exec_s = exec_s;
+	s.fd = fd;
+	s.in = fd[0];
+	s.out = 1;
+	s.root = node->rchild;
+	pid2 = spawn_process(&s);
+	waitpid(pid2, &status, 0);
+	if (WIFEXITED(status))
+		exec_s->exit_status = status;
+}
+
 void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 {
 	static int fd[2];
-	int status;
-	int pid2;
 	int fd2;
+	int status;
 
 	fd2 = dup(0);
 	while (node->type == PIPE)
 	{
-		// printf("HERE1\n");
 		int ret = pipe(fd);
 		if (ret < 0)
 			exit(-1);
-		if (it_has_herdoc(node->lchild))
-		{
-			close(fd[0]);
-			fd[0] = node->lchild->fd[0];
-		}
-		else
-			spawn_process(0, fd[1], node->lchild, exec_s, fd, env);
+		pipe_chain_exec_hoc(node, fd, exec_s, env);
 		if (node->rchild->type == CMD)
-		{
-			// printf("HERE IM PIPE\n");
-			if (it_has_herdoc(node->rchild))
-			{
-				close(fd[0]);
-				fd[0] = node->rchild->fd[0];
-			}
-			pid2 = spawn_process(fd[0], 1, node->rchild, exec_s, fd, env);
-			waitpid(pid2, &status, 0);
-			if (WIFEXITED(status))
-			{
-				exec_s->exit_status = status;
-			}
-		}
+			pipe_chain_exec_rc(node, fd, exec_s, env);
 		else
 		{
 			dup2(fd[0], 0);
@@ -158,6 +216,9 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	while (waitpid(-1, &status, 0) != -1)
 		;
 }
+
+////// exec_simple_cmd
+
 
 int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 {
