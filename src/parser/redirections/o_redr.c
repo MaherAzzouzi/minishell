@@ -137,14 +137,16 @@ static void	n_parse_herdoc(t_lnode *head, struct herdoc_exp **redri_array,
 	}
 }
 
-struct herdoc_exp **alloc_herdoc_array(t_lnode *head, e_token redr, t_lnode *end)
+struct herdoc_exp	**alloc_herdoc_array(t_lnode *head,
+		e_token redr, t_lnode *end)
 {
-	int	count;
-	int	i;
-	struct herdoc_exp   **redri_array;
+	int					count;
+	int					i;
+	struct herdoc_exp	**redri_array;
 
 	count = count_redirections(head, redr, end);
-	redri_array = (struct herdoc_exp **)malloc((count + 1) * sizeof(struct herdoc_exp *));
+	redri_array = (struct herdoc_exp **)malloc((count + 1)
+			* sizeof(struct herdoc_exp *));
 	i = 0;
 	if (!redri_array)
 		exit(0);
@@ -154,13 +156,13 @@ struct herdoc_exp **alloc_herdoc_array(t_lnode *head, e_token redr, t_lnode *end
 		head = head->next;
 	}
 	redri_array[i] = NULL;
-	return redri_array;
+	return (redri_array);
 }
 
-char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
+char	**alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
 {
-	int	count;
-	int	i;
+	int		count;
+	int		i;
 	char	**redri_array;
 
 	count = count_redirections(head, redr, end);
@@ -183,10 +185,10 @@ char **alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end)
 		head = head->next;
 	}
 	redri_array[i] = NULL;
-	return redri_array;
+	return (redri_array);
 }
 
-e_token get_last_output_red(t_lnode *head)
+e_token	get_last_output_red(t_lnode *head)
 {
 	e_token	t;
 
@@ -201,14 +203,13 @@ e_token get_last_output_red(t_lnode *head)
 	return (t);
 }
 
-e_token get_last_in_red(t_lnode *head)
+e_token	get_last_in_red(t_lnode *head)
 {
 	e_token	t;
 
 	t = EOL;
 	while (get_token(head) != EOL)
 	{
-
 		if (get_token(head) == DLMI || get_token(head) == REDRI)
 			t = get_token(head);
 		head = head->next;
@@ -216,31 +217,31 @@ e_token get_last_in_red(t_lnode *head)
 	return (t);
 }
 
-t_parsing_node *parse_redirections(t_lnode *head, t_lnode *end)
+t_parsing_node	*parse_redirections(t_lnode *hd, t_lnode *end)
 {
 	t_parsing_node	*node;
 	t_lnode			*cmd;
 	int				count;
-	
-	if (find_red(head, end, REDRI) == NULL && find_red(head, end, REDRO) == NULL
-	&& find_red(head, end, APPND) == NULL && find_red(head, end, DLMI) == NULL)
-		return NULL;
+
+	if (find_red(hd, end, REDRI) == NULL && find_red(hd, end, REDRO) == NULL
+		&& find_red(hd, end, APPND) == NULL && find_red(hd, end, DLMI) == NULL)
+		return (NULL);
 	node = alloc_node(CMD);
-	cmd = get_command(head, end);
+	cmd = get_command(hd, end);
 	if (cmd)
 	{
 		free(node->cmd.cmd);
 		node->cmd.cmd = ft_strdup(get_cmd(cmd));
-		count  = count_command_with_ore_args(cmd, head, end);
+		count = count_command_with_ore_args(cmd, hd, end);
 		node->cmd.argv = (char **)malloc(sizeof(char *) * (count + 2));
 		node->cmd.argv[0] = ft_strdup(get_cmd(cmd));
-		fill_command_with_ore_args(cmd, head, &node->cmd.argv[1], end);
+		fill_command_with_ore_args(cmd, hd, &node->cmd.argv[1], end);
 	}
-	node->reds.i_r_params = alloc_redr_array(head, REDRI, end);
-	node->reds.o_r_params = alloc_redr_array(head, REDRO, end);
-	node->reds.append_array = alloc_redr_array(head, APPND, end);
-	node->reds.herdoc_array = alloc_herdoc_array(head, DLMI, end);
-	node->last_out_token = get_last_output_red(head);
-	node->last_in_token = get_last_in_red(head);
+	node->reds.i_r_params = alloc_redr_array(hd, REDRI, end);
+	node->reds.o_r_params = alloc_redr_array(hd, REDRO, end);
+	node->reds.append_array = alloc_redr_array(hd, APPND, end);
+	node->reds.herdoc_array = alloc_herdoc_array(hd, DLMI, end);
+	node->last_out_token = get_last_output_red(hd);
+	node->last_in_token = get_last_in_red(hd);
 	return (node);
 }

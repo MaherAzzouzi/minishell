@@ -1,24 +1,24 @@
 #include "minishell.h"
 
-// This one g"re"p should be CMD -> EOL
-
-int is_quote(t_lnode *node)
+int	is_quote(t_lnode *node)
 {
 	return ((get_token(node) == DBLQT) || (get_token(node) == SGLQT));
 }
 
-void consolidate_commands(t_lnode **head)
+void	consolidate_commands(t_lnode **head)
 {
-	t_lnode *current;
-	t_lnode *p;
-	t_lnode *tmp;
+	t_lnode	*current;
+	t_lnode	*p;
+	t_lnode	*tmp;
 
 	current = *head;
 	while (get_token(current) != EOL)
 	{
-		if (get_token(current) == CMD && is_quote(current->next) && get_token(current->next->next) == CMD)
+		if (get_token(current) == CMD
+			&& is_quote(current->next) && get_token(current->next->next) == CMD)
 		{
-			set_cmd(current->next->next, ft_strjoin(get_cmd(current), get_cmd(current->next->next), 1));
+			set_cmd(current->next->next, ft_strjoin(get_cmd(current),
+					get_cmd(current->next->next), 1));
 			tmp = current;
 			if (current == *head)
 				*head = current->next;
@@ -32,10 +32,9 @@ void consolidate_commands(t_lnode **head)
 	}
 }
 
-// replace a with b in string p.
-void  replace(char *p, char a, char b)
+void	replace(char *p, char a, char b)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (p[i])
@@ -46,9 +45,9 @@ void  replace(char *p, char a, char b)
 	}
 }
 
-void replace_dlr_with_flag(t_lnode *head)
+void	replace_dlr_with_flag(t_lnode *head)
 {
-	t_lnode *current;
+	t_lnode	*current;
 
 	current = head;
 	while (get_token(current) != EOL)
@@ -70,14 +69,17 @@ void replace_dlr_with_flag(t_lnode *head)
 	}
 }
 
-void flag_env_variables(t_lnode *head)
+void	flag_env_variables(t_lnode *head)
 {
+	int		size;
+	char	*p;
+
 	while (get_token(head) != EOL)
 	{
 		if (get_token(head) == CMD && strchr(get_cmd(head), '$'))
 		{
-			int size = ft_strlen(head->type.cmd);
-			char *p = (char *)malloc((size + 2) * sizeof(char));
+			size = ft_strlen(head->type.cmd);
+			p = (char *)malloc((size + 2) * sizeof(char));
 			ft_memset(p, 0, size + 2);
 			ft_memcpy(p, head->type.cmd, size);
 			p[size] = '\xfe';
@@ -88,10 +90,9 @@ void flag_env_variables(t_lnode *head)
 	}
 }
 
-t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
+t_parsing_node	*parse(t_lnode **head, t_exec_struct *exec_s)
 {
-    t_parsing_node *root;
-	(void)exec_s;
+	t_parsing_node	*root;
 
 	consolidate_dlr_with_cmd(head, exec_s);
 	flag_env_variables(*head);
@@ -102,12 +103,11 @@ t_parsing_node *parse(t_lnode **head, t_exec_struct* exec_s)
 		return (NULL);
 	}
 	replace_dlr_with_flag(*head);
-	// Here I should replace $ with \xff in case a cmd is between single quotes.
 	join_quotes(*head);
 	clean_empty_quote(head, SGLQT);
 	clean_empty_quote(head, DBLQT);
 	consolidate_commands(head);
 	handle_wildcard(*head);
 	root = parse_tree(*head);
-    return root;
+	return (root);
 }
