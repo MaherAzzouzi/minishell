@@ -10,11 +10,11 @@ B_DIR= build
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\
 		general_utils.c number_utils.c free_tree.c)
 LEXERC=$(addprefix lexer/, lexing.c)
-PARSERC=$(addprefix parser/, parser.c)
+PARSERC=$(addprefix parser/, parser.c parser_utils.c)
 PARSETREE=$(addprefix parser/main_tree/, main_tree.c main_tree_1.c analyze_cmd.c)
 PARSQUOTES = $(addprefix parser/quotes/, handle_single_quotes.c  handle_single_quotes_1.c handle_single_quotes_2.c handle_double_quotes.c handle_quotes.c )
 PARSCHECK= $(addprefix parser/checks/, check_quotes.c check_all.c two_nearby_tokens.c check_conditional.c check_paranthesis.c check_parenthesis_2.c) 
-PARSRED= $(addprefix parser/redirections/, o_redr.c)
+PARSRED= $(addprefix parser/redirections/, o_redr.c o_redr_1.c o_redr_2.c)
 PARSENV= $(addprefix parser/expansion/, expand.c expand_1.c expand_2.c expand_3.c wildcard.c)
 PARSEP=$(addprefix parser/parenthesis/, parse_parenthesis.c parse_parenthesis_1.c)
 EXEC=$(addprefix exec/, exec.c gen_utils.c error_handling.c reds_exec.c or_and_exec.c change_exit_status.c bridge.c)

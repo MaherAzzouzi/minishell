@@ -145,5 +145,24 @@ t_lnode	*check_sglqt_dblqt(t_lnode *current, t_lnode *node);
 void	free_quotes_leaks(t_lnode *temp, t_lnode *current);
 void	join_quotes(t_lnode *head);
 t_lnode	*handle_single_quote(t_lnode *head);
+t_lnode	*find_red(t_lnode *head, t_lnode *end, e_token redr);
+t_lnode	*get_command(t_lnode *head, t_lnode *end);
+int	count_command_with_ore_args(t_lnode *cmd, t_lnode *head, t_lnode *end);
+int	fill_command_with_ore_args(t_lnode *cmd, \
+    t_lnode *head, char **argv, t_lnode *end);
+int	count_redirections(t_lnode *head, e_token redr, t_lnode *end);
+void	n_parse_herdoc(t_lnode *head, struct herdoc_exp **redri_array,
+			e_token redr, int *i);
+struct herdoc_exp	**alloc_herdoc_array(t_lnode *head,
+		e_token redr, t_lnode *end);
+char	**alloc_redr_array(t_lnode *head, e_token redr, t_lnode *end);
+e_token	get_last_output_red(t_lnode *head);
+e_token	get_last_in_red(t_lnode *head);
+int	is_quote(t_lnode *node);
+void	consolidate_commands(t_lnode **head);
+void	replace(char *p, char a, char b);
+void	replace_dlr_with_flag(t_lnode *head);
+void	flag_env_variables(t_lnode *head);
+
 
 # endif
