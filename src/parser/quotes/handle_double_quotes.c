@@ -1,7 +1,8 @@
 #include "minishell.h"
 
 
-static t_lnode* n_free_nodes(t_lnode **head, t_lnode *current, int *hc, t_lnode *p)
+static t_lnode* n_free_nodes(t_lnode **head, t_lnode *current, int *hc, \
+t_lnode *p)
 {
     free_lexer_node(current->next->next);
     free_lexer_node(current->next);

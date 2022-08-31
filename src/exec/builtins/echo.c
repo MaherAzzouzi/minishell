@@ -42,6 +42,14 @@ static void	check_n_arg(t_parsing_node *root, int *i, int *flag)
 	}
 }
 
+static void ft_echo_p(t_parsing_node *root, int i)
+{
+	if (root->cmd.argv[i + 1] == NULL)
+		printf("%s", root->cmd.argv[i]);
+	else
+		printf("%s ", root->cmd.argv[i]);
+}
+
 void	ft_echo(t_parsing_node *root)
 {
 	int	i;
@@ -51,19 +59,14 @@ void	ft_echo(t_parsing_node *root)
 	i = 2;
 	if (root->cmd.argv[1] == NULL)
 		write(1, "\n", 2);
-	    else if (!(ft_strncmp(root->cmd.argv[1], "-n", 2))
+	else if (!(ft_strncmp(root->cmd.argv[1], "-n", 2))
 		&& it_contain_only(root->cmd.argv[1] + 2, 'n'))
 	{
 		while (root->cmd.argv[i])
 		{
 			check_n_arg(root, &i, &flag);
 			if (root->cmd.argv[i] != NULL)
-			{
-				if (root->cmd.argv[i + 1] == NULL)
-					printf("%s", root->cmd.argv[i]);
-				else
-					printf("%s ", root->cmd.argv[i]);
-			}
+				ft_echo_p(root, i);
 			else
 				break ;
 			i++;

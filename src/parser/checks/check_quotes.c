@@ -6,7 +6,6 @@ int	ft_check_quotes(t_lnode *head, e_token dlm)
 	t_lnode	*current;
 
 	current = head;
-	ft_check_lists(head);
 	while (current)
 	{
 		if (get_token(current) == dlm

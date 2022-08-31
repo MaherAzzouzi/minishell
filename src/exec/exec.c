@@ -127,6 +127,9 @@ pid_t spawn_process(t_spp *s)
 	pid_t pid;
 
 	pid = fork();
+
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ctrl_c_handler);
 	if (pid == 0)
 		spawn_process_child(s);
 	else
@@ -136,7 +139,6 @@ pid_t spawn_process(t_spp *s)
 		if (s->out != 1)
 			close(s->out);
 		return (pid);
-
 	}
 	return 0;
 }
@@ -215,114 +217,122 @@ void pipe_chain_exec(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	close(fd2);
 	while (waitpid(-1, &status, 0) != -1)
 		;
+	signal(SIGINT, enter);
 }
 
 ////// exec_simple_cmd
 
-
-int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
+static int exec_simple_cmd_builtin(t_parsing_node *node, t_exec_struct *exec_s, 
+			t_envp **env)
 {
-	pid_t pid;
-	char *p;
+	int stdout_;
+	int stdin_;
+
+	stdout_ = dup(1);
+	stdin_ = dup(0);
+	handle_append_oredr(node);
+	handle_herdoc_iredr(node, exec_s);
+	expand_one_node(node, exec_s);
+	builtins(node, exec_s, env);
+	dup2(stdout_, 1);
+	dup2(stdin_, 0);
+	return (0);
+}
+
+static void exec_simple_cmd_core(char *p, struct stat *sb, t_parsing_node *node)
+{
+	p = NULL;
+	if (node->cmd.cmd[0] != 0)
+	{
+		expand_one_node(node, g_exec_struct);
+		p = return_cmd_full_path(node, g_exec_struct);
+		if (p == NULL)
+			show_errno(node->cmd.cmd);
+		if (stat(p, sb) < 0)
+			show_errno(p);
+		if (S_ISDIR(sb->st_mode))
+		{
+			printf("minishell: %s: is a directory\n", node->cmd.cmd);
+			exit(-2);
+		}
+		if (access(p, X_OK) != 0)
+			show_errno(node->cmd.cmd);
+	}
+	handle_append_oredr(node);
+	handle_herdoc_iredr(node, g_exec_struct);
+	if (node->cmd.cmd[0] == 0)
+	{
+		p = "/";
+		node->cmd.argv[0] = "/";
+	}
+	execve(p, node->cmd.argv, g_exec_struct->envp);
+}
+
+static int exec_simple_cmd_prt(pid_t pid)
+{
 	int status;
-	int es;
-	struct stat sb;
 
-
-	if (is_builtin(node))
+	waitpid(pid, &status, 0);
+	signal(SIGINT, enter);
+	if (WIFEXITED(status))
 	{
-		int stdout_ = dup(1);
-		int stdin_ = dup(0);
-		handle_append_oredr(node);
-		handle_herdoc_iredr(node, exec_s);
-		expand_one_node(node, exec_s);
-		builtins(node, exec_s, env);
-		dup2(stdout_, 1);
-		dup2(stdin_, 0);
-		return (0);
+		g_exec_struct->exit_status = status;
+		return status;
 	}
-
-	signal(SIGINT, SIG_IGN);
-	signal(SIGINT, ctrl_c_handler);
-	pid = fork();
-	if (pid == 0)
+	else if (WIFSIGNALED(status))
 	{
-		if (it_has_herdoc(node))
-		{
-			dup2(node->fd[0], 0);
-			close(node->fd[0]);
-		}
-		if (node->p.parenthesised == 0)
-		{
-			p = NULL;
-			if (node->cmd.cmd[0] != 0)
-			{
-				expand_one_node(node, exec_s);
-
-				p = return_cmd_full_path(node, exec_s);
-				if (p == NULL)
-					show_errno(node->cmd.cmd);
-				if (stat(p, &sb) < 0)
-					show_errno(p);
-				if (S_ISDIR(sb.st_mode))
-				{
-					printf("minishell: %s: is a directory\n", node->cmd.cmd);
-					exit(-2);
-				}
-				if (access(p, X_OK) != 0)
-				{
-					show_errno(node->cmd.cmd);
-				}
-			}
-			handle_append_oredr(node);
-			handle_herdoc_iredr(node, exec_s);
-			if (node->cmd.cmd[0] == 0)
-			{
-				p = "/";
-				node->cmd.argv[0] = "/";
-			}
-			execve(p, node->cmd.argv, exec_s->envp);
-			exit(0);
-		}
-		else
-		{
-			handle_append_oredr(node);
-			handle_herdoc_iredr(node, exec_s);
-			int ret = core(ft_strdup(node->p.cmd), exec_s->envp, exec_s, env);
-			exit(ret);
-		}
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		signal(SIGINT, enter);
-		if (WIFEXITED(status))
-		{
-			es = status;
-			g_exec_struct->exit_status = es;
-			return es;
-		}
-		else if (WIFSIGNALED(status))
-		{
-			if (WTERMSIG(status) == 2)
-				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
-			else if (WTERMSIG(status) == 3)
-				printf("Quit: %d\n", WTERMSIG(status));
-			else if (WTERMSIG(status) != 11)
-				exec_s->exit_status |= ((128 + WTERMSIG(status)) << 8) & 0xff00;
-		}
+		if (WTERMSIG(status) == 2)
+			g_exec_struct->exit_status |= ((128 + WTERMSIG(status)) << 8)
+			& 0xff00;
+		else if (WTERMSIG(status) == 3)
+			printf("Quit: %d\n", WTERMSIG(status));
+		else if (WTERMSIG(status) != 11)
+			g_exec_struct->exit_status |= ((128 + WTERMSIG(status)) << 8) 
+			& 0xff00;
 	}
 	return 0;
 }
 
-void herdoc_handler(int p)
+static void exec_simple_cmd_child(t_parsing_node *node, t_envp **env)
 {
-	(void)p;
-	fflush(stdout);
-	fflush(stderr);
-	fflush(stdin);
-	exit_status_fail();
-	return;
+	struct stat sb;
+	char *p;
+
+	if (it_has_herdoc(node))
+	{
+		dup2(node->fd[0], 0);
+		close(node->fd[0]);
+	}
+	if (node->p.parenthesised == 0)
+	{
+		p = NULL;
+		exec_simple_cmd_core(p, &sb, node);
+		exit(0);
+	}
+	else
+	{
+		handle_append_oredr(node);
+		handle_herdoc_iredr(node, g_exec_struct);
+		int ret = core(ft_strdup(node->p.cmd), g_exec_struct->envp,
+			g_exec_struct, env);
+		exit(ret);
+	}
+}
+
+int exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
+{
+	pid_t pid;
+	
+	if (is_builtin(node))
+		return exec_simple_cmd_builtin(node, exec_s, env);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ctrl_c_handler);
+	pid = fork();
+	if (pid == 0)
+		exec_simple_cmd_child(node, env);
+	else
+		return exec_simple_cmd_prt(pid);
+	return 0;
 }
 
 char *get_next_line(int fd)
@@ -340,19 +350,59 @@ char *get_next_line(int fd)
 	return ft_strdup(p);
 }
 
+/////////// handle_herdoc_store_pipe
+
+static void handle_herdoc_parent(t_parsing_node *node)
+{
+	int status;
+	char c;
+
+	wait(&status);
+	signal(SIGINT, enter);
+	close(node->fd[1]);
+	if (WIFSIGNALED(status))
+	{
+		write(1, "\n", 1);
+		while(read(node->fd[0], &c, 1) == 1)
+		;
+		loop_handler(NULL, g_exec_struct);
+	}
+}
+
+static void herdoc_fill_pipe(t_parsing_node *node, int *i, 
+		t_exec_struct *exec_s)
+{
+	char *p;
+
+	while (1)
+	{
+		ft_putstr_fd("> ", 2);
+		p = get_next_line(0);
+		if (p[0] == 0)
+		{
+			free(p);
+			break;
+		}
+		if (ft_strcmp(p, node->reds.herdoc_array[*i]->herdoc_keyword) == 0)
+			break;
+		if (!node->reds.herdoc_array[*i]->is_quoted && ft_strchr(p, '$'))
+			p = expand_an_array_having_dlr(p, exec_s);
+		write(node->fd[1], p, ft_strlen(p));
+		write(node->fd[1], "\n", 1);
+		free(p);
+	}
+} 
+
 void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 {
 	int i;
 	char *p;
-	int pid;
-	int status = 0;
 
 	if (!it_has_herdoc(node))
 		return;
 	signal(SIGINT, SIG_IGN);
 	pipe(node->fd);
-	pid = fork();
-	if (pid == 0)
+	if (fork() == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		i = 0;
@@ -364,41 +414,12 @@ void handle_herdoc_store_pipe(t_parsing_node *node, t_exec_struct *exec_s)
 				i++;
 			free(p);
 		}
-
-		while (1)
-		{
-			ft_putstr_fd("> ", 2);
-			p = get_next_line(0);
-			if (p[0] == 0)
-			{
-				free(p);
-				break;
-			}
-			if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
-				break;
-			if (!node->reds.herdoc_array[i]->is_quoted && ft_strchr(p, '$'))
-				p = expand_an_array_having_dlr(p, exec_s);
-			write(node->fd[1], p, ft_strlen(p));
-			write(node->fd[1], "\n", 1);
-			free(p);
-		}
+		herdoc_fill_pipe(node, &i, exec_s);
 		close(node->fd[1]);
 		exit(0);
 	}
 	else
-	{
-		wait(&status);
-		signal(SIGINT, enter);
-		close(node->fd[1]);
-		if (WIFSIGNALED(status))
-		{
-			char c;
-			write(1, "\n", 1);
-			while(read(node->fd[0], &c, 1) == 1)
-			;
-			loop_handler(NULL, g_exec_struct);
-		}
-	}
+		handle_herdoc_parent(node);
 }
 
 void traverse_for_herdoc(t_parsing_node *root, t_envp **env)

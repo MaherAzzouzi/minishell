@@ -13,10 +13,6 @@ char *read_command_line(t_exec_struct *exec_struct)
 	char *cmd2;
 	int i;
 
-	// if (g_exec_struct->exit_status == 0)
-	// 	cmd = readline(":)$ ");
-	// else
-
 	cmd = readline("$ ");
 	if (!cmd)
 	{
@@ -53,7 +49,6 @@ int core(char *cmd, char *envp[], t_exec_struct *exec_struct, t_envp **env)
 void ctrl_c_handler(int p)
 {
 	(void)p;
-
 	return;
 }
 void enter(int p)

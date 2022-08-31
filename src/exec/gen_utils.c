@@ -1,18 +1,5 @@
 #include "minishell.h"
 
-char **show_envp(char *envp[])
-{
-    int i;
-
-    i = 0;
-    while (envp[i])
-    {
-        //printf("%s\n", envp[i]);
-        i++;
-    }
-    return NULL;
-}
-
 void free_charpp(char **p)
 {
     int i;
@@ -56,7 +43,6 @@ char *itoa(int d)
 
     ft_memset(p, 0, 0x10);
     i = 0;
-
     if (d == 0)
         p[0] = '0';
     else
@@ -73,7 +59,6 @@ char *itoa(int d)
         }
         if (sign == -1)
             p[i] = '-';
-        
         reverse(p);
     }
     return ft_strdup(p);
@@ -90,16 +75,11 @@ char *get_env(char *var, void* exec_s, int flag)
     if (flag == 0)
         envp = ((t_exec_struct*)exec_s)->envp;
     else
-        envp = (char**)exec_s;
-
+        envp = (char **)exec_s;
     if (ft_strcmp(var, "$") == 0)
-    {
         return itoa(getpid());
-    }
     else if (ft_strcmp(var, "?") == 0)
-    {
         return itoa(WEXITSTATUS(g_exec_struct->exit_status));
-    }
     else if (var[0] == '\xfe' && var[1] == 0)
         return ft_strdup("\xff");
     i= 0;
@@ -107,11 +87,7 @@ char *get_env(char *var, void* exec_s, int flag)
     {
         envpline = ft_split(envp[i], '=');
         if (ft_strcmp(envpline[0], var) == 0)
-        {
-            val = ft_strdup(envpline[1]);
-            free_charpp(envpline);
-            return val;
-        }
+            return (val = ft_strdup(envpline[1]), free_charpp(envpline), val);
         free_charpp(envpline);
         i++;
     }
@@ -123,6 +99,7 @@ char *check_if_bin_exist(char *bin_name, char *path_env)
     char **paths;
     char *full_path;
     int i;
+
     full_path = ft_strdup("");
     paths = ft_split(path_env, ':');
     i = 0;
@@ -132,9 +109,7 @@ char *check_if_bin_exist(char *bin_name, char *path_env)
         full_path = ft_strjoin(full_path, "/", 0);
         full_path = ft_strjoin(full_path, bin_name, 0);
         if (access(full_path, X_OK) == 0)
-        {
             return (full_path);
-        }
         free(full_path);
         full_path = ft_strdup("");
         i++;

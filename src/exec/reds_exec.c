@@ -28,8 +28,7 @@ int it_has_append(t_parsing_node *node)
     return (0);
 }
 
-// Need to use access before opening.
-// cat t >t>f>y (t should become empty)
+
 int handle_output_redirect(t_parsing_node *node)
 {
     int i;
@@ -37,28 +36,17 @@ int handle_output_redirect(t_parsing_node *node)
 
     if (!is_output_redirected(node))
         return (-1);
-    
-    //printf("REDOUTPUT!\n");
-
     i = 0;
     while (node->reds.o_r_params[i] && node->reds.o_r_params[i + 1] != NULL)
     {
         fd = open(node->reds.o_r_params[i], O_CREAT , 0664);
         if (fd < 0)
-        {
-            //printf("Error creating file %s\n", node->reds.o_r_params[i]);
             exit(-1);
-        }
         i++;
     }
-    // The actual file we want to redirect the output to.
     fd = open(node->reds.o_r_params[i], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-    //printf("redirect to %s\n", node->reds.o_r_params[i]);
     if (fd < 0)
-    {
-        //printf("Error creating file %s\n", node->reds.o_r_params[i]);
         exit(-1);
-    }
     return (fd);
 }
 
@@ -71,31 +59,21 @@ int handle_append(t_parsing_node *node)
 
     if (!it_has_append(node))
         return (-1);
-    // We just set the output to the last file in our list.
-
     i = 0;
     while (node->reds.append_array[i] && node->reds.append_array[i + 1])
     {        
         fd = open(node->reds.append_array[i], O_CREAT , 0664);
         if (fd < 0)
-        {
-            //printf("Error creating file %s\n", node->reds.append_array[i]);
             exit(-1);
-        }
         i++;
     }
     fd = open(node->reds.append_array[i], O_CREAT | O_WRONLY | O_APPEND, 0664);
-    //printf("redirect to %s\n", node->reds.append_array[i]);
     if (fd < 0)
-    {
-        //printf("Error creating file %s\n", node->reds.append_array[i]);
         exit(-1);
-    }
     return (fd);
 }
 
 
-// This function will redirect the output of the child!
 int handle_append_oredr(t_parsing_node *node)
 {
     int out;
@@ -119,54 +97,6 @@ int handle_append_oredr(t_parsing_node *node)
     return (0);
 }
 
-// <<
-
-int handle_herdoc(t_parsing_node *node, t_exec_struct *exec_s)
-{
-    int i;
-    int fd[2];
-    char *p;
-
-    if (!it_has_herdoc(node))
-        return (-1);
-    // Open a pipe
-    // Keep reading until the last herdoc which is interesting
-    // Open a pipe to use it as input for our program
-
-    i = 0;
-    while (node->reds.herdoc_array[i] && node->reds.herdoc_array[i + 1])
-    {
-        p = readline("> ");
-        // if (p == NULL)
-        // {
-        //     i++;
-        //     continue;
-        // }
-        if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
-            i++;
-        free(p);
-    }
-    pipe(fd);
-    while (1)
-    {
-        p = readline("> ");
-        if (p == NULL)
-        {
-            break;
-        }
-        if (ft_strcmp(p, node->reds.herdoc_array[i]->herdoc_keyword) == 0)
-            break;
-        if (!node->reds.herdoc_array[i]->is_quoted && ft_strchr(p, '$'))
-            p = expand_an_array_having_dlr(p, exec_s);
-        write(fd[1], p, ft_strlen(p));
-        write(fd[1], "\n", 1);
-        free(p);
-    }
-    close(fd[1]);
-    return (fd[0]);
-}
-
-// Now we come to input like this <
 int handle_input_redirect(t_parsing_node *node)
 {
     int i;
@@ -180,28 +110,20 @@ int handle_input_redirect(t_parsing_node *node)
     {
         fd = open(node->reds.i_r_params[i], O_CREAT , 0664);
         if (fd < 0)
-        {
-            //printf("Error creating file %s\n", node->reds.i_r_params[i]);
             exit(-1);
-        }
         i++;
     }
-    // The actual file we want to redirect the output to.
     if (access(node->reds.i_r_params[i], R_OK) != 0)
         show_errno(node->reds.i_r_params[i]);
     fd = open(node->reds.i_r_params[i], O_RDONLY, 0664);
-    //printf("redirect to %s\n", node->reds.i_r_params[i]);
     if (fd < 0)
-    {
-        //printf("Error creating file %s\n", node->reds.o_r_params[i]);
         exit(-1);
-    }
     return (fd);
 }
 
-// This function will redirect the input of the child!
 int handle_herdoc_iredr(t_parsing_node *node, t_exec_struct *exec_s)
 {
+    (void)exec_s;
     int in;
 
     in = -1;
@@ -210,15 +132,7 @@ int handle_herdoc_iredr(t_parsing_node *node, t_exec_struct *exec_s)
     else if (node->last_in_token == REDRI)
     {
         in = handle_input_redirect(node);
-        handle_herdoc(node, exec_s);
     }
-    // else if (node->last_in_token == DLMI)
-    // {
-    //     in = handle_herdoc(node, exec_s);
-    //     handle_input_redirect(node);
-    // }
-    
-    // Make it read from here!
     dup2(in, 0);
     close(in);
     return (0);

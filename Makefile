@@ -6,7 +6,7 @@ MAIN=main.c
 B_DIR= build
 # If a new directory is created inside src, we should have it in a variable
 # containing all files inside, and add it to CFILES too.
-DBGUTILS= $(addprefix dbg_utils/, token_str.c check_lists.c tree_debug.c visual_tree.c)
+# DBGUTILS= $(addprefix dbg_utils/, token_str.c check_lists.c tree_debug.c visual_tree.c)
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\
 		general_utils.c number_utils.c free_tree.c)
 LEXERC=$(addprefix lexer/, lexing.c)
