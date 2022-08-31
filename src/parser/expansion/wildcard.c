@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Mriskyin <Mriskyin-team@student.42.ma>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 18:51:01 by Mriskyin          #+#    #+#             */
+/*   Updated: 2022/08/31 18:51:03 by Mriskyin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-//////////////
-static int **n_is_matching(char *pattern, int n, int m)
+static int	**n_is_matching(char *pattern, int n, int m)
 {
-	int **lookup;
-	int i;
-	int j;
+	int	**lookup;
+	int	i;
+	int	j;
 
 	lookup = (int **)malloc((n + 1) * sizeof(int *));
 	memset(lookup, 0, (n + 1) * sizeof(int *));
@@ -24,13 +35,13 @@ static int **n_is_matching(char *pattern, int n, int m)
 			lookup[0][j] = lookup[0][j - 1];
 		j++;
 	}
-	return lookup;
+	return (lookup);
 }
 
-static int is_matching_free(int **lookup, int n, int m)
+static int	is_matching_free(int **lookup, int n, int m)
 {
-	int ret;
-	int i;
+	int	ret;
+	int	i;
 
 	ret = lookup[n][m];
 	i = 0;
