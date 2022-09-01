@@ -17,18 +17,7 @@ What we should implement:
     - || OR
     - && AND
     - () PARANTHESIS
-
-    Features:
-    - The color will be set depending on the exit value of the last command.
-    (We will start with GREEN and change to RED)
-
-    task :
-    --> free(head);
-    --> double quotes;
-    --> nzido nimplemtiw f pipe
-
-    --> need to fix cd | ls builtins in fork
-
+    - * WILDCARD
 
 
 
