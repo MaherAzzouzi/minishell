@@ -1,6 +1,6 @@
 CC=gcc
 INC=inc/
-FLAGS=-Wall -Wextra -Werror
+FLAGS= -fcommon
 MAIN= main_utils.c main.c
 B_DIR= build
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\

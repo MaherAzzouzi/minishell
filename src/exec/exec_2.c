@@ -20,7 +20,10 @@ pid_t	spawn_process(t_spp *s)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, ctrl_c_handler);
 	if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
 		spawn_process_child(s);
+	}
 	else
 	{
 		if (s->in != 0)

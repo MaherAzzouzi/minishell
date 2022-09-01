@@ -103,7 +103,10 @@ int	exec_simple_cmd(t_parsing_node *node, t_exec_struct *exec_s, t_envp **env)
 	signal(SIGINT, ctrl_c_handler);
 	pid = fork();
 	if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
 		exec_simple_cmd_child(node, env);
+	}
 	else
 		return (exec_simple_cmd_prt(pid));
 	return (0);
