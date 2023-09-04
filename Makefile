@@ -1,7 +1,7 @@
 CC=gcc
 INC=inc/
 # Flags should be -Wall -Wextra -Werror but just to make it compile under Linux I changed it to -fcommon
-FLAGS=-Wall -Wextra -Werror
+FLAGS=
 MAIN= main_utils.c main.c
 B_DIR= build
 UTILS= $(addprefix utils/, ft_new_node.c node_operations_parse.c get_token.c get_cmd.c free_list.c\
