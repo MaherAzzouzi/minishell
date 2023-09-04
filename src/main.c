@@ -32,7 +32,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argv;
 	(void)argc;
-	rl_catch_signals = 0;
+	//u can comment this if u dont have readline installed
+	// rl_catch_signals = 0;
 	rl_outstream = stderr;
 	signal(SIGINT, enter);
 	signal(SIGQUIT, SIG_IGN);

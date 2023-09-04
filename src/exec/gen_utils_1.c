@@ -97,10 +97,15 @@ char	*get_env(char *var, void *exec_s, int flag)
 	{
 		envpline = ft_split(envp[i], '=');
 		if (ft_strcmp(envpline[0], var) == 0)
+		{
 			if (envpline[1])
 				return (val = ft_strdup(envpline[1]), free_charpp(envpline), val);
-			else
+			else {
+
 				return ft_strdup("");
+			}
+
+		}
 		free_charpp(envpline);
 		i++;
 	}
