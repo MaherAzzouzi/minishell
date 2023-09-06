@@ -47,10 +47,10 @@ void	enter(int p)
 {
 	(void)p;
 	ft_printf("\n");
-	rl_on_new_line();
+	//rl_on_new_line();
 	//u can comment this if u dont have readline installed
-	rl_replace_line("", 0);
-	rl_redisplay();
+	//rl_replace_line("", 0);
+	//rl_redisplay();
 	exit_status_fail();
 	return ;
 }
